@@ -13,17 +13,17 @@ namespace Explorer.Tours.Core.Domain
         public string Difficulty { get; init; }
         public string Description { get; init; }
         public double Cost { get; init; }
-        public string State { get; init; }
+        public string Status { get; init; }
         public string Tags { get; init; }
 
 
-        public Tour(string name, string difficulty, string description, double cost, string state, string tags)
+        public Tour(string name, string difficulty, string description, double cost, string status, string tags)
         {
             Name = name;
             Difficulty = difficulty;
             Description = description;
             Cost = cost;
-            State = state;
+            Status = status;
             Tags = tags;
         }
     }

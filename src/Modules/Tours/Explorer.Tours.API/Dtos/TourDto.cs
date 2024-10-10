@@ -12,7 +12,7 @@ namespace Explorer.Tours.API.Dtos
         public string Difficulty { get; set; }
         public string Description { get; set; }
         public double Cost { get; set; }
-        public string State { get; set; }
+        public string Status { get; set; }
         public string Tags { get; set; }
 
     }

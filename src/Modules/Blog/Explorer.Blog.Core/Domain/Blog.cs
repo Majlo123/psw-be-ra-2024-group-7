@@ -9,23 +9,24 @@ namespace Explorer.Blog.Core.Domain
 {
     public class Blog : Entity
     {
-        public int BlogId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public int BlogId { get;private set; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
 
-        public BlogStatus Status { get; set; }
-        public List<string> ImageUrl { get; set; }
-        public DateOnly Date {  get; set; }
+        public BlogStatus Status { get; private set; }
+        public List<string> ImageUrl { get; private set; }
+        public DateOnly Date {  get; private set; }
 
         public Blog(int blogId, string title, string description, BlogStatus status, List<string> imageUrl, DateOnly date)
         {
+            Validate();
             BlogId = blogId;
             Title = title;
             Description = description;
             Status = status;
             ImageUrl = imageUrl;
             Date = date;
-            Validate();
+            
         }
 
         private void Validate()

@@ -18,8 +18,8 @@ namespace Explorer.Tours.Core.Domain
 
         public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time)
         {
-            if (tourId <= 0)
-                throw new ArgumentException("TourId must be greater than 0", nameof(tourId));
+            if (tourId < 0)
+                throw new ArgumentException("TourId must be 0 or positive number", nameof(tourId));
 
             if (string.IsNullOrWhiteSpace(category))
                 throw new ArgumentException("Category cannot be empty", nameof(category));

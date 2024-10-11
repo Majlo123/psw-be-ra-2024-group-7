@@ -3,6 +3,7 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Author;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,22 @@ namespace Explorer.Tours.Core.UseCases.Author;
 
 public class KeyPointService : BaseService<KeyPointDto, KeyPoint>, IKeyPointService
 {
-    public KeyPointService(IMapper mapper) : base(mapper) {}
+    private readonly IKeyPointRepository _keyPointRepository;
+    public KeyPointService(IKeyPointRepository keyPointRepository, IMapper mapper) : base(mapper) 
+    {
+        _keyPointRepository = keyPointRepository;
+    }
 
     public Result<KeyPointDto> Create(KeyPointDto keyPoint)
     {
-       throw new NotImplementedException(); //trenutno ova metoda ne moze da se implementira jer nije kreiran repozitorijum
+        try
+        {
+            var result = _keyPointRepository.Create(MapToDomain(keyPoint));
+            return MapToDto(result);
+        }
+        catch (ArgumentException e)
+        {
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
     }
 }

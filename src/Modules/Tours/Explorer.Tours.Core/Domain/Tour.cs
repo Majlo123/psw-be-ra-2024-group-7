@@ -19,6 +19,7 @@ namespace Explorer.Tours.Core.Domain
 
         public Tour(string name, string difficulty, string description, double cost, string status, string tags)
         {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
             Difficulty = difficulty;
             Description = description;

@@ -29,7 +29,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var newEntity = new TourDto
             {
-                Name = "Tura1",
+                Name = "Tura4",
                 Difficulty="Laka",
                 Description = "Planinski hajk",
                 Cost=200,
@@ -111,6 +111,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.StatusCode.ShouldBe(404);
         }
 
+        [Fact]
         public void Updates()
         {
             // Arrange
@@ -121,7 +122,11 @@ namespace Explorer.Tours.Tests.Integration.Administration
             {
                 Id = -1,
                 Name = "Tura1",
-                Difficulty = "Laka"
+                Difficulty = "Teze",
+                Description = "Planinski hajk",
+                Cost = 200,
+                Status = "draft",
+                Tags = "visina,priroda"
             };
 
             // Act
@@ -132,12 +137,15 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.Id.ShouldBe(-1);
             result.Name.ShouldBe(updatedEntity.Name);
             result.Difficulty.ShouldBe(updatedEntity.Difficulty);
+            result.Description.ShouldBe(updatedEntity.Description);
+            result.Cost.ShouldBe(updatedEntity.Cost);
+            result.Tags.ShouldBe(updatedEntity.Tags);
 
             // Assert - Database
-            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura1");
+            var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Difficulty == "Teze");
             storedEntity.ShouldNotBeNull();
             storedEntity.Difficulty.ShouldBe(updatedEntity.Difficulty);
-            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Name == "Tura1");
+            var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Id==-1 && i.Difficulty == "Laka");
             oldEntity.ShouldBeNull();
         }
 

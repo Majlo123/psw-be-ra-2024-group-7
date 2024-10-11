@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist.Administration
 {
-    [Authorize(Policy = "touristPolicy")]
     [Route("api/administration/tour-problem-report")]
     public class TourProblemReportController : BaseApiController
     {
@@ -18,13 +17,24 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
         [HttpGet]
+        [Authorize(Policy = "touristPolicy")]
         public ActionResult<PagedResult<TourProblemReportDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _tourProblemReportService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
 
+        [HttpGet]
+        [Route("api/administration/tour-problem-report/administratorView")]
+        [Authorize(Policy = "administratorPolicy")]
+        public ActionResult<PagedResult<TourProblemReportDto>> GetAllForAdministrator([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourProblemReportService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
+
         [HttpPost]
+        [Authorize(Policy = "touristPolicy")]
         public ActionResult<TourProblemReportDto> Create([FromBody] TourProblemReportDto tourProblemReport)
         {
             var result = _tourProblemReportService.Create(tourProblemReport);
@@ -32,6 +42,7 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Policy = "touristPolicy")]
         public ActionResult<TourProblemReportDto> Update([FromBody] TourProblemReportDto tourProblemReport)
         {
             var result = _tourProblemReportService.Update(tourProblemReport);
@@ -39,6 +50,7 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = "touristPolicy")]
         public ActionResult Delete(int id)
         {
             var result = _tourProblemReportService.Delete(id);

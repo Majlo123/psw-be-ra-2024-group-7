@@ -22,7 +22,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _context.TourProblemReports.FirstOrDefault(tpr => tpr.Id == id);
         }
 
-        // Get a list of Tours by their Status
+        // Get a list of Tour Problems by their Priority
         public List<TourProblemReport> GetByPriority(ProblemPriority priority)
         {
             return _context.TourProblemReports.Where(tpr => tpr.Priority == priority).ToList();

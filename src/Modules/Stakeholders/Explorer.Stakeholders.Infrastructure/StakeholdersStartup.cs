@@ -25,6 +25,8 @@ public static class StakeholdersStartup
     
     private static void SetupCore(IServiceCollection services)
     {
+        services.AddScoped<IPersonEditingService, PersonEditingService>();
+        services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
     }
@@ -33,7 +35,7 @@ public static class StakeholdersStartup
     {
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
-
+        services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "stakeholders")));

@@ -12,4 +12,5 @@ namespace Explorer.Tours.API.Public.Author;
 public interface IKeyPointService
 {
     Result<KeyPointDto> Create(KeyPointDto keyPoint);
+    Result<List<KeyPointDto>> GetAll();
 }

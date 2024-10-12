@@ -27,4 +27,9 @@ public class KeyPointRepository : IKeyPointRepository
         _dbContext.SaveChanges();
         return keyPoint;
     }
+
+    public List<KeyPoint> GetAll()
+    {
+        return _dbSet.ToList();
+    }
 }

@@ -22,4 +22,11 @@ public class KeyPointController : BaseApiController
         var result = _keyPointService.Create(keyPointDto);
         return CreateResponse(result);
     }
+
+    [HttpGet]
+    public ActionResult<List<KeyPointDto>> GetAll()
+    {
+        var result = _keyPointService.GetAll();
+        return CreateResponse(result);
+    }
 }

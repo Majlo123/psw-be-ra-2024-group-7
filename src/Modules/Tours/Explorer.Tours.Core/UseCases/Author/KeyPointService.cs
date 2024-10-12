@@ -33,4 +33,17 @@ public class KeyPointService : BaseService<KeyPointDto, KeyPoint>, IKeyPointServ
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
     }
+
+    public Result<List<KeyPointDto>> GetAll()
+    {
+        try 
+        {
+            var result = _keyPointRepository.GetAll();
+            return MapToDto(result);
+        }
+        catch (ArgumentException e)
+        {
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
+    }
 }

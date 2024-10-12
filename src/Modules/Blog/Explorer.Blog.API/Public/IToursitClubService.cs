@@ -1,0 +1,19 @@
+﻿using Explorer.Blog.API.Dtos;
+using Explorer.BuildingBlocks.Core.UseCases;
+using FluentResults;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Explorer.Blog.API.Public
+{
+    public interface IToursitClubService 
+    {
+        Result<PagedResult<TouristClubDto>> GetPaged(int page, int pageSize);
+        Result<TouristClubDto> Create(TouristClubDto club);
+        Result<TouristClubDto> Update(TouristClubDto club);
+        Result Delete(int id);
+    }
+}

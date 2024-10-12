@@ -17,7 +17,7 @@ namespace Explorer.Tours.API.Dtos
 
         public string Comment { get; set; }
 
-        public Person Tourist { get; set; }
+        public int Tourist { get; set; }
 
         public DateTime VisitDate { get; set; }
 

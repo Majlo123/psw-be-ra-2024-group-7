@@ -19,6 +19,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             _mapper = mapper;
         }
 
+
         // Implementacija GetGrades metode
         public Result<Explorer.Stakeholders.API.Public.PagedResult<ApplicationGradeDto>> GetGrades(int page, int pageSize)
         {
@@ -56,6 +57,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             var exists = gradesPaged.Results.Any(g => g.UserId == userId);
             return Result.Ok(exists);
         }
+
     }
 }
 

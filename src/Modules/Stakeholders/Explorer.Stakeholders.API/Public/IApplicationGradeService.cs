@@ -7,6 +7,7 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<ApplicationGradeDto> AddGrade(ApplicationGradeDto applicationGrade);
         Result<PagedResult<ApplicationGradeDto>> GetGrades(int page, int pageSize);  // Ova metoda vraća PagedResult
+
         Result<bool> UserExists(int userId);
     }
 

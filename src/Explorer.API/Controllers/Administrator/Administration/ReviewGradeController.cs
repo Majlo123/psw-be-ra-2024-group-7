@@ -44,6 +44,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _applicationGradeService.AddGrade(applicationGrade);
             return CreateResponse(result);
         }
+
     }
 }
 

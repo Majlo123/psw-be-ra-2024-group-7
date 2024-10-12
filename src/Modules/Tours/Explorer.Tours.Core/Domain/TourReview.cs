@@ -12,7 +12,6 @@ namespace Explorer.Tours.Core.Domain
 {
     public class TourReview : Entity
     {
-        public int ReviewId { get; private set; }
         public int TourId { get; private set; }
         public int Rating { get; private set; }  
         public string Comment { get; private set; } 
@@ -21,10 +20,12 @@ namespace Explorer.Tours.Core.Domain
         public DateTime ReviewDate { get; private set; }  
         public List<string> Images { get; private set; }
 
-
-        public TourReview(int reviewId, int tourId, int rating, string comment, int touristId, DateTime visitDate, DateTime reviewDate, List<string> images)
+        public TourReview()
         {
-            ReviewId = reviewId;
+        }
+        public TourReview( int tourId, int rating, string comment, int touristId, DateTime visitDate, DateTime reviewDate, List<string> images)
+        {
+           
             TourId = tourId;
             Rating = rating;
             Comment = comment;
@@ -41,7 +42,6 @@ namespace Explorer.Tours.Core.Domain
         private void Validate()
         {
             if (TourId < 0) throw new ArgumentException("TourId must be 0 or positive number", nameof(TourId));
-            if (ReviewId < 0) throw new ArgumentException("ReviewId must be 0 or positive number", nameof(ReviewId));
             if (Rating < 1 || Rating > 5) throw new ArgumentException("Rating must be between 1 and 5.");
             if (string.IsNullOrWhiteSpace(Comment)) throw new ArgumentException("Comment cannot be empty.");
             if (TouristId < 0) throw new ArgumentNullException(nameof(TouristId), "Tourist information is required.");

@@ -9,7 +9,6 @@ namespace Explorer.Tours.API.Dtos
 {
     public class TourReviewDto
     {
-        public int ReviewId { get; set; }
 
         public int TourId { get; set; }
 
@@ -17,7 +16,7 @@ namespace Explorer.Tours.API.Dtos
 
         public string Comment { get; set; }
 
-        public int Tourist { get; set; }
+        public int TouristId { get; set; }
 
         public DateTime VisitDate { get; set; }
 

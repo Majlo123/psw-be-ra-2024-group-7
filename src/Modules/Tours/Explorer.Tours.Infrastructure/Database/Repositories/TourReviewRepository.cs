@@ -19,7 +19,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public TourReview Get(int reviewId)
         {
-            return _context.TourReview.FirstOrDefault(tr => tr.ReviewId == reviewId);
+            return _context.TourReview.FirstOrDefault(tr => tr.Id == reviewId);
         }
 
         public List<TourReview> GetReviewsForTour(int tourId)

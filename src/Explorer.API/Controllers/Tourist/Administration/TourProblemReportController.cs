@@ -25,7 +25,7 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
         [HttpGet]
-        [Route("api/administration/tour-problem-report/administratorView")]
+        [Route("administratorView")]
         [Authorize(Policy = "administratorPolicy")]
         public ActionResult<PagedResult<TourProblemReportDto>> GetAllForAdministrator([FromQuery] int page, [FromQuery] int pageSize)
         {

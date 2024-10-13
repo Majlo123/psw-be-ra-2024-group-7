@@ -14,6 +14,5 @@ namespace Explorer.Blog.API.Public
         Result<PagedResult<TouristClubDto>> GetPaged(int page, int pageSize);
         Result<TouristClubDto> Create(TouristClubDto club);
         Result<TouristClubDto> Update(TouristClubDto club);
-        Result Delete(int id);
     }
 }

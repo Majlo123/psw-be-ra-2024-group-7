@@ -1,6 +1,6 @@
 ﻿using Explorer.API.Controllers.Author;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Author;
+using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.Author;
+namespace Explorer.Tours.Tests.Integration.Administration;
 
 [Collection("Sequential")]
 public class KeyPointQueryTests : BaseToursIntegrationTest

@@ -29,13 +29,19 @@ public static class StakeholdersStartup
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
+        // Dodajemo servis za ApplicationGrade
+        services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
+
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
+        // Dodajemo repozitorijum za ApplicationGrade
+        services.AddScoped(typeof(ICrudRepository<ApplicationGrade>), typeof(CrudDatabaseRepository<ApplicationGrade, StakeholdersContext>));
+
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "stakeholders")));

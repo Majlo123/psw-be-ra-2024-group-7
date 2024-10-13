@@ -1,9 +1,7 @@
 ﻿using Explorer.API.Controllers.Tourist;
-using Explorer.Blog.API.Dtos;
-using Explorer.Blog.API.Public;
-using Explorer.Blog.Infrastructure.Database;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Infrastructure.Database;
+using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -13,13 +11,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Blog.Tests.Integration.Administration
+namespace Explorer.Stakeholders.Tests.Integration
 {
-
     [Collection("Sequential")]
-    public class TouristClubCommandTests : BaseBlogIntegrationTest
+    public class TouristClubCommandTests : BaseStakeholdersIntegrationTest
     {
-        public TouristClubCommandTests(BlogTestFactory factory) : base(factory) { }
+        public TouristClubCommandTests(StakeholdersTestFactory factory) : base(factory) { }
 
         [Fact]
         public void Creates()
@@ -27,13 +24,13 @@ namespace Explorer.Blog.Tests.Integration.Administration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new TouristClubDto
             {
                 Name = "TestClub",
                 Description = "Test description",
                 Picture = "linktoTestPicture",
-                OwnerId = 3
+                OwnerId = -21
             };
 
             //Act
@@ -76,14 +73,14 @@ namespace Explorer.Blog.Tests.Integration.Administration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var updatedEntity = new TouristClubDto
             {
-                Id = -1,
+                Id = -3,
                 Name = "TestUpdateClub",
                 Description = "Test update description",
                 Picture = "linktoTestUpdatePicture",
-                OwnerId = 3
+                OwnerId = -13
             };
 
             // Act
@@ -91,7 +88,7 @@ namespace Explorer.Blog.Tests.Integration.Administration
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-1);
+            result.Id.ShouldBe(-3);
             result.Name.ShouldBe(updatedEntity.Name);
             result.Description.ShouldBe(updatedEntity.Description);
             result.Picture.ShouldBe(updatedEntity.Picture);
@@ -100,11 +97,11 @@ namespace Explorer.Blog.Tests.Integration.Administration
             var storedEntity = dbContext.TouristClub.FirstOrDefault(i => i.Name == "TestUpdateClub");
             storedEntity.ShouldNotBeNull();
             storedEntity.Description.ShouldBe(updatedEntity.Description);
-            var oldEntity = dbContext.TouristClub.FirstOrDefault(i => i.Name == "Planinari");
+            var oldEntity = dbContext.TouristClub.FirstOrDefault(i => i.Name == "Novosadjani");
             oldEntity.ShouldBeNull();
         }
 
-       [Fact]
+        [Fact]
         public void Update_fails_invalid_id()
         {
             // Arrange
@@ -125,7 +122,7 @@ namespace Explorer.Blog.Tests.Integration.Administration
             // Assert
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(404);
-        } 
+        }
 
 
         private static TouristClubController CreateController(IServiceScope scope)

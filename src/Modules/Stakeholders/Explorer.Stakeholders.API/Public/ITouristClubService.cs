@@ -1,5 +1,5 @@
-﻿using Explorer.Blog.API.Dtos;
-using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Blog.API.Public
+namespace Explorer.Stakeholders.API.Public
 {
-    public interface IToursitClubService 
+    public interface IToursitClubService
     {
         Result<PagedResult<TouristClubDto>> GetPaged(int page, int pageSize);
         Result<TouristClubDto> Create(TouristClubDto club);

@@ -1,16 +1,15 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using Explorer.Stakeholders.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Explorer.Blog.Core.Domain
+namespace Explorer.Stakeholders.Core.Domain
 {
     public class TouristClub : Entity
-    {  
+    {
         public string Name { get; private set; }
 
         public string Description { get; private set; }
@@ -18,6 +17,9 @@ namespace Explorer.Blog.Core.Domain
         public string? Picture { get; private set; }
 
         public long OwnerId { get; private set; }
+        public User Owner { get; private set; }
+
+        public List<User> Members { get; private set; }
 
         public TouristClub(string name, string description, string? picture, long ownerId)
         {
@@ -27,6 +29,7 @@ namespace Explorer.Blog.Core.Domain
             Description = description;
             Picture = picture;
             OwnerId = ownerId;
+            Members = new List<User>();
         }
     }
 }

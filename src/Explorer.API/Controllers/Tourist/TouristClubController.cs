@@ -32,7 +32,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{Id:int}")]
         public ActionResult<TouristClubDto> Update([FromBody] TouristClubDto club)
         {
             var result = _toursitClubService.Update(club);

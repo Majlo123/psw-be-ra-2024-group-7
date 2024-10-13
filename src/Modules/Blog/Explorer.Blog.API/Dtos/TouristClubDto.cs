@@ -9,7 +9,7 @@ namespace Explorer.Blog.API.Dtos
 {
     public  class TouristClubDto
     {
-        public long ClubId { get;  set; }
+        public long Id { get;  set; }
         public string Name { get;  set; }
 
         public string Description { get;  set; }
@@ -18,7 +18,6 @@ namespace Explorer.Blog.API.Dtos
 
         public long OwnerId { get;  set; }
 
-        public Person Owner { get;  set; }
 
     }
 }

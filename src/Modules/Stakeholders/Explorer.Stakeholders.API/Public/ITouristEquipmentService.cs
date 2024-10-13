@@ -13,6 +13,7 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<PagedResult<TouristEquipmentDto>> GetPaged(int page, int pageSize);
         Result<TouristEquipmentDto> Create(TouristEquipmentDto touristEquipment);
+        Result<TouristEquipmentDto> Update(TouristEquipmentDto touristEquipment);
         Result Delete(int id);
     }
 }

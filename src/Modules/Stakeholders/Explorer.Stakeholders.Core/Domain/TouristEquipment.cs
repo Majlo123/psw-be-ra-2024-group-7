@@ -19,10 +19,10 @@ namespace Explorer.Stakeholders.Core.Domain
         }
         public void Validate()
         {
-            if (EquipmentId <= 0)
-                throw new ArgumentException("TourId must be greater than 0", nameof(EquipmentId));
-            if(TouristId<= 0)
-                throw new ArgumentException("TourId must be greater than 0", nameof(TouristId));
+            if (EquipmentId < 0)
+                throw new ArgumentException("EquipmentId must be greater than 0", nameof(EquipmentId));
+            if(TouristId < 0)
+                throw new ArgumentException("TouristId must be greater than 0", nameof(TouristId));
 
         }
     }

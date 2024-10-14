@@ -12,6 +12,8 @@ public class StakeholderProfile : Profile
         CreateMap<TouristClubDto, TouristClub>().ReverseMap();
 
 
+
+        CreateMap<TouristEquipmentDto, TouristEquipment>().ReverseMap();
         CreateMap<PersonDto, Person>().ReverseMap();
         // Mapiramo DTO na domensku klasu i obratno
         CreateMap<ApplicationGradeDto, ApplicationGrade>().ReverseMap();

@@ -1,4 +1,4 @@
-﻿using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
@@ -9,10 +9,12 @@ public class StakeholdersContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<TouristEquipment> TouristEquipments{get;set;}
     public DbSet<ApplicationGrade> ApplicationGrades { get; set; }
 
 
     public DbSet<TouristClub> TouristClub { get; set; }
+
 
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 

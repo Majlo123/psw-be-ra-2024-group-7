@@ -25,9 +25,16 @@ public static class StakeholdersStartup
     
     private static void SetupCore(IServiceCollection services)
     {
+        services.AddScoped<IPersonEditingService, PersonEditingService>();
+        services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
+
         services.AddScoped<IToursitClubService, TouristClubService>();
+
+        // Dodajemo servis za ApplicationGrade
+        services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
+
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -35,6 +42,10 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped(typeof(ICrudRepository<TouristClub>), typeof(CrudDatabaseRepository<TouristClub, StakeholdersContext>));
+
+        services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
+        // Dodajemo repozitorijum za ApplicationGrade
+        services.AddScoped(typeof(ICrudRepository<ApplicationGrade>), typeof(CrudDatabaseRepository<ApplicationGrade, StakeholdersContext>));
 
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),

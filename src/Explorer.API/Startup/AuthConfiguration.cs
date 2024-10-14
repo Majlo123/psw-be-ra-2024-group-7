@@ -53,6 +53,7 @@ public static class AuthConfiguration
         services.AddAuthorization(options =>
         {
             options.AddPolicy("administratorPolicy", policy => policy.RequireRole("administrator"));
+            options.AddPolicy("userPolicy", policy => policy.RequireRole("author", "tourist"));
             options.AddPolicy("authorPolicy", policy => policy.RequireRole("author"));
             options.AddPolicy("touristPolicy", policy => policy.RequireRole("tourist"));
         });

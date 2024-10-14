@@ -15,7 +15,7 @@ namespace Explorer.Tours.Core.Domain
         public double Cost { get; private set; }
         public string Status { get; private set; }
         public string Tags { get; private set; }
-
+        public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
 
         public Tour(string name, string difficulty, string description, double cost, string status, string tags)
         {
@@ -26,6 +26,11 @@ namespace Explorer.Tours.Core.Domain
             Cost = cost;
             Status = status;
             Tags = tags;
+        }
+        public void AddKeyPoint(KeyPoint keyPoint)
+        {
+            if (keyPoint == null) throw new ArgumentNullException(nameof(keyPoint));
+            KeyPoints.Add(keyPoint);
         }
     }
 }

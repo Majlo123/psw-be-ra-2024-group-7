@@ -8,14 +8,20 @@ public class Person : Entity
     public long UserId { get; init; }
     public string Name { get; init; }
     public string Surname { get; init; }
+    public string ProfilePictureUrl { get; init; }
+    public string Biography { get; init; }
+    public string Motto { get; init; }
     public string Email { get; init; }
 
-    public Person(long userId, string name, string surname, string email)
+    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto)
     {
         UserId = userId;
         Name = name;
         Surname = surname;
         Email = email;
+        ProfilePictureUrl = profilePictureUrl;
+        Biography = biography;
+        Motto = motto;
         Validate();
     }
 
@@ -26,4 +32,5 @@ public class Person : Entity
         if (string.IsNullOrWhiteSpace(Surname)) throw new ArgumentException("Invalid Surname");
         if (!MailAddress.TryCreate(Email, out _)) throw new ArgumentException("Invalid Email");
     }
+
 }

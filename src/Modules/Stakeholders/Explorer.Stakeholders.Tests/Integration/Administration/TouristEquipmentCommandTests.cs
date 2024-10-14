@@ -56,8 +56,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var controller = CreateController(scope);
             var updatedEntity = new TouristEquipmentDto
             {
-
-                EquipmentId=-2
+                Id = -5,
+                TouristId=-1,
+                EquipmentId=0
             };
 
             //Act
@@ -76,7 +77,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var updatedEntity = new TouristEquipmentDto
             {
-                Id = -1,
+                Id = -2,
                 TouristId = 4,
                 EquipmentId = 4
             };
@@ -86,7 +87,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
 
             //Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-1);
+            result.Id.ShouldBe(-2);
             result.TouristId.ShouldBe(updatedEntity.TouristId);
             result.EquipmentId.ShouldBe(updatedEntity.EquipmentId);
 
@@ -94,7 +95,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.EquipmentId == 4);
             storedEntity.ShouldNotBeNull();
             storedEntity.TouristId.ShouldBe(updatedEntity.TouristId);
-            var oldEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -1);
+            var oldEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -2);
             oldEntity.ShouldNotBeNull();
 
         }
@@ -126,14 +127,14 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             //Act
-            var result = (OkResult)controller.Delete(-2);
+            var result = (OkResult)controller.Delete(-1);
 
             //Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             //Assert - Database
-            var storedCourse = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -2);
+            var storedCourse = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -1);
             storedCourse.ShouldBeNull();
         }
         [Fact]

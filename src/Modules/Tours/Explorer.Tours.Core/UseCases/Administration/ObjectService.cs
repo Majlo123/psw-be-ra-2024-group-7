@@ -17,10 +17,5 @@ namespace Explorer.Tours.Core.UseCases.Administration
     {
         public ObjectService(ICrudRepository<Object> repository, IMapper mapper) : base(repository, mapper) { }
 
-        public override Result<ObjectDto> Create(ObjectDto objectDto)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

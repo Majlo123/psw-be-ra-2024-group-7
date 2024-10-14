@@ -31,5 +31,3 @@ public class StakeholdersContext : DbContext
         .HasForeignKey<Person>(s => s.UserId);
     }
 }
-/*Add-Migration -Name Init -Context StakeholdersContext -Project Explorer.Stakeholders.Infrastructure -StartupProject Explorer.API
-Update - Database - Context StakeholdersContext - Project Explorer.Stakeholders.Infrastructure - StartupProject Explorer.API */

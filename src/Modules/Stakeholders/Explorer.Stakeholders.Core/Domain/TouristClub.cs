@@ -17,7 +17,6 @@ namespace Explorer.Stakeholders.Core.Domain
         public string? Picture { get; private set; }
 
         public long OwnerId { get; private set; }
-        public User Owner { get; private set; }
 
         public List<User> Members { get; private set; }
 

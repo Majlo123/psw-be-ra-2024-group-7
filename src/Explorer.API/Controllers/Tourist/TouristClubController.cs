@@ -4,6 +4,7 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Explorer.Stakeholders.Infrastructure.Authentication;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -27,14 +28,20 @@ namespace Explorer.API.Controllers.Tourist
 
         [HttpPost]
         public ActionResult<TouristClubDto> Create([FromBody] TouristClubDto club) 
-        { 
+        {
+            if (club.OwnerId >= 0)
+            club.OwnerId = User.PersonId() + 1; 
             var result = _toursitClubService.Create(club);
             return CreateResponse(result);
         }
 
-        [HttpPut("{Id:int}")]
+        [HttpPut("{id:int}")]
         public ActionResult<TouristClubDto> Update([FromBody] TouristClubDto club)
         {
+            if (club.OwnerId > 0) { 
+            if (club.OwnerId != User.PersonId() + 1)
+                return BadRequest("OwnerId is not valid.");
+            }
             var result = _toursitClubService.Update(club);
             return CreateResponse(result);
         }

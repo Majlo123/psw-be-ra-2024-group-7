@@ -113,7 +113,7 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Name = "TestUpdateClubFAIL",
                 Description = "Test update description FAIL",
                 Picture = "linktoTestUpdatePicture FAIL ",
-                OwnerId = 3
+                OwnerId = -13
             };
 
             // Act

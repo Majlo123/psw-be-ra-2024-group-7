@@ -34,3 +34,4 @@ namespace Explorer.Tours.Core.Domain
         }
     }
 }
+

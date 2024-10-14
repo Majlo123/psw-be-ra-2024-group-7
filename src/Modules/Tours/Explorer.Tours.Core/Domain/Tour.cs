@@ -9,16 +9,17 @@ namespace Explorer.Tours.Core.Domain
 {
     public class Tour : Entity
     {
-        public string Name { get; init; }
-        public string Difficulty { get; init; }
-        public string Description { get; init; }
-        public double Cost { get; init; }
-        public string Status { get; init; }
-        public string Tags { get; init; }
+        public string Name { get; private set; }
+        public string Difficulty { get; private set; }
+        public string Description { get; private set; }
+        public double Cost { get; private set; }
+        public string Status { get; private set; }
+        public string Tags { get; private set; }
 
 
         public Tour(string name, string difficulty, string description, double cost, string status, string tags)
         {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
             Difficulty = difficulty;
             Description = description;
@@ -28,3 +29,4 @@ namespace Explorer.Tours.Core.Domain
         }
     }
 }
+

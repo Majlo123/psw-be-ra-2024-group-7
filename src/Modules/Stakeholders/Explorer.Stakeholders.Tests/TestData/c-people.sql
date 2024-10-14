@@ -1,19 +1,23 @@
 ﻿INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-11, -11, 'Ana', 'Anić', 'autor1@gmail.com');
-INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-12, -12, 'Lena', 'Lenić', 'autor2@gmail.com');
-INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-13, -13, 'Sara', 'Sarić', 'autor3@gmail.com');
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-11, -11, 'Ana', 'Anić', 'autor1@gmail.com', 'https://example.com/profile1.png', 'Biografija 1', 'Motto 1');
 
 INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-21, -21, 'Pera', 'Perić', 'turista1@gmail.com');
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-12, -12, 'Lena', 'Lenić', 'autor2@gmail.com', 'https://example.com/profile2.png', 'Biografija 2', 'Motto 2');
+
 INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-22, -22, 'Mika', 'Mikić', 'turista2@gmail.com');
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-13, -13, 'Sara', 'Sarić', 'autor3@gmail.com', 'https://example.com/profile3.png', 'Biografija 3', 'Motto 3');
+
 INSERT INTO stakeholders."People"(
-    "Id", "UserId", "Name", "Surname", "Email")
-VALUES (-23, -23, 'Steva', 'Stević', 'turista3@gmail.com');
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-21, -21, 'Pera', 'Perić', 'turista1@gmail.com', 'https://example.com/profile4.png', 'Biografija 4', 'Motto 4');
+
+INSERT INTO stakeholders."People"(
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-22, -22, 'Mika', 'Mikić', 'turista2@gmail.com', 'https://example.com/profile5.png', 'Biografija 5', 'Motto 5');
+
+INSERT INTO stakeholders."People"(
+    "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto")
+VALUES (-23, -23, 'Steva', 'Stević', 'turista3@gmail.com', 'https://example.com/profile6.png', 'Biografija 6', 'Motto 6');

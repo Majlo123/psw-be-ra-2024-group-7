@@ -9,5 +9,6 @@ public class BlogProfile : Profile
     public BlogProfile()
     {
         CreateMap<BlogDto, Domain.Blog>().ReverseMap();
+        CreateMap<CommentDto,Domain.Comment>().ReverseMap();
     }
 }

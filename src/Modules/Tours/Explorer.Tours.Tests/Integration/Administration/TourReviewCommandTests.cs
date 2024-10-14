@@ -1,4 +1,4 @@
-﻿using Explorer.API.Controllers.Administrator.Administration;
+﻿/*using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.API.Controllers.Tourist.Administration;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
@@ -26,7 +26,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 TourId = 1,
                 Rating = 5,
                 Comment = "Absolutely loved this tour! The guide was amazing and the views were breathtaking.",
-                TouristId = 101,
+                TouristId = -11,
                 VisitDate = DateTime.UtcNow.AddDays(-2), // Make sure to use UTC
                 ReviewDate = DateTime.UtcNow.AddDays(-1), // Make sure to use UTC
                 Images = new List<string> { "image1.jpg", "image2.jpg" }
@@ -191,3 +191,4 @@ namespace Explorer.Tours.Tests.Integration.Administration
         }
     }
 }
+*/

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.BuildingBlocks.Core.UseCases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +12,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         Tour Get(int id);
         List<Tour> GetByStatus(string status);
+        PagedResult<Tour> GetPaged(int page, int pageSize);
     }
 }

@@ -16,6 +16,6 @@ namespace Explorer.Tours.API.Dtos
         public string Status { get; set; }
         public string Tags { get; set; }
         public IEnumerable<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
-
+        public IEnumerable<EquipmentDto> Equipments { get; set; } = new List<EquipmentDto>();
     }
 }

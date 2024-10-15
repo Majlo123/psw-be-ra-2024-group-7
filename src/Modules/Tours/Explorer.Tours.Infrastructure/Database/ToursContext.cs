@@ -19,5 +19,9 @@ public class ToursContext : DbContext
         modelBuilder.Entity<Tour>().
             HasMany(t => t.KeyPoints)
             .WithOne();
+
+        modelBuilder.Entity<Tour>().
+            HasMany(t => t.Equipments)
+            .WithMany();
     }
 }

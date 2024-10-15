@@ -35,6 +35,7 @@ namespace Explorer.API.Controllers.Author.Administration
         [HttpPut("{id:int}")]
         public ActionResult<TourDto> Update([FromBody] TourDto tour)
         {
+            //_tourService.DeleteEquipments(tour);
             var result = _tourService.Update(tour);
             return CreateResponse(result);
         }

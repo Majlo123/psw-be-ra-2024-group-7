@@ -15,5 +15,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> Create(TourDto tour);
         Result<TourDto> Update(TourDto tour);
         Result Delete(int id);
+        //void DeleteEquipments(TourDto tour);
     }
 }

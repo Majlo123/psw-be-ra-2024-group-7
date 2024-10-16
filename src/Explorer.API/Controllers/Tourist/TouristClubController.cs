@@ -20,7 +20,7 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpGet]
-        public ActionResult<PagedResult<TouristClubDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TouristClubDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _toursitClubService.GetPaged(page, pageSize);
             return CreateResponse(result);

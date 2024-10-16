@@ -26,7 +26,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetAll(page:0,pageSize:0).Result)?.Value as  PagedResult<TouristEquipmentDto>;
+            var result = ((ObjectResult)controller.GetAll(page:0,pageSize:0).Result)?.Value as  BuildingBlocks.Core.UseCases.PagedResult<TouristEquipmentDto>;
 
             //Assert
             result.ShouldNotBeNull();

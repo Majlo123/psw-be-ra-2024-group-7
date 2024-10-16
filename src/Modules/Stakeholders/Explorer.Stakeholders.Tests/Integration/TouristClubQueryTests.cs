@@ -30,7 +30,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<TouristClubDto>;
+            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as BuildingBlocks.Core.UseCases.PagedResult<TouristClubDto>;
 
             //Assert
             result.ShouldNotBeNull();

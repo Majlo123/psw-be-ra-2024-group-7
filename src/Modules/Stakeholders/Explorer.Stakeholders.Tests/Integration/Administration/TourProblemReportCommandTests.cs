@@ -1,8 +1,8 @@
 ﻿using Explorer.API.Controllers.Tourist.Administration;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
-using Explorer.Tours.Infrastructure.Database;
+using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -12,12 +12,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.Administration
+namespace Explorer.Stakeholders.Tests.Integration.Administration
 {
     [Collection("Sequential")]
-    public class TourProblemReportCommandTests : BaseToursIntegrationTest
+    public class TourProblemReportCommandTests : BaseStakeholdersIntegrationTest
     {
-        public TourProblemReportCommandTests(ToursTestFactory factory) : base(factory) { }
+        public TourProblemReportCommandTests(StakeholdersTestFactory factory) : base(factory) { }
 
         [Fact]
         public void Creates()
@@ -25,7 +25,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new TourProblemReportDto
             {
                 TourId = 1, 
@@ -85,7 +85,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
             var result = (OkResult)controller.Delete(-3);
@@ -120,7 +120,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             var updatedEntity = new TourProblemReportDto
             {

@@ -29,6 +29,7 @@ public static class StakeholdersStartup
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
+        services.AddScoped<ITourProblemReportService, TourProblemReportService>();
 
 
         services.AddScoped<IToursitClubService, TouristClubService>();
@@ -46,6 +47,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<TouristClub>), typeof(CrudDatabaseRepository<TouristClub, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>),typeof(CrudDatabaseRepository<TouristEquipment, StakeholdersContext>));
 
+        services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
 
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         // Dodajemo repozitorijum za ApplicationGrade

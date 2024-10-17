@@ -1,5 +1,5 @@
 ﻿
-namespace Explorer.Tours.API.Dtos
+namespace Explorer.Stakeholders.API.Dtos
 {
     public enum ProblemPriority
     {

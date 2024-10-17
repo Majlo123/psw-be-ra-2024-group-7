@@ -14,8 +14,8 @@ public class TourEquipment : BuildingBlocks.Core.Domain.Entity
 
     public TourEquipment(int tourId, int equipmentId)
     {
-        if (int.IsNegative(tourId)) throw new ArgumentException("Invalid TourId.");
-        if (int.IsNegative(equipmentId)) throw new ArgumentException("Invalid EquipmentId.");
+        //if (int.IsNegative(tourId)) throw new ArgumentException("Invalid TourId.");
+        //if (int.IsNegative(equipmentId)) throw new ArgumentException("Invalid EquipmentId.");
         TourId = tourId; 
         EquipmentId = equipmentId;
     }

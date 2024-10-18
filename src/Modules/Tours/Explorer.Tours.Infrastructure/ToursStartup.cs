@@ -9,7 +9,7 @@ using Explorer.Tours.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Object = Explorer.Tours.Core.Domain.Object;
+using TourObject = Explorer.Tours.Core.Domain.TourObject;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -27,20 +27,20 @@ public static class ToursStartup
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IEquipmentService, EquipmentService>();
-        services.AddScoped<IObjectService, ObjectService>();
         services.AddScoped<ITourReviewService, TourReviewService>();
         services.AddScoped<IKeyPointService, KeyPointService>();
         services.AddScoped<ITourService, TourService>();
+        services.AddScoped<ITourObjectService, TourObjectService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
         services.AddScoped(typeof(ICrudRepository<Equipment>), typeof(CrudDatabaseRepository<Equipment, ToursContext>));
-        services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
         services.AddScoped(typeof(IKeyPointRepository), typeof(KeyPointRepository)); 
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ITourRepository), typeof(TourRepository));
+        services.AddScoped(typeof(ICrudRepository<TourObject>), typeof(CrudDatabaseRepository<TourObject, ToursContext>));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),

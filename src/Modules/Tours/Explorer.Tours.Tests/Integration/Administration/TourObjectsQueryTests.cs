@@ -15,9 +15,9 @@ namespace Explorer.Tours.Tests.Integration.Administration
 {
     [Collection("Sequential")]
     //Imam problem sa skriptama, ne ucitavaju, ali server radi
-    public class ObjectsQueryTests : BaseToursIntegrationTest
+    public class TourObjectsQueryTests : BaseToursIntegrationTest
     {
-        public ObjectsQueryTests(ToursTestFactory factory) : base(factory) { }
+        public TourObjectsQueryTests(ToursTestFactory factory) : base(factory) { }
 
         [Fact]
         public void Retrieves_all()
@@ -27,7 +27,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             var controller = CreateController(scope);
 
             // Act
-            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<ObjectDto>;
+            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<TourObjectDto>;
 
             // Assert
             result.ShouldNotBeNull();
@@ -35,9 +35,9 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.TotalCount.ShouldBe(3);
         }
 
-        private static ObjectController CreateController(IServiceScope scope)
+        private static TourObjectController CreateController(IServiceScope scope)
         {
-            return new ObjectController(scope.ServiceProvider.GetRequiredService<IObjectService>())
+            return new TourObjectController(scope.ServiceProvider.GetRequiredService<ITourObjectService>())
             {
                 ControllerContext = BuildContext("-1")
             };

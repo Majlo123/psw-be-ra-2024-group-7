@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.API.Public.Administration
 {
-    public interface IObjectService
+    public interface ITourObjectService
     {
-        Result<PagedResult<ObjectDto>> GetPaged(int page, int pageSize);
-        Result<ObjectDto> Create(ObjectDto objectt);
-        Result<ObjectDto> Update(ObjectDto objectt);
+        Result<PagedResult<TourObjectDto>> GetPaged(int page, int pageSize);
+        Result<TourObjectDto> Create(TourObjectDto objectt);
+        Result<TourObjectDto> Update(TourObjectDto objectt);
         Result Delete(int id);
     }
 }

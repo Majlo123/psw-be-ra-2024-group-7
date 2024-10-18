@@ -6,33 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Administrator.Administration
 {
-    [Authorize(Policy = "administratorPolicy")]
-    [Route("api/author/object")]
-    public class ObjectController : BaseApiController
+    [Authorize(Policy = "authorPolicy")]
+    [Route("api/tours/object")]
+    public class TourObjectController : BaseApiController
     {
-        private readonly IObjectService _objectService;
+        private readonly ITourObjectService _objectService;
 
-        public ObjectController(IObjectService objectService)
+        public TourObjectController(ITourObjectService objectService)
         {
             _objectService = objectService;
         }
 
         [HttpGet]
-        public ActionResult<PagedResult<ObjectDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<PagedResult<TourObjectDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _objectService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
 
         [HttpPost]
-        public ActionResult<EquipmentDto> Create([FromBody] ObjectDto objectt)
+        public ActionResult<EquipmentDto> Create([FromBody] TourObjectDto objectt)
         {
             var result = _objectService.Create(objectt);
             return CreateResponse(result);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<EquipmentDto> Update([FromBody] ObjectDto objectt)
+        public ActionResult<EquipmentDto> Update([FromBody] TourObjectDto objectt)
         {
             var result = _objectService.Update(objectt);
             return CreateResponse(result);

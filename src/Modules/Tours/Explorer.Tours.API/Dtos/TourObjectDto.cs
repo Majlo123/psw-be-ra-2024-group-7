@@ -7,13 +7,12 @@ using Explorer.Tours;
 
 namespace Explorer.Tours.API.Dtos
 {
-    public enum Category { WC, Restaurant, Parking, Other };
-    public class ObjectDto
+    public class TourObjectDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public Category category { get; set; }
+        public int category { get; set; }
     }
 }

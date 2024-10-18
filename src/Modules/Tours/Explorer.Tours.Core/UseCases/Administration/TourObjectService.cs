@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Object = Explorer.Tours.Core.Domain.Object;
+using TourObject = Explorer.Tours.Core.Domain.TourObject;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class ObjectService : CrudService<ObjectDto, Object>, IObjectService
+    public class TourObjectService : CrudService<TourObjectDto, TourObject>, ITourObjectService
     {
-        public ObjectService(ICrudRepository<Object> repository, IMapper mapper) : base(repository, mapper) { }
+        public TourObjectService(ICrudRepository<TourObject> repository, IMapper mapper) : base(repository, mapper) { }
 
     }
 }

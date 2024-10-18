@@ -28,7 +28,11 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
             Email = "turistaA@gmail.com",
             Password = "turistaA",
             Name = "Žika",
-            Surname = "Žikić"
+            Surname = "Žikić",
+            Role = "User",
+            ProfilePictureUrl = "https://example.com/profile.jpg",
+            Biography = "A passionate traveler.",
+            Motto = "Travel the world!"
         };
 
         // Act

@@ -1,0 +1,14 @@
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
+using FluentResults;
+
+namespace Explorer.Stakeholders.API.Public
+{
+    public interface ITourProblemReportService
+    {
+        Result<BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>> GetPaged(int page, int pageSize);
+        Result<TourProblemReportDto> Create(TourProblemReportDto tourProblemReport);
+        Result<TourProblemReportDto> Update(TourProblemReportDto tourProblemReport);
+        Result Delete(int id);
+    }
+}

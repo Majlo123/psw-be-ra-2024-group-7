@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
-    public interface IObjectRepository
+    public interface ITourObjectRepository
     {
-        List<Object> GetAll();
+        List<TourObject> GetAll();
     }
 }

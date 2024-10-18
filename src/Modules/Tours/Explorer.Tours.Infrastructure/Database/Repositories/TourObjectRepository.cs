@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Object = Explorer.Tours.Core.Domain.Object;
+using TourObject = Explorer.Tours.Core.Domain.TourObject;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
-    public class ObjectRepository : IObjectRepository
+    public class TourObjectRepository : ITourObjectRepository
     {
         private readonly ToursContext _context;
 
-        public ObjectRepository(ToursContext context)
+        public TourObjectRepository(ToursContext context)
         {
             _context = context;
         }
 
-        public List<Object> GetAll() 
+        public List<TourObject> GetAll() 
         {
-            return _context.Objects.ToList();
+            return _context.TourObjects.ToList();
         }
     }
 }

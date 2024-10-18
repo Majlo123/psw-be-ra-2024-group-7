@@ -1,11 +1,13 @@
 using Explorer.Tours.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using Object = Explorer.Tours.Core.Domain.Object;
 
 namespace Explorer.Tours.Infrastructure.Database;
 
 public class ToursContext : DbContext
 {
     public DbSet<Equipment> Equipment { get; set; }
+    public DbSet<Object> Objects { get; set; }
     public DbSet<TourReview> TourReview { get; set; }
     public DbSet<KeyPoint> KeyPoints { get; set; }
     public DbSet<Tour> Tours { get; set; }

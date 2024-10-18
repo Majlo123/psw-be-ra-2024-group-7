@@ -31,11 +31,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var result = _tourRepository.Get(id);
             return MapToDto(result);
         }
-        /*
-        public void DeleteEquipments(TourDto tour)
+        
+        public void DeleteEquipments(long id)
         {
-            _tourRepository.DeleteEquipmenmts(MapToDomain(tour));
+            _tourRepository.DeleteEquipmenmts(id);
         }
-        */
+        
     }
 }

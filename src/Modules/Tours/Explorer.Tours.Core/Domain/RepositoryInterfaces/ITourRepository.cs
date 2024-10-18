@@ -14,6 +14,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         Tour Get(int id);
         List<Tour> GetByStatus(string status);
         PagedResult<Tour> GetPaged(int page, int pageSize);
-        //void DeleteEquipmenmts(Tour tour);
+        void DeleteEquipmenmts(long id);
     }
 }

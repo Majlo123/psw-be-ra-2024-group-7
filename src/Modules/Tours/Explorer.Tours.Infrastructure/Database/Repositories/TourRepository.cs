@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Explorer.Tours.API.Dtos;
+using Npgsql;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -20,15 +21,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             _context = context;
         }
-
-        /*
-        public void DeleteEquipmenmts(Tour tour)
+        public void DeleteEquipmenmts(long id)
         {
-            //var oldTour = Get((int)tour.Id);
-            //tour.Equipments.Clear();
-            //_context.SaveChanges();
+            string sqlScript = @"
+            DELETE FROM tours.""EquipmentTour""
+            WHERE ""TourId"" = @id";
+            _context.Database.ExecuteSqlRaw(sqlScript, new NpgsqlParameter("@id", id));
         }
-        */
 
         // Get a specific Tour by ID
         public Tour Get(int id)

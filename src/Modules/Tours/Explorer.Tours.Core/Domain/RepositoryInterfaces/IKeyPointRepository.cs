@@ -11,4 +11,5 @@ public interface IKeyPointRepository
     KeyPoint Create(KeyPoint keyPoint);
     List<KeyPoint> GetAll();
     void Delete(long id);
+    KeyPoint Update(KeyPoint keyPoint);
 }

@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,5 +39,19 @@ public class KeyPointRepository : IKeyPointRepository
     public List<KeyPoint> GetAll()
     {
         return _dbSet.ToList();
+    }
+
+    public KeyPoint Update(KeyPoint keyPoint)
+    {
+        try
+        {
+            _dbContext.Update(keyPoint);
+            _dbContext.SaveChanges();
+        }
+        catch (DbUpdateException e)
+        {
+            throw new KeyNotFoundException(e.Message);
+        }
+        return keyPoint;
     }
 }

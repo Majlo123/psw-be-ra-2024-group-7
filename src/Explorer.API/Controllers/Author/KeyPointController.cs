@@ -30,6 +30,13 @@ public class KeyPointController : BaseApiController
         return CreateResponse(result);
     }
 
+    [HttpPut("{id:int}")]
+    public ActionResult<KeyPointDto> Update([FromBody] KeyPointDto keyPointDto)
+    {
+        var result = _keyPointService.Update(keyPointDto);
+        return CreateResponse(result);
+    }
+
     [HttpPost]
     [Route("image")]
     public async Task<IActionResult> Upload([FromForm] IFormFile file)

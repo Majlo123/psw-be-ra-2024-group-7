@@ -28,6 +28,13 @@ public class KeyPointRepository : IKeyPointRepository
         return keyPoint;
     }
 
+    public void Delete(long id)
+    {
+        var entity = _dbSet.FirstOrDefault(k => k.Id == id);
+        _dbSet.Remove(entity);
+        _dbContext.SaveChanges();
+    }
+
     public List<KeyPoint> GetAll()
     {
         return _dbSet.ToList();

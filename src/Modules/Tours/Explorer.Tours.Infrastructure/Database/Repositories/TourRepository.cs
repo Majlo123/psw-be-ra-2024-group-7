@@ -14,14 +14,35 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
     public class TourRepository : ITourRepository
     {
         private readonly ToursContext _context;
+        private readonly IKeyPointRepository _keyPointRepository;
 
-        public TourRepository(ToursContext context)
+        public TourRepository(ToursContext context, IKeyPointRepository keyPointRepository)
         {
             _context = context;
+            _keyPointRepository = keyPointRepository;
         }
 
+        public void Delete(long id)
+        {
+            var tour = Get(id);
+
+            if (tour == null)
+                throw new KeyNotFoundException();
+
+            var keyPointIds = tour.KeyPoints.Select(k => k.Id).ToList();
+
+            foreach (var keyPointId in keyPointIds)
+            {
+                _keyPointRepository.Delete(keyPointId);
+            }
+
+            _context.Tours.Remove(tour);
+            _context.SaveChanges();
+        }
+
+
         // Get a specific Tour by ID
-        public Tour Get(int id)
+        public Tour Get(long id)
         {
             return _context.Tours.Include(t => t.KeyPoints).FirstOrDefault(t => t.Id == id);
         }

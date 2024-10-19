@@ -10,8 +10,9 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface ITourRepository
     {
-        Tour Get(int id);
+        Tour Get(long id);
         List<Tour> GetByStatus(string status);
         PagedResult<Tour> GetPaged(int page, int pageSize);
+        void Delete(long id);
     }
 }

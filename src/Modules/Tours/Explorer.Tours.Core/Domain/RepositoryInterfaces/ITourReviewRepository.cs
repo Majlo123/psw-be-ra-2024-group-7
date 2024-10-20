@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
-    public interface ITourProblemReportRepository
+    public interface ITourReviewRepository
     {
-        TourProblemReport Get(int id);
-        List<TourProblemReport> GetByPriority(ProblemPriority priority);
+        public TourReview Get(int id);
+        public List<TourReview> GetReviewsForTour(int id);
     }
 }

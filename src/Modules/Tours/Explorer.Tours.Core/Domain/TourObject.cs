@@ -14,6 +14,7 @@ namespace Explorer.Tours.Core.Domain
         public string? Description { get; private set; }
         public string? Image { get; private set; }
         public int Category { get; private set; }
+        
 
         public TourObject(string name, string description, string image, int category)
         {

@@ -7,6 +7,7 @@ namespace Explorer.Tours.Infrastructure.Database;
 public class ToursContext : DbContext
 {
     public DbSet<Equipment> Equipment { get; set; }
+    public DbSet<TourEquipment> TourEquipment { get; set; }
     public DbSet<TourReview> TourReview { get; set; }
     public DbSet<KeyPoint> KeyPoints { get; set; }
     public DbSet<Tour> Tours { get; set; }
@@ -20,5 +21,9 @@ public class ToursContext : DbContext
         modelBuilder.Entity<Tour>().
             HasMany(t => t.KeyPoints)
             .WithOne();
+
+        modelBuilder.Entity<Tour>().
+            HasMany(t => t.Equipments)
+            .WithMany();
     }
 }

@@ -14,15 +14,19 @@ namespace Explorer.Tours.Core.Domain
         public string? Description { get; private set; }
         public string? Image { get; private set; }
         public int Category { get; private set; }
+        public float Longitude { get; private set; }
+        public float Latitude { get; private set; }
         
 
-        public TourObject(string name, string description, string image, int category)
+        public TourObject(string name, string description, string image, int category, float longitude, float latitude)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
             Description = description;
             Image = image;
             Category = category;
+            Longitude = longitude;
+            Latitude = latitude;
         }
 
     }

@@ -14,6 +14,8 @@ namespace Explorer.Tours.API.Dtos
         public string Description { get; set; }
         public string Image { get; set; }
         public int category { get; set; }
+        public float Longitude { get; set; }
+        public float Latitude { get; set; }
 
     }
 }

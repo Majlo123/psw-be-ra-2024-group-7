@@ -1,4 +1,4 @@
-﻿using Explorer.API.Controllers.Author;
+﻿using Explorer.API.Controllers.Author.Administration;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;

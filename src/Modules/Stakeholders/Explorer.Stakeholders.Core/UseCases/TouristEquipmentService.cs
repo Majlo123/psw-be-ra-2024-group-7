@@ -15,10 +15,5 @@ namespace Explorer.Stakeholders.Core.UseCases
     public class TouristEquipmentService : CrudService<TouristEquipmentDto, TouristEquipment>, ITouristEquipmentService
     {
         public TouristEquipmentService(ICrudRepository<TouristEquipment> repository, IMapper mapper) : base(repository, mapper) { }
-
-        Result<API.Public.PagedResult<TouristEquipmentDto>> ITouristEquipmentService.GetPaged(int page, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

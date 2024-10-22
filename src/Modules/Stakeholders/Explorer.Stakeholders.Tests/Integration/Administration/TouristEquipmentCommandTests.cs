@@ -29,9 +29,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new TouristEquipmentDto
             {
-                Id=-4,
-                TouristId = 1,
-                EquipmentId = 1
+                Id=4,
+                TouristId = -21,
+                EquipmentId = -1
             };
 
             //Act
@@ -57,7 +57,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var updatedEntity = new TouristEquipmentDto
             {
                 Id = -5,
-                TouristId=-1,
+                TouristId=0,
                 EquipmentId=0
             };
 
@@ -78,8 +78,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var updatedEntity = new TouristEquipmentDto
             {
                 Id = -2,
-                TouristId = 4,
-                EquipmentId = 4
+                TouristId = -22,
+                EquipmentId = -3
             };
 
             //Act
@@ -92,7 +92,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.EquipmentId.ShouldBe(updatedEntity.EquipmentId);
 
             //Assert - Database
-            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.EquipmentId == 4);
+            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.EquipmentId == -3);
             storedEntity.ShouldNotBeNull();
             storedEntity.TouristId.ShouldBe(updatedEntity.TouristId);
             var oldEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -2);
@@ -107,8 +107,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var controller = CreateController(scope);
             var updatedEntity = new TouristEquipmentDto
             {
-                Id = -1000,
-                TouristId = 4,
+                Id = 1000,
+                TouristId = -21,
+                EquipmentId = -3
             };
             
             //Act

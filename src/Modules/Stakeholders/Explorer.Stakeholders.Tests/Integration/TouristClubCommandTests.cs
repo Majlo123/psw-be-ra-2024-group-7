@@ -80,7 +80,7 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Name = "TestUpdateClub",
                 Description = "Test update description",
                 Picture = "linktoTestUpdatePicture",
-                OwnerId = -13
+                OwnerId = -23
             };
 
             // Act

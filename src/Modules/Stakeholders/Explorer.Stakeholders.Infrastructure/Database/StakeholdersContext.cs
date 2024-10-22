@@ -11,8 +11,6 @@ public class StakeholdersContext : DbContext
     public DbSet<Person> People { get; set; }
     public DbSet<TouristEquipment> TouristEquipments{get;set; }
     public DbSet<TourProblemReport> TourProblemReports { get; set; }
-    public DbSet<ApplicationGrade> ApplicationGrades { get; set; }
-
 
     public DbSet<TouristClub> TouristClub { get; set; }
 

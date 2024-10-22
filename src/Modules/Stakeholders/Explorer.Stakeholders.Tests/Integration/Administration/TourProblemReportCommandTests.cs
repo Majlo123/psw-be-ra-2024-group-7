@@ -88,14 +88,14 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
-            var result = (OkResult)controller.Delete(-3);
+            var result = (OkResult)controller.Delete(-1);
 
             // Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             // Assert - Database
-            var storedCourse = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -3);
+            var storedCourse = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -1);
             storedCourse.ShouldBeNull();
         }
 
@@ -124,8 +124,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
 
             var updatedEntity = new TourProblemReportDto
             {
-                Id = -1, 
-                TourId = 1, 
+                Id = -2, 
+                TourId = -2, 
                 Category = "Tehnički problem",
                 Priority = ProblemPriority.MEDIUM, 
                 Description = "Problem sa internet konekcijom.",
@@ -137,7 +137,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-1);
+            result.Id.ShouldBe(-2);
             result.TourId.ShouldBe(updatedEntity.TourId);
             result.Category.ShouldBe(updatedEntity.Category);
             result.Priority.ShouldBe(updatedEntity.Priority); 
@@ -151,7 +151,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             storedPriority.CompareTo(updatedEntity.Priority);
 
             // Ažurira staru vrednost
-            var oldEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -1 && i.Category == "Stari problem");
+            var oldEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -2 && i.Category == "Stari problem");
             oldEntity.ShouldBeNull(); 
         }
 

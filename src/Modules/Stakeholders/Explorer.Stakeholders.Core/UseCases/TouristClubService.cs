@@ -16,9 +16,5 @@ namespace Explorer.Stakeholders.Core.UseCases
     {
         public TouristClubService(ICrudRepository<TouristClub> repository, IMapper mapper) : base(repository, mapper) { }
 
-        Result<API.Public.PagedResult<TouristClubDto>> IToursitClubService.GetPaged(int page, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -6,10 +6,10 @@ using Explorer.Tours.Core.UseCases.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Tourist.Administration
+namespace Explorer.API.Controllers.Tourist
 {
     [Authorize(Policy = "touristPolicy")]
-    [Route("api/administration/tour-review")]
+    [Route("api/tourist/tour-review")]
     public class TourReviewController : BaseApiController
     {
         private readonly ITourReviewService _tourReviewService;

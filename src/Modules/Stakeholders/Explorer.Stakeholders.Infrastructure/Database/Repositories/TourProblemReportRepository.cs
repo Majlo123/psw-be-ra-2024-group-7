@@ -1,18 +1,13 @@
-﻿using Explorer.Tours.Core.Domain;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 
-namespace Explorer.Tours.Infrastructure.Database.Repositories
+namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 {
     public class TourProblemReportRepository : ITourProblemReportRepository
     {
-        private readonly ToursContext _context;
+        private readonly StakeholdersContext _context;
 
-        public TourProblemReportRepository(ToursContext context)
+        public TourProblemReportRepository(StakeholdersContext context)
         {
             _context = context;
         }

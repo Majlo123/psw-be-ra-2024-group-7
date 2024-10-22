@@ -16,6 +16,7 @@ namespace Explorer.Tours.Core.Domain
         public string Status { get; private set; }
         public string Tags { get; private set; }
         public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
+        public List<Equipment> Equipments { get; set; } = new List<Equipment>();
 
         public Tour(string name, string difficulty, string description, double cost, string status, string tags)
         {

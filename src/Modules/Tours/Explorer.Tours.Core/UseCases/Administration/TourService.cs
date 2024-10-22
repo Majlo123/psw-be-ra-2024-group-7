@@ -44,5 +44,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
 
+        
+        public void DeleteEquipments(long id)
+        {
+            _tourRepository.DeleteEquipmenmts(id);
+        }
+        
     }
 }

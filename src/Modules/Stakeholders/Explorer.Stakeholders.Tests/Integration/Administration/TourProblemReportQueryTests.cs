@@ -1,16 +1,16 @@
 ﻿using Explorer.API.Controllers.Tourist.Administration;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
+using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 
-namespace Explorer.Tours.Tests.Integration.Administration
+namespace Explorer.Stakeholders.Tests.Integration.Administration
 {
-    public class TourProblemReportQueryTests : BaseToursIntegrationTest
+    public class TourProblemReportQueryTests : BaseStakeholdersIntegrationTest
     {
-        public TourProblemReportQueryTests(ToursTestFactory factory) : base(factory) { }
+        public TourProblemReportQueryTests(StakeholdersTestFactory factory) : base(factory) { }
         [Fact]
 
         public void Retrieves_all()
@@ -21,7 +21,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<TourProblemReportDto>;
+            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>;
 
 
             //Assert

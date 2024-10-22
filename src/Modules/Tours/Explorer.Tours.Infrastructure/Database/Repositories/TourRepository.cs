@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Tours.API.Dtos;
+using Npgsql;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -20,6 +22,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             _context = context;
             _keyPointRepository = keyPointRepository;
+        }
+        public void DeleteEquipmenmts(long id)
+        {
+            string sqlScript = @"
+            DELETE FROM tours.""EquipmentTour""
+            WHERE ""TourId"" = @id";
+            _context.Database.ExecuteSqlRaw(sqlScript, new NpgsqlParameter("@id", id));
         }
 
         public void Delete(long id)
@@ -44,20 +53,22 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         // Get a specific Tour by ID
         public Tour Get(long id)
         {
-            return _context.Tours.Include(t => t.KeyPoints).FirstOrDefault(t => t.Id == id);
+            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).FirstOrDefault(t => t.Id == id);
         }
 
         // Get a list of Tours by their Status
         public List<Tour> GetByStatus(string status)
         {
-            return _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == status).ToList();
+            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
         }
 
         public PagedResult<Tour> GetPaged(int page, int pageSize)
         {
-            var task = _context.Tours.Include(t => t.KeyPoints).GetPagedById(page, pageSize);
+            var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).GetPagedById(page, pageSize);
             task.Wait();
             return task.Result;
         }
+
+ 
     }
 }

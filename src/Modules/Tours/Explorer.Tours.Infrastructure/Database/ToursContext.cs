@@ -1,15 +1,17 @@
 using Explorer.Tours.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using TourObject = Explorer.Tours.Core.Domain.TourObject;
 
 namespace Explorer.Tours.Infrastructure.Database;
 
 public class ToursContext : DbContext
 {
     public DbSet<Equipment> Equipment { get; set; }
+    public DbSet<TourEquipment> TourEquipment { get; set; }
     public DbSet<TourReview> TourReview { get; set; }
     public DbSet<KeyPoint> KeyPoints { get; set; }
-    public DbSet<TourProblemReport> TourProblemReports { get; set; }
     public DbSet<Tour> Tours { get; set; }
+    public DbSet<TourObject> TourObjects { get; set; }
 
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
@@ -19,5 +21,9 @@ public class ToursContext : DbContext
         modelBuilder.Entity<Tour>().
             HasMany(t => t.KeyPoints)
             .WithOne();
+
+        modelBuilder.Entity<Tour>().
+            HasMany(t => t.Equipments)
+            .WithMany();
     }
 }

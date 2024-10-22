@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         List<Tour> GetByStatus(string status);
         PagedResult<Tour> GetPaged(int page, int pageSize);
         void Delete(long id);
+        void DeleteEquipmenmts(long id);
     }
 }

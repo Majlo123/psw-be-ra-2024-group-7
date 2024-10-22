@@ -26,11 +26,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
            return MapToDto(result);
         }
 
-        public Result<TourDto> Get(int id)
+        public Result<TourDto> Get(long id)
         {
             var result = _tourRepository.Get(id);
             return MapToDto(result);
         }
+        public Result Delete(long id)
+        {
+            try
+            {
+                _tourRepository.Delete(id);
+                return Result.Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+        }
+
         
         public void DeleteEquipments(long id)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
@@ -40,6 +41,23 @@ public class KeyPointService : BaseService<KeyPointDto, KeyPoint>, IKeyPointServ
         {
             var result = _keyPointRepository.GetAll();
             return MapToDto(result);
+        }
+        catch (ArgumentException e)
+        {
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
+    }
+
+    public Result<KeyPointDto> Update(KeyPointDto keyPoint)
+    {
+        try
+        {
+            var result = _keyPointRepository.Update(MapToDomain(keyPoint));
+            return MapToDto(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return Result.Fail(FailureCode.NotFound).WithError(e.Message);
         }
         catch (ArgumentException e)
         {

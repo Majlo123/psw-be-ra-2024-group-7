@@ -65,16 +65,12 @@ namespace Explorer.Blog.Tests.Integration
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
 
-            var existingComment = new Comment(1, "Original comment text");  // Kreiramo komentar sa UserId = 1
-            dbContext.Comments.Add(existingComment);
-            dbContext.SaveChanges();
-
             var updatedComment = new CommentDto
             {
-                Id = (int)existingComment.Id,
+                Id = -1,
                 UserId = 2,  // Ažuriramo UserId na 2
                 Text = "Updated comment text",
-                CreatedAt = existingComment.CreatedAt,
+                CreatedAt = DateTime.UtcNow.AddDays(-1),
                 LastModified = DateTime.UtcNow
             };
 
@@ -87,7 +83,7 @@ namespace Explorer.Blog.Tests.Integration
             result.Text.ShouldBe(updatedComment.Text);
 
             // Assert - Database
-            var storedEntity = dbContext.Comments.FirstOrDefault(i => i.Id == existingComment.Id);
+            var storedEntity = dbContext.Comments.FirstOrDefault(i => i.Id == -1);
             storedEntity.ShouldNotBeNull();
             storedEntity.UserId.ShouldBe(updatedComment.UserId);  // Proveravamo ažurirani UserId
             storedEntity.Text.ShouldBe(updatedComment.Text);
@@ -106,10 +102,10 @@ namespace Explorer.Blog.Tests.Integration
             dbContext.SaveChanges();
 
             // Act
-            var result = controller.Delete((int)existingComment.Id).ExecuteResult;
+            var result = (OkResult)controller.Delete((int)existingComment.Id);
 
             // Assert - Response
-            result.ShouldBeOfType<OkResult>();
+            result.StatusCode.ShouldBe(200);
 
             // Assert - Database
             var deletedEntity = dbContext.Comments.FirstOrDefault(i => i.Id == existingComment.Id);

@@ -3,7 +3,7 @@ using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Author;
+namespace Explorer.API.Controllers.Author.Administration;
 
 [Authorize(Policy = "authorPolicy")]
 [Route("api/tours/keypoint")]
@@ -18,7 +18,7 @@ public class KeyPointController : BaseApiController
 
     [HttpPost]
     public ActionResult<KeyPointDto> Create([FromBody] KeyPointDto keyPointDto)
-    {
+        {
         var result = _keyPointService.Create(keyPointDto);
         return CreateResponse(result);
     }
@@ -27,6 +27,13 @@ public class KeyPointController : BaseApiController
     public ActionResult<List<KeyPointDto>> GetAll()
     {
         var result = _keyPointService.GetAll();
+        return CreateResponse(result);
+    }
+
+    [HttpPut("{id:int}")]
+    public ActionResult<KeyPointDto> Update([FromBody] KeyPointDto keyPointDto)
+    {
+        var result = _keyPointService.Update(keyPointDto);
         return CreateResponse(result);
     }
 }

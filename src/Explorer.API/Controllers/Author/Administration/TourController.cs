@@ -41,9 +41,15 @@ namespace Explorer.API.Controllers.Author.Administration
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(long id)
         {
             var result = _tourService.Delete(id);
+            return CreateResponse(result);
+        }
+        [HttpGet("{id:int}")]
+        public ActionResult<PagedResult<TourDto>> Get(long id)
+        {
+            var result = _tourService.Get(id);
             return CreateResponse(result);
         }
     }

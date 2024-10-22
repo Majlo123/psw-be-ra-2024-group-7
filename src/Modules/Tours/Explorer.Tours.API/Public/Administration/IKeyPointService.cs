@@ -13,4 +13,5 @@ public interface IKeyPointService
 {
     Result<KeyPointDto> Create(KeyPointDto keyPoint);
     Result<List<KeyPointDto>> GetAll();
+    Result<KeyPointDto> Update(KeyPointDto keyPoint);
 }

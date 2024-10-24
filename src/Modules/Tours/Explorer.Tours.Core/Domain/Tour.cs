@@ -13,12 +13,12 @@ namespace Explorer.Tours.Core.Domain
         public string Difficulty { get; private set; }
         public string Description { get; private set; }
         public double Cost { get; private set; }
-        public string Status { get; private set; }
+        public int Status { get; private set; }
         public string Tags { get; private set; }
         public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
         public List<Equipment> Equipments { get; set; } = new List<Equipment>();
 
-        public Tour(string name, string difficulty, string description, double cost, string status, string tags)
+        public Tour(string name, string difficulty, string description, double cost, int status, string tags)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;

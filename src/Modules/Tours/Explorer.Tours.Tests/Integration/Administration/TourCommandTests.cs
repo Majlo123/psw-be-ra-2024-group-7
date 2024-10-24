@@ -33,7 +33,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Difficulty="Laka",
                 Description = "Planinski hajk",
                 Cost=200,
-                Status="draft",
+                Status=0,
                 Tags="visina,priroda"  
             };
 
@@ -64,7 +64,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Difficulty = "Laka",
                 Description = "Planinski hajk",
                 Cost = 0, 
-                Status = "draft",
+                Status = 0,
                 Tags = "visina,priroda"
             };
 
@@ -125,7 +125,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Difficulty = "Teze",
                 Description = "Planinski hajk",
                 Cost = 200,
-                Status = "draft",
+                Status = 0,
                 Tags = "visina,priroda"
             };
 

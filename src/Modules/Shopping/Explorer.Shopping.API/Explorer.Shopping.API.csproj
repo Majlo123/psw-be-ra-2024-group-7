@@ -7,15 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dtos\**" />
     <Compile Remove="Internal\**" />
-    <Compile Remove="Public\**" />
-    <EmbeddedResource Remove="Dtos\**" />
     <EmbeddedResource Remove="Internal\**" />
-    <EmbeddedResource Remove="Public\**" />
-    <None Remove="Dtos\**" />
     <None Remove="Internal\**" />
-    <None Remove="Public\**" />
   </ItemGroup>
 
   <ItemGroup>

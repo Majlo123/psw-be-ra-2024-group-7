@@ -10,8 +10,9 @@ namespace Explorer.Shopping.API.Public
 {
     public interface IShoppingCartService
     {
-        Result<ShoppingCartDto> AddItem(OrderItemDto itemDto, int userId);
-        Result<ShoppingCartDto> RemoveItem(OrderItemDto itemDto, int userId);
+        Result<ShoppingCartDto> GetByUser(long userId);
+        Result<ShoppingCartDto> AddItem(ItemDto itemDto, int userId);
+        Result<ShoppingCartDto> RemoveItem(ItemDto itemDto, int userId);
         Result<ShoppingCartDto> CheckOut(long userId, string? couponCode);
     }
 }

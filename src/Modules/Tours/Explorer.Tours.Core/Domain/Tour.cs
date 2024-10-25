@@ -17,8 +17,10 @@ namespace Explorer.Tours.Core.Domain
         public string Tags { get; private set; }
         public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
         public List<Equipment> Equipments { get; set; } = new List<Equipment>();
+        public List<TourDuration> TourDurations { get; set;} = new List<TourDuration>();
+        public double Length { get; private set; }
 
-        public Tour(string name, string difficulty, string description, double cost, int status, string tags)
+        public Tour(string name, string difficulty, string description, double cost, int status, string tags, double length)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -27,12 +29,39 @@ namespace Explorer.Tours.Core.Domain
             Cost = cost;
             Status = status;
             Tags = tags;
+            Length = length;
         }
         public void AddKeyPoint(KeyPoint keyPoint)
         {
             if (keyPoint == null) throw new ArgumentNullException(nameof(keyPoint));
             KeyPoints.Add(keyPoint);
         }
+
+        public bool Publish()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Archive()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Valid()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void IncrementDuration(TourDuration tourDruation)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IncrementLength(double length)
+        {
+            throw new NotSupportedException();
+        }
+
     }
 }
 

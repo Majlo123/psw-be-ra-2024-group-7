@@ -26,4 +26,11 @@ public class KeyPoint : Entity
         Latitude = latitude;
         Longitude = longitude;
     }
+
+    public bool Valid()
+    {
+         throw new NotImplementedException();
+    }
+
+
 }

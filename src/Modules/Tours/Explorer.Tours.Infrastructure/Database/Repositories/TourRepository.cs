@@ -53,18 +53,18 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         // Get a specific Tour by ID
         public Tour Get(long id)
         {
-            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).FirstOrDefault(t => t.Id == id);
+            return _context.Tours.Include(t=>t.TourDurations).Include(t => t.KeyPoints).Include(t => t.Equipments).FirstOrDefault(t => t.Id == id);
         }
 
         // Get a list of Tours by their Status
         public List<Tour> GetByStatus(int status)
         {
-            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
+            return _context.Tours.Include(t => t.TourDurations).Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
         }
 
         public PagedResult<Tour> GetPaged(int page, int pageSize)
         {
-            var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).GetPagedById(page, pageSize);
+            var task = _context.Tours.Include(t => t.TourDurations).Include(t => t.KeyPoints).Include(t => t.Equipments).GetPagedById(page, pageSize);
             task.Wait();
             return task.Result;
         }

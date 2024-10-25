@@ -3,22 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Explorer.Shopping.Core.Domain.ShoppingCarts
+namespace Explorer.Shopping.Core.Domain
 {
-    public class OrderItem : ValueObject
+    public class Item:Entity
     {
+        public long SellerId { get; init; }
         public long ItemId { get; init; }
-        public string Name { get; init; }
-        public int Price { get; init; }
+        public string Name { get; private set; }
+        public int Price { get; private set; }
 
-        public OrderItem() { }
-
-        [JsonConstructor]
-        public OrderItem(long itemId, string name, int price)
+        public Item(long sellerId, long itemId, string name, int price)
         {
+            SellerId = sellerId;
             ItemId = itemId;
             Name = name;
             Price = price;
@@ -26,15 +24,10 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
         }
         private void Validate()
         {
+            if (SellerId == 0) throw new ArgumentException("Invalid SellerId");
             if (ItemId == 0) throw new ArgumentException("Invalid ItemId");
             if (string.IsNullOrWhiteSpace(Name)) throw new ArgumentException("Invalid Name.");
             if (Price < 0) throw new ArgumentException("Invalid Price.");
-        }
-
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Explorer.Shopping.API.Dtos;
+using Explorer.Shopping.Core.Domain;
 using Explorer.Shopping.Core.Domain.ShoppingCarts;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace Explorer.Shopping.Core.Mappers
             CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
             CreateMap<ShoppingCartDto, ShoppingCart>().ReverseMap();
             CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+            CreateMap<ItemDto, OrderItem>().ReverseMap();
+            CreateMap<ItemDto, Item>().ReverseMap();
         }
     }
 }

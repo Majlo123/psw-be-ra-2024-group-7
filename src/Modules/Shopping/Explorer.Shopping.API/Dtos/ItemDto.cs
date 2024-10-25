@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Shopping.API.Dtos
 {
-    public class OrderItemDto
+    internal class ItemDto
     {
-        public long ItemId { get; init; }
-        public string Name { get; init; }
-        public int Price { get; init; }
     }
 }

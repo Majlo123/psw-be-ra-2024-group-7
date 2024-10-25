@@ -22,6 +22,15 @@ namespace Explorer.Shopping.Core.Domain
             Price = price;
             Validate();
         }
+        public Item(Item item)
+        {
+            Id = item.Id;
+            SellerId = item.SellerId;
+            ItemId = item.ItemId;
+            Name = item.Name;
+            Price = item.Price;
+        }
+
         private void Validate()
         {
             if (SellerId == 0) throw new ArgumentException("Invalid SellerId");

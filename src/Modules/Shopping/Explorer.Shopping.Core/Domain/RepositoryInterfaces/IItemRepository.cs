@@ -9,7 +9,7 @@ namespace Explorer.Shopping.Core.Domain.RepositoryInterfaces
 {
     public interface IItemRepository:ICrudRepository<Item>
     {
-        public Item GetByItemIdAndType(long itemId);
-        void DeleteByItemIdAndType(long itemId);
+        public Item GetByItemId(long itemId);
+        void DeleteByItemId(long itemId);
     }
 }

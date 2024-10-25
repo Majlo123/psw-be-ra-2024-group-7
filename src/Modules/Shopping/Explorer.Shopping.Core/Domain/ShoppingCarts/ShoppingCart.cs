@@ -10,14 +10,24 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
     public class ShoppingCart : Entity
     {
         public long UserId { get; init; }
-        public List<OrderItem> Items { get; private set; } = new List<OrderItem>();
+        public List<OrderItem> Items { get; private set; } 
         public decimal TotalPrice { get; private set; }
-        public List<TourPurchaseToken> TourPurchaseTokens { get; private set; } = new List<TourPurchaseToken>();
+        public List<TourPurchaseToken> TourPurchaseTokens { get; private set; }
 
+        public ShoppingCart(long userId)
+        {
+            UserId = userId;
+            Items = new List<OrderItem>();
+            TourPurchaseTokens = new List<TourPurchaseToken>();
+        }
         public void AddItem(OrderItem item)
         {
-            Items.Add(item);
+            Items.Add(item);   
             CalculateTotalPrice();
+        }
+        public bool IsEmpty()
+        {
+            return Items.Count == 0;
         }
 
         public void RemoveItem(OrderItem item)
@@ -30,7 +40,15 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
         {
             TotalPrice = Items.Sum(i => i.Price);
         }
+        public void UpdateItem(OrderItem orderItem, Item item)
+        {
+            var index = Items.FindIndex(i => i.ItemId == orderItem.ItemId);
 
+            if (index == -1) throw new ArgumentException("Order item not found in cart.");
+
+            var updatedItem = new OrderItem(item.ItemId, item.Name, item.Price);
+            Items[index] = updatedItem;
+        }
         public void Checkout()
         {
             foreach (var item in Items)

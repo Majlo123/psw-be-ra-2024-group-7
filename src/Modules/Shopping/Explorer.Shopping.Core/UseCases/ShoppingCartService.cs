@@ -16,7 +16,7 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
     private readonly IItemRepository _itemRepository;
     private readonly ITourPurchaseTokenRepository _purchaseTokenRepository;
 
-    public ShoppingCartService(IShoppingCartRepository repository, IItemRepository itemRepository,ITourPurchaseTokenRepository purchaseTokenRepository, ICrudRepository<PaymentRecord> paymentRecordRepository,
+    public ShoppingCartService(IShoppingCartRepository repository, IItemRepository itemRepository,ITourPurchaseTokenRepository purchaseTokenRepository,
        IMapper mapper) : base(mapper)
     {
         _mapper = mapper;

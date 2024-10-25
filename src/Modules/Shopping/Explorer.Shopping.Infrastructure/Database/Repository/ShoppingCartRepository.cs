@@ -14,5 +14,13 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
     public class ShoppingCartRepository : CrudDatabaseRepository<ShoppingCart, ShoppingContext>, IShoppingCartRepository
     {
         public ShoppingCartRepository(ShoppingContext dbContext) : base(dbContext) {}
+
+        public ShoppingCart GetByUser(long userId)
+        {
+            var shoppingCart = DbContext.ShoppingCarts.FirstOrDefault(c => c.UserId == userId);
+            if (shoppingCart == null) throw new KeyNotFoundException("Not found: " + userId);
+            return shoppingCart;
+        }
+
     }
 }

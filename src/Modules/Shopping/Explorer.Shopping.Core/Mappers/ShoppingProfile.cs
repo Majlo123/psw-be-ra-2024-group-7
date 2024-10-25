@@ -16,7 +16,6 @@ namespace Explorer.Shopping.Core.Mappers
         {
             CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
             CreateMap<ShoppingCartDto, ShoppingCart>().ReverseMap();
-            CreateMap<OrderItemDto, OrderItem>().ReverseMap();
             CreateMap<ItemDto, OrderItem>().ReverseMap();
             CreateMap<ItemDto, Item>().ReverseMap();
         }

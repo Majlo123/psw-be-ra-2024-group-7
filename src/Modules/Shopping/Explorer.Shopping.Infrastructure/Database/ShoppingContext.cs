@@ -14,7 +14,7 @@ public class ShoppingContext : DbContext
     {
         modelBuilder.HasDefaultSchema("tours");
         modelBuilder.Entity<ShoppingCart>()
-           .Property(cart => cart.items)
+           .Property(cart => cart.Items)
            .HasColumnType("jsonb");
         ConfigureShoppingCart(modelBuilder);
     }

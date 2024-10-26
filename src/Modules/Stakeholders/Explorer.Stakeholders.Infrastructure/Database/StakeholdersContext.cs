@@ -1,4 +1,5 @@
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
@@ -19,6 +20,8 @@ public class StakeholdersContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TourProblemReport>().Property(item => item.Notifications).HasColumnType("jsonb");
+        modelBuilder.Entity<TourProblemReport>().Property(item => item.Messages).HasColumnType("jsonb");
         modelBuilder.HasDefaultSchema("stakeholders");
 
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();

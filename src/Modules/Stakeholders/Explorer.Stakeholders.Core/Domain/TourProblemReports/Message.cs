@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {
-    public class Message : ValueObject<Message>
+    public class Message : ValueObject
     {
         public int UserId { get; private set; }
         public int ReportId { get; private set; }
@@ -22,22 +22,11 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             ReportId = reportId;
             Content = content;
         }
-        protected override bool EqualsCore(Message other)
+        protected override IEnumerable<object> GetEqualityComponents()
         {
-            return UserId == other.UserId &&
-                ReportId == other.ReportId &&
-                Content == other.Content;
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            unchecked
-            {
-                int hashCode = UserId.GetHashCode();
-                hashCode = (hashCode * 397) ^ ReportId.GetHashCode();
-                hashCode = (hashCode * 397) ^ Content.GetHashCode();
-                return hashCode;
-            }
+            yield return UserId;
+            yield return ReportId;
+            yield return Content;
         }
     }
 }

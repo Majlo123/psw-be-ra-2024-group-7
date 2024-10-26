@@ -15,7 +15,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         CHAT,
         DEADLINE
     }
-    public class Notification : ValueObject<Notification>
+    public class Notification : ValueObject
     {
         public int SenderId { get; private set; }
         public int RecipientId { get; private set; }
@@ -32,26 +32,14 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             Type = type;
             Content = content;
         }
-        protected override bool EqualsCore(Notification other)
-        {
-            return SenderId == other.SenderId && 
-                RecipientId == other.RecipientId && 
-                IsRead == other.IsRead && 
-                Type == other.Type && 
-                Content == other.Content;
-        }
 
-        protected override int GetHashCodeCore()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
-            unchecked
-            {
-                int hashCode = SenderId.GetHashCode();
-                hashCode = (hashCode * 397) ^ RecipientId.GetHashCode();
-                hashCode = (hashCode * 397) ^ IsRead.GetHashCode();
-                hashCode = (hashCode * 397) ^ Type.GetHashCode();
-                hashCode = (hashCode * 397) ^ Content.GetHashCode();
-                return hashCode;
-            }
+            yield return SenderId;
+            yield return RecipientId;
+            yield return IsRead;
+            yield return Type;
+            yield return Content;
         }
     }
 }

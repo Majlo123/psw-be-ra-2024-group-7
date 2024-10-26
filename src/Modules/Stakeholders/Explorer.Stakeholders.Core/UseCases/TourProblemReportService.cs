@@ -1,8 +1,8 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using AutoMapper;
-using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {

@@ -25,7 +25,7 @@ public class TourDuration : ValueObject<TourDuration>
 
     protected override bool EqualsCore(TourDuration other)
     {
-       return Duration == other.Duration && TransportType == other.TransportType;
+       return Duration == other.Duration && TransportType == other.TransportType && TimeUnit == other.TimeUnit;
     }
 
     protected override int GetHashCodeCore()

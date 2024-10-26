@@ -24,6 +24,7 @@ namespace Explorer.Payments.Tests.Integration
 
             var item = new ItemDto()
             {
+                SellerId = -1,
                 ItemId = -4,
                 Name = "Zimovanje na Tari",
                 Price = 200
@@ -34,8 +35,8 @@ namespace Explorer.Payments.Tests.Integration
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-3);
-            result.UserId.ShouldBe(-23);
+            result.Id.ShouldBe(-1);
+            result.UserId.ShouldBe(-21);
 
             // Assert - Database
             var storedEntity = dbContext.ShoppingCarts.AsEnumerable().Where(c => c.Id == -3 && c.TotalPrice == 250);
@@ -62,8 +63,8 @@ namespace Explorer.Payments.Tests.Integration
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-3);
-            result.UserId.ShouldBe(-23);
+            result.Id.ShouldBe(-1);
+            result.UserId.ShouldBe(-21);
 
             // Assert - Database
             var storedEntity = dbContext.ShoppingCarts.AsEnumerable().Where(c => c.Id == -3 && c.TotalPrice == 0);

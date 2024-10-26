@@ -18,7 +18,7 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
 
         public Item GetByItemId(long itemId)
         {
-            var item = DbContext.Items.FirstOrDefault(i => i.ItemId == itemId);
+            var item = DbContext.Items.FirstOrDefault(i => i.ItemId== itemId);
             if (item == null) throw new KeyNotFoundException("Not found: " + itemId);
             return item;
         }

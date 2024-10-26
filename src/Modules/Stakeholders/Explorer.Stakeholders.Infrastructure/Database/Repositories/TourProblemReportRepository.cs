@@ -1,20 +1,27 @@
-﻿using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
+using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 {
-    public class TourProblemReportRepository : ITourProblemReportRepository
+    public class TourProblemReportRepository : CrudDatabaseRepository<TourProblemReport, StakeholdersContext>, ITourProblemReportRepository
     {
         private readonly StakeholdersContext _context;
 
-        public TourProblemReportRepository(StakeholdersContext context)
+        public TourProblemReportRepository(StakeholdersContext context) : base(context) { }
+
+        public new TourProblemReport? Get(int id)
         {
-            _context = context;
+            return DbContext.TourProblemReports.Where(t => t.Id == id)
+                .FirstOrDefault();
         }
 
-        public TourProblemReport Get(int id)
+        public new TourProblemReport Update(TourProblemReport tourProblemReport)
         {
-            return _context.TourProblemReports.FirstOrDefault(tpr => tpr.Id == id);
+            DbContext.Entry(tourProblemReport).State = EntityState.Modified;
+            DbContext.SaveChanges();
+            return tourProblemReport;
         }
 
         // Get a list of Tour Problems by their Priority

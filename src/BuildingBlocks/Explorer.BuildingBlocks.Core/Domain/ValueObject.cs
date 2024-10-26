@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,7 @@ namespace Explorer.BuildingBlocks.Core.Domain
 {
     public abstract class ValueObject<T>
     where T : ValueObject<T>
+
     {
         public override bool Equals(object obj)
         {

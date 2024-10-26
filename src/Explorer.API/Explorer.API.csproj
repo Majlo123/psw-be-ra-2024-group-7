@@ -28,8 +28,4 @@
 	<ProjectReference Include="..\Modules\Shopping\Explorer.Shopping.Infrastructure\Explorer.Shopping.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Tourist\" />
-  </ItemGroup>
-
 </Project>

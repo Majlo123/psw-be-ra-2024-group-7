@@ -13,7 +13,7 @@ public class ShoppingContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("tours");
+        modelBuilder.HasDefaultSchema("shopping");
         modelBuilder.Entity<ShoppingCart>()
            .Property(cart => cart.Items)
            .HasColumnType("jsonb");

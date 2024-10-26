@@ -26,8 +26,8 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public Status Status { get; private set; }
         public int TouristId { get; private set; }
         public string Comment { get; private set; }
-        public List<Message>? Messages { get; protected set; }
-        public List<Notification>? Notifications { get; protected set; }
+        public List<Message> Messages { get; protected set; } = new List<Message>();
+        public List<Notification> Notifications { get; protected set; } = new List<Notification>();
 
         public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time, Status status, int touristId, string comment)
         {

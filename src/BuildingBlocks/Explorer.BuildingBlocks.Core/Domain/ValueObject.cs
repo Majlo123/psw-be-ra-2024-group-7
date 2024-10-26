@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Explorer.BuildingBlocks.Core.Domain
 {
     public abstract class ValueObject<T>
-        where T : ValueObject<T>
+    where T : ValueObject<T>
+
     {
         public override bool Equals(object obj)
         {

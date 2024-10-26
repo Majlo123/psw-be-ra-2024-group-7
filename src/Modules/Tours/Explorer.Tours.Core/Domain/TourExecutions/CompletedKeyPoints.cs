@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    public class CompletedKeyPoints : ValueObject
+    public class CompletedKeyPoints : ValueObject<CompletedKeyPoints>
     {
         public KeyPoint CompletedKeyPoint { get; private set; }
         public DateTime ExecutionTime { get; private set; }
@@ -25,14 +25,25 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             TouristId = touristId;
             TourId = tourId;
         }
-        protected override IEnumerable<object> GetEqualityComponents()
+
+        protected override bool EqualsCore(CompletedKeyPoints completedKeyPoints)
         {
-            yield return CompletedKeyPoint;
-            yield return ExecutionTime;
-            yield return TouristId;
-            yield return TourId;
+            return CompletedKeyPoint == completedKeyPoints.CompletedKeyPoint
+                       && ExecutionTime == completedKeyPoints.ExecutionTime
+                       && TouristId == completedKeyPoints.TouristId
+                       && TourId == completedKeyPoints.TourId;
         }
 
- 
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                int hashCode = CompletedKeyPoint.GetHashCode();
+                hashCode = (hashCode * 357) ^ ExecutionTime.GetHashCode();
+                hashCode = (hashCode * 357) ^ TouristId.GetHashCode();
+                hashCode = (hashCode * 357) ^ TourId.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

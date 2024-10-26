@@ -1,24 +1,20 @@
 INSERT INTO shopping."Items"(
     "Id", "SellerId", "ItemId", "Name", "Price")
 VALUES 
-    (1, 1, -1, 'Planinarski štap', 30);
-
+    (1, -11, -1, 'Planinarski štap', 30);
 INSERT INTO shopping."Items"(
     "Id", "SellerId", "ItemId", "Name", "Price")
 VALUES 
-    (2, 1, -1, 'Ranac za hajk', 70);
-
+    (2, -11, -1, 'Ranac za hajk', 70);
 INSERT INTO shopping."Items"(
     "Id", "SellerId", "ItemId", "Name", "Price")
 VALUES 
-    (3, 1, -2, 'Ronila?ka maska', 100);
-
+    (3, -12, -2, 'Ronilacka maska', 100);
 INSERT INTO shopping."Items"(
     "Id", "SellerId", "ItemId", "Name", "Price")
 VALUES 
-    (4, 1, -2, 'Boca za ronjenje', 150);
-
+    (4, -12, -2, 'Boca za ronjenje', 150);
 INSERT INTO shopping."Items"(
     "Id", "SellerId", "ItemId", "Name", "Price")
 VALUES 
-    (5, 1, -3, 'Sanke', 80);
+    (5, -12, -3, 'Sanke', 80);

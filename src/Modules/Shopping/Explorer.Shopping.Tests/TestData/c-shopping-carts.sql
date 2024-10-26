@@ -1,14 +1,5 @@
 INSERT INTO shopping."ShoppingCarts"(
     "Id", "UserId", "Items", "TotalPrice")
 VALUES 
-    (1, -21, '[{"Name": "Planinarski štap", "Price": 30}, {"Name": "Ranac za hajk", "Price": 70}]', 100);
+    (-1, -21, '[{"Id": 1, "SellerId": 1, "ItemId": -1, "Name": "Planinarski štap", "Price": 30}, {"Id": 2, "SellerId": 1, "ItemId": -1, "Name": "Ranac za hajk", "Price": 70}]'::jsonb, 100);
 
-INSERT INTO shopping."ShoppingCarts"(
-    "Id", "UserId", "Items", "TotalPrice")
-VALUES 
-    (2, -22, '[{"Name": "Ronila?ka maska", "Price": 100}, {"Name": "Boca za ronjenje", "Price": 150}]', 250);
-
-INSERT INTO shopping."ShoppingCarts"(
-    "Id", "UserId", "Items", "TotalPrice")
-VALUES 
-    (3, -23, '[{"Name": "Sanke", "Price": 80}]', 80);

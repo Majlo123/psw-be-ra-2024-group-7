@@ -22,7 +22,7 @@ public class ShoppingCartController : BaseApiController
     [HttpGet]
     public ActionResult<ShoppingCartDto> GetByUser([FromQuery] int touristId)
     {
-        //if (User.PersonId() != touristId) return CreateResponse(Result.Fail(FailureCode.Forbidden));
+        if (User.PersonId() != touristId) return CreateResponse(Result.Fail(FailureCode.Forbidden));
 
         var result = _shoppingCartService.GetByUser(touristId);
         return CreateResponse(result);

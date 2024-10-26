@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Tests;
+﻿using Explorer.Blog.Infrastructure.Database;
+using Explorer.BuildingBlocks.Tests;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;

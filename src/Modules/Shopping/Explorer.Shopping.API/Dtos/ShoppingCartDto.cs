@@ -8,6 +8,7 @@ namespace Explorer.Shopping.API.Dtos
 {
     public class ShoppingCartDto
     {
+        public long Id { get; set; }
         public long UserId { get; init; }
         public List<ItemDto>? Items { get; private set; }
         public decimal TotalPrice { get; private set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Shopping.Core.Domain.ShoppingCarts
 {
-    public class OrderItem : ValueObject
+    public class OrderItem : ValueObject<OrderItem>
     {
         public long ItemId { get; init; }
         public string Name { get; init; }
@@ -25,7 +25,12 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
            
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override bool EqualsCore(OrderItem other)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override int GetHashCodeCore()
         {
             throw new NotImplementedException();
         }

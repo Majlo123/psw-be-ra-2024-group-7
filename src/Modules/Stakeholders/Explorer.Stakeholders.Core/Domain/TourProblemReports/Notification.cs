@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
@@ -15,7 +17,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         CHAT,
         DEADLINE
     }
-    public class Notification : ValueObject
+    public class Notification : ValueObject<Notification>
     {
         public int SenderId { get; private set; }
         public int RecipientId { get; private set; }
@@ -33,13 +35,26 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             Content = content;
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override bool EqualsCore(Notification other)
         {
-            yield return SenderId;
-            yield return RecipientId;
-            yield return IsRead;
-            yield return Type;
-            yield return Content;
+            return SenderId == other.SenderId &&
+            RecipientId == other.RecipientId &&
+            IsRead == other.IsRead &&
+            Type == other.Type &&
+            Content == other.Content;
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                int hashCode = SenderId.GetHashCode();
+                hashCode = (hashCode * 397) ^ RecipientId.GetHashCode();
+                hashCode = (hashCode * 397) ^ IsRead.GetHashCode();
+                hashCode = (hashCode * 397) ^ Type.GetHashCode();
+                hashCode = (hashCode * 397) ^ Content.GetHashCode();
+                return hashCode;
+            }
         }
     }
 }

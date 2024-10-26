@@ -36,7 +36,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Status = 0,
                 Tags = "visina,priroda",
                 Length = 0,
-                TourDurations =new List<TourDurationDto>()
+                TourDurations = new List<TourDurationDto>(),
+                IdAuthor = -12
             };
 
             //Act
@@ -69,7 +70,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Status = 0,
                 Tags = "visina,priroda",
                 Length = 0,
-                TourDurations = new List<TourDurationDto>()
+                TourDurations = new List<TourDurationDto>(),
+                IdAuthor = -12
 
             };
 
@@ -133,7 +135,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Status = 0,
                 Tags = "visina,priroda",
                 TourDurations = new List<TourDurationDto>(),
-                Length = 0
+                Length = 0,
+                IdAuthor = -12
             };
 
             // Act

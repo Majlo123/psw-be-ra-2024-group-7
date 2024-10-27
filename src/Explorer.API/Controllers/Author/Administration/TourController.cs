@@ -7,7 +7,6 @@ using Explorer.Tours.Core.UseCases.Administration;
 
 namespace Explorer.API.Controllers.Author.Administration
 {
-    [Authorize(Policy = "authorPolicy")]
     [Route("api/administration/tour")]
     public class TourController : BaseApiController
     {
@@ -26,6 +25,7 @@ namespace Explorer.API.Controllers.Author.Administration
         }
 
         [HttpPost]
+        [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Create([FromBody] TourDto tour)
         {
             var result = _tourService.Create(tour);
@@ -33,6 +33,7 @@ namespace Explorer.API.Controllers.Author.Administration
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Update([FromBody] TourDto tour)
         {
             _tourService.DeleteEquipments(tour.Id);
@@ -41,6 +42,7 @@ namespace Explorer.API.Controllers.Author.Administration
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = "authorPolicy")]
         public ActionResult Delete(long id)
         {
             var result = _tourService.Delete(id);

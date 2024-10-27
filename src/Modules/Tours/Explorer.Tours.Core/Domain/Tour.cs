@@ -19,9 +19,9 @@ namespace Explorer.Tours.Core.Domain
         public List<Equipment> Equipments { get; set; } = new List<Equipment>();
         public List<TourDuration> TourDurations { get; set;} = new List<TourDuration>();
         public double Length { get; private set; }
-        public int IdAuthor { get; private set; }
+        public int AuthorId { get; private set; }
 
-        public Tour(string name, string difficulty, string description, double cost, int status, string tags, double length,int idAuthor)
+        public Tour(string name, string difficulty, string description, double cost, int status, string tags, double length,int authorId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -31,7 +31,7 @@ namespace Explorer.Tours.Core.Domain
             Status = status;
             Tags = tags;
             Length = length;
-            IdAuthor = idAuthor;
+            AuthorId = authorId;
         }
         public void AddKeyPoint(KeyPoint keyPoint)
         {

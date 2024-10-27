@@ -49,6 +49,14 @@ namespace Explorer.API.Controllers.Tourist.Administration
             return CreateResponse(result);
         }
 
+        [HttpPut("{id:int}/set-solving-deadline")]
+        [Authorize(Policy = "administratorPolicy")]
+        public ActionResult<TourProblemReportDto> SetSolvingDeadline(int id, [FromBody] DateTime solvingDeadline)
+        {
+            var result = _tourProblemReportService.SetSolvingDeadline(id, solvingDeadline);
+            return CreateResponse(result);
+        }
+
         [HttpDelete("{id:int}")]
         [Authorize(Policy = "touristPolicy")]
         public ActionResult Delete(int id)

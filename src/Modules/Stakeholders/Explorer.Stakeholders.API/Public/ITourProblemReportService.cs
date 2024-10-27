@@ -10,5 +10,7 @@ namespace Explorer.Stakeholders.API.Public
         Result<TourProblemReportDto> Create(TourProblemReportDto tourProblemReport);
         Result<TourProblemReportDto> Update(TourProblemReportDto tourProblemReport);
         Result Delete(int id);
+
+        Result<TourProblemReportDto> SetSolvingDeadline(int id, DateTime solvingDeadline);
     }
 }

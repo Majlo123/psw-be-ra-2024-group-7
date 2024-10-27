@@ -16,7 +16,7 @@ namespace Explorer.Tours.API.Dtos
         public int Status { get; set; }
         public string Tags { get; set; }
         public double Length { get; set; }
-        public int IdAuthor { get; set; }
+        public int AuthorId { get; set; }
         public IEnumerable<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public IEnumerable<EquipmentDto> Equipments { get; set; } = new List<EquipmentDto>();
         public IEnumerable<TourDurationDto> TourDurations { get; set; } = new List<TourDurationDto>();

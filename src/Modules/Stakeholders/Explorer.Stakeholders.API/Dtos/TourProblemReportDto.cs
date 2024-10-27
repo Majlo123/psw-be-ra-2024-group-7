@@ -9,8 +9,8 @@ namespace Explorer.Stakeholders.API.Dtos
     }
     public enum Status
     {
+        UNSOLVED,
         SOLVED,
-        RESOLVED,
         CLOSED
     }
     public class TourProblemReportDto
@@ -23,7 +23,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public DateTime Time { get; set; }
         public Status Status { get;  set; }
         public int TouristId { get;  set; }
-        public string Comment { get;  set; }
+        public string? Comment { get; set; } = "";
         public List<MessageDto> Messages { get;  set; } = new List<MessageDto>();
         public List<NotificationDto> Notifications { get;  set; } = new List<NotificationDto>();
     }

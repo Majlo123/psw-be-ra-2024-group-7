@@ -49,7 +49,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>),typeof(CrudDatabaseRepository<TouristEquipment, StakeholdersContext>));
 
         services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
-
+        services.AddScoped<ITourProblemReportRepository, TourProblemReportRepository>();
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         // Dodajemo repozitorijum za ApplicationGrade
         services.AddScoped(typeof(ICrudRepository<ApplicationGrade>), typeof(CrudDatabaseRepository<ApplicationGrade, StakeholdersContext>));

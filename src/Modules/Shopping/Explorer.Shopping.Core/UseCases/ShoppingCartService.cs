@@ -93,7 +93,7 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
         }
     }
 
-    public Result<ShoppingCartDto> CheckOut(long userId, string? couponCode)
+    public Result<ShoppingCartDto> CheckOut(long userId)
     {
         try
         {

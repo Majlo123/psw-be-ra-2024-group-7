@@ -43,11 +43,11 @@ public class ShoppingCartController : BaseApiController
     }
 
     [HttpPut("checkout")]
-    public ActionResult<ShoppingCartDto> Checkout([FromQuery] int touristId, [FromQuery] string? coupon)
+    public ActionResult<ShoppingCartDto> Checkout([FromQuery] int touristId)
     {
         if (User.PersonId() != touristId) return CreateResponse(Result.Fail(FailureCode.Forbidden));
 
-        var result = _shoppingCartService.CheckOut(touristId, coupon);
+        var result = _shoppingCartService.CheckOut(touristId);
         return CreateResponse(result);
     }
 }

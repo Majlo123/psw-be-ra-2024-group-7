@@ -13,6 +13,6 @@ namespace Explorer.Shopping.API.Public
         Result<ShoppingCartDto> GetByUser(long userId);
         Result<ShoppingCartDto> AddItem(ItemDto itemDto, int userId);
         Result<ShoppingCartDto> RemoveItem(ItemDto itemDto, int userId);
-        Result<ShoppingCartDto> CheckOut(long userId, string? couponCode);
+        Result<ShoppingCartDto> CheckOut(long userId);
     }
 }

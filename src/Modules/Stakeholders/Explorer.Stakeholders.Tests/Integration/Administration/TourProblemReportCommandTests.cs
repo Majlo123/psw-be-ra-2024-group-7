@@ -32,7 +32,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Category = "Tehnički problem", 
                 Priority = ProblemPriority.HIGH, 
                 Description = "Problem sa internet konekcijom.", 
-                Time = DateTime.UtcNow.AddDays(-2)
+                Time = DateTime.UtcNow.AddDays(-2),
+                Status = 0,
+                TouristId = -21,
+                Comment = "aa"
             };
 
             //Act
@@ -129,8 +132,11 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Category = "Tehnički problem",
                 Priority = ProblemPriority.MEDIUM, 
                 Description = "Problem sa internet konekcijom.",
-                Time = DateTime.UtcNow.AddDays(-5)
-            };
+                Time = DateTime.UtcNow.AddDays(-5),
+                Status = 0,
+                TouristId = -21,
+                Comment = "aa"
+    };
 
             // Act
             var result = ((ObjectResult)controller.Update(updatedEntity).Result)?.Value as TourProblemReportDto;
@@ -168,7 +174,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Category = "Tehnički problem",
                 Priority = ProblemPriority.MEDIUM,
                 Description = "Problem sa internet konekcijom.",
-                Time = DateTime.Now
+                Time = DateTime.Now,
+                Status = 0,
+                TouristId = -21,
+                Comment = "aa"
             };
 
             // Act

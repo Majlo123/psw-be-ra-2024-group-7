@@ -21,7 +21,6 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
             Price = price;
             Validate();
         }
-
         private void Validate()
         {
             if (ItemId == 0) throw new ArgumentException("Invalid ItemId");

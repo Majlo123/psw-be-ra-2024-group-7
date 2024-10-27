@@ -60,9 +60,12 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             Comment = comment;
             SolvingDeadline = solvingDeadline;
         }
-        public void SetSolvingDeadline(DateTime deadline)
+        public void SetSolvingDeadline(DateTime solvingDeadline)
         {
-            SolvingDeadline = deadline;
+            if (solvingDeadline < DateTime.Now)
+                throw new ArgumentException("Time cannot be in the past");
+
+            SolvingDeadline = solvingDeadline;
         }
     }
 }

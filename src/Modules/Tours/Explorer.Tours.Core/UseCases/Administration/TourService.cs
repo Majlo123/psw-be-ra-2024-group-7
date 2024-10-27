@@ -13,7 +13,7 @@ using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class TourService : CrudService<TourDto,Tour>, ITourService 
+    public class TourService : CrudService<TourDto, Tour>, ITourService
     {
         private readonly ITourRepository _tourRepository;
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base (repository, mapper)
@@ -44,11 +44,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
 
-        
         public void DeleteEquipments(long id)
         {
             _tourRepository.DeleteEquipmenmts(id);
         }
-        
+
+        public Result<TourDto> Publish(TourDto tourDto)
+        {
+            try
+            {
+                Tour tour = MapToDomain(tourDto);
+                tour = tour.Publish();
+                return base.Update(MapToDto(tour));
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+
+        }
     }
 }

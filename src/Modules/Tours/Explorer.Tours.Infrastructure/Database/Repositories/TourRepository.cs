@@ -59,7 +59,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         // Get a list of Tours by their Status
         public List<Tour> GetByStatus(int status)
         {
-            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
+            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => (int) t.Status == status).ToList();
         }
 
         public PagedResult<Tour> GetPaged(int page, int pageSize)
@@ -69,7 +69,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return task.Result;
             
         }   
-
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
  
     }
 }

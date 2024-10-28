@@ -25,8 +25,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             var result = _tourService.GetPaged(page, pageSize);
             return CreateResponse(result);
-        }
-
+        }       
         [HttpGet("{id:int}")]
         public ActionResult<TourDto> GetById(int id)
         {

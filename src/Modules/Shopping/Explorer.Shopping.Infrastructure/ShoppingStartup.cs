@@ -3,8 +3,8 @@ using Explorer.Payments.Core.UseCases;
 using Explorer.Shopping.API.Public;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Mappers;
+using Explorer.Shopping.Infrastructure.Database;
 using Explorer.Shopping.Infrastructure.Database.Repository;
-using Explorer.Tours.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -104,7 +104,7 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
             UpdateShoppingCart(shoppingCart, true);
 
             var purchasedItems = GetPurchasedItems(shoppingCart);
-            CreatePurchaseTokens(userId, purchasedItems);
+            //CreatePurchaseTokens(userId, purchasedItems);
 
             shoppingCart.Checkout();
             var result = _shoppingCartRepository.Update(shoppingCart);
@@ -120,6 +120,16 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
     }
+    public Result<List<ItemDto>> GetPurchasedTours(long userId)
+    {
+        var purchasedTourIds = _purchaseTokenRepository.GetByUser(userId)
+            .Select(tp => tp.TourId)
+            .ToList();
+
+        var items = _itemRepository.GetItemsByTourIds(purchasedTourIds);
+        return Result.Ok(items.Select(item => _mapper.Map<ItemDto>(item)).ToList());
+    }
+
     private List<Item> GetPurchasedItems(ShoppingCart shoppingCart)
     {
         var purchasedItems = new List<Item>();
@@ -148,28 +158,6 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
 
         _shoppingCartRepository.Update(shoppingCart);
     }
-    private void CreatePurchaseTokens(long userId, List<Item> purchasedItems)
-    {
-
-        var purchasedTourIds = GetPurchasedTourIds(purchasedItems);
-        foreach (var tourId in purchasedTourIds)
-        {
-            var purchaseToken = new TourPurchaseToken(userId, tourId);
-            _purchaseTokenRepository.Create(purchaseToken);
-        }
-    }
-
-    private List<long> GetPurchasedTourIds(List<Item> purchasedItems)
-    {
-        var purchasedTourIds = new List<long>();
-        foreach (var item in purchasedItems)
-        {
-           
-                purchasedTourIds.Add(item.ItemId);
-            
-        }
-
-        return purchasedTourIds;
-    }
+   
 }
 

@@ -8,12 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Tours.API.Internal;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class TourService : CrudService<TourDto,Tour>, ITourService 
+    public class TourService : CrudService<TourDto,Tour>, ITourService, IInternalTourService
     {
         private readonly ITourRepository _tourRepository;
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base (repository, mapper)
@@ -49,6 +50,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
         {
             _tourRepository.DeleteEquipmenmts(id);
         }
-        
+
+        public Result<List<TourDto>> GetMany(List<long> tourIds)
+        {
+            var tours = CrudRepository.GetMany(tourIds);
+            return MapToDto(tours);
+        }
     }
 }

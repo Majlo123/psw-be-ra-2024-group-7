@@ -61,7 +61,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
         }
-
         public PagedResult<Tour> GetPaged(int page, int pageSize)
         {
             var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).GetPagedById(page, pageSize);

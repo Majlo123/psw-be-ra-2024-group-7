@@ -2,7 +2,7 @@
 using Explorer.Shopping.Core.Domain.ShoppingCarts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Explorer.Tours.Infrastructure.Database;
+namespace Explorer.Shopping.Infrastructure.Database;
 
 public class ShoppingContext : DbContext
 {
@@ -19,7 +19,7 @@ public class ShoppingContext : DbContext
            .HasColumnType("jsonb");
         ConfigureShoppingCart(modelBuilder);
     }
-
+    
     private static void ConfigureShoppingCart(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TourPurchaseToken>()

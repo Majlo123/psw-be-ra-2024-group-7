@@ -12,7 +12,7 @@ namespace Explorer.Payments.Tests.Integration
     public class ShoppingCartQueryTests : BaseShoppingIntegrationTest
     {
         public ShoppingCartQueryTests(ShoppingTestFactory factory) : base(factory) { }
-
+        
         [Fact]
         public void Retrieves_by_id()
         {
@@ -40,7 +40,7 @@ namespace Explorer.Payments.Tests.Integration
             var result = (ObjectResult)controller.GetByUser(-1).Result;
 
             result.ShouldNotBeNull();
-            result.StatusCode.ShouldBe(403);
+            result.StatusCode.ShouldBe(404);
         }
 
         private static ShoppingCartController CreateController(IServiceScope scope)
@@ -50,5 +50,6 @@ namespace Explorer.Payments.Tests.Integration
                 ControllerContext = BuildContext("-21")
             };
         }
+        
     }
 }

@@ -201,12 +201,24 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var reportId = -1; 
-            var pastDate = DateTime.UtcNow.AddYears(-5);
+            var reportId = -1;
+            var updatedEntity = new TourProblemReportDto
+            {
+                Id = -1000,
+                TourId = 1,
+                Category = "Tehnički problem",
+                Priority = ProblemPriority.MEDIUM,
+                Description = "Problem sa internet konekcijom.",
+                Time = DateTime.Now,
+                Status = 0,
+                TouristId = -21,
+                Comment = "aa",
+                SolvingDeadline = DateTime.UtcNow.AddDays(-5)
+            };
 
             // Act
             var exception = Assert.Throws<ArgumentException>(() =>
-                controller.SetSolvingDeadline(reportId, pastDate));
+                controller.SetSolvingDeadline(reportId, updatedEntity));
 
             // Assert
             exception.Message.ShouldBe("Time cannot be in the past");

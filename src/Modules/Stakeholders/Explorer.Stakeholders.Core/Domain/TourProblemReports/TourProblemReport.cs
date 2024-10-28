@@ -11,9 +11,11 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 
     public enum Status
     {
-        SOLVED,
-        RESOLVED,
-        CLOSED
+        REPORTED,    // Problem je prijavljen ali nije zadat rok za resavanje od strane admina
+        SOLVING,     // Admin je zadao rok za resavanje
+        SOLVED,      // Problem je rešen
+        UNSOLVED,    // Problem nije rešen
+        CLOSED       // Problem je zatvoren
     }
 
     public class TourProblemReport : Entity
@@ -66,6 +68,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
                 throw new ArgumentException("Time cannot be in the past");
 
             SolvingDeadline = solvingDeadline;
+            Status = Status.SOLVING;
         }
     }
 }

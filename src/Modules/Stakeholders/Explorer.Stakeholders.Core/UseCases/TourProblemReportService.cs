@@ -20,8 +20,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             _mapper = mapper; 
         }
 
-
-        public Result<TourProblemReportDto> SetSolvingDeadline(int id, DateTime deadline)
+        public Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReportDto)
         {
             var aggregate = _repository.Get(id);
             if (aggregate == null)
@@ -29,7 +28,7 @@ namespace Explorer.Stakeholders.Core.UseCases
                 throw new Exception("Agregat TourProblemReport nije pronađen");
             }
 
-            aggregate.SetSolvingDeadline(deadline);
+            aggregate.SetSolvingDeadline(tourProblemReportDto.SolvingDeadline);
 
             _repository.Update(aggregate);
 

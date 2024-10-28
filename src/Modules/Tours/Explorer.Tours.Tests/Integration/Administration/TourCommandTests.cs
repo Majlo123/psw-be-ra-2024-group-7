@@ -30,11 +30,14 @@ namespace Explorer.Tours.Tests.Integration.Administration
             var newEntity = new TourDto
             {
                 Name = "Tura4",
-                Difficulty="Laka",
+                Difficulty = "Laka",
                 Description = "Planinski hajk",
-                Cost=200,
-                Status="draft",
-                Tags="visina,priroda"  
+                Cost = 200,
+                Status = 0,
+                Tags = "visina,priroda",
+                Length = 0,
+                TourDurations = new List<TourDurationDto>(),
+                AuthorId = -12
             };
 
             //Act
@@ -63,9 +66,13 @@ namespace Explorer.Tours.Tests.Integration.Administration
             {
                 Difficulty = "Laka",
                 Description = "Planinski hajk",
-                Cost = 0, 
-                Status = "draft",
-                Tags = "visina,priroda"
+                Cost = 0,
+                Status = 0,
+                Tags = "visina,priroda",
+                Length = 0,
+                TourDurations = new List<TourDurationDto>(),
+                AuthorId = -12
+
             };
 
             // Act
@@ -125,8 +132,11 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Difficulty = "Teze",
                 Description = "Planinski hajk",
                 Cost = 200,
-                Status = "draft",
-                Tags = "visina,priroda"
+                Status = 0,
+                Tags = "visina,priroda",
+                TourDurations = new List<TourDurationDto>(),
+                Length = 0,
+                AuthorId = -12
             };
 
             // Act

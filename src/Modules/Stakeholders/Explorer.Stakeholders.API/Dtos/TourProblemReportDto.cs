@@ -7,6 +7,12 @@ namespace Explorer.Stakeholders.API.Dtos
         MEDIUM,
         HIGH
     }
+    public enum Status
+    {
+        UNSOLVED,
+        SOLVED,
+        CLOSED
+    }
     public class TourProblemReportDto
     {
         public int Id { get; set; }
@@ -15,5 +21,10 @@ namespace Explorer.Stakeholders.API.Dtos
         public ProblemPriority Priority { get; set; }
         public string Description { get; set; }
         public DateTime Time { get; set; }
+        public Status Status { get;  set; }
+        public int TouristId { get;  set; }
+        public string? Comment { get; set; } = "";
+        public List<MessageDto> Messages { get;  set; } = new List<MessageDto>();
+        public List<NotificationDto> Notifications { get;  set; } = new List<NotificationDto>();
     }
 }

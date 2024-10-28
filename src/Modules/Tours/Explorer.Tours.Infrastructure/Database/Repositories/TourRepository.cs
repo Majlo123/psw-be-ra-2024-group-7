@@ -57,17 +57,17 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         }
 
         // Get a list of Tours by their Status
-        public List<Tour> GetByStatus(string status)
+        public List<Tour> GetByStatus(int status)
         {
             return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
         }
-
         public PagedResult<Tour> GetPaged(int page, int pageSize)
         {
             var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).GetPagedById(page, pageSize);
             task.Wait();
             return task.Result;
-        }
+            
+        }   
 
  
     }

@@ -26,7 +26,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 
         public List<CompletedKeyPoints> CompletedKeyPoints { get;  set; }
         //public ... CurrentTouristLocation { get; private set; }
-        //public ... TrnasportationType { get; private set; }
+        //public ... TransportationType { get; private set; }
 
 
 

@@ -28,6 +28,7 @@ public class ToursContext : DbContext
             HasMany(t => t.Equipments)
             .WithMany();
 
+        modelBuilder.Entity<Tour>().Property(item => item.TourDurations).HasColumnType("jsonb");
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeyPoints).HasColumnType("jsonb");
     }
 

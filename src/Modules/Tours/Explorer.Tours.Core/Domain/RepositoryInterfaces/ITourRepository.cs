@@ -12,7 +12,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     public interface ITourRepository
     {
         Tour Get(long id);
-        List<Tour> GetByStatus(string status);
+        List<Tour> GetByStatus(int status);
         PagedResult<Tour> GetPaged(int page, int pageSize);
         void Delete(long id);
         void DeleteEquipmenmts(long id);

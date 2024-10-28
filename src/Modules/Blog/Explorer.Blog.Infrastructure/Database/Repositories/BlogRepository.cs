@@ -20,6 +20,14 @@ namespace Explorer.Blog.Infrastructure.Database.Repositories
             _context = context;
             _dbSet = _context.Set<Core.Domain.Blog>();
         }
+
+        public Core.Domain.Blog Create(Core.Domain.Blog blog)
+        {
+            _dbSet.Add(blog);
+            _context.SaveChanges();
+            return blog;
+        }
+
         public Core.Domain.Blog Get(long id)
         {
             return _context.Blogs.Include(b => b.Comments).FirstOrDefault(b => b.Id == id);
@@ -49,9 +57,6 @@ namespace Explorer.Blog.Infrastructure.Database.Repositories
                 throw new KeyNotFoundException(e.Message);
             }
             return blog;
-            //DbContext.Entry(aggregateRoot).State = EntityState.Modified;
-            //DbContext.SaveChanges();
-            //return aggregateRoot;
         }
     }
 }

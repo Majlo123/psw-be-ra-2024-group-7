@@ -9,7 +9,7 @@ namespace Explorer.Blog.Core.Domain
 {
     public class Comment : Entity 
     {
-        public long UserId { get; private set; }  
+        public int UserId { get; private set; }  
         public string Username { get; private set; }
         public DateTime CreatedAt { get; private set; }  
         public string Text { get; private set; }  

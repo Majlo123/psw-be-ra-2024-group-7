@@ -32,6 +32,7 @@ namespace Explorer.Blog.Tests.Integration
                 Description = "test",
                 Date = DateOnly.FromDateTime(DateTime.Today),
                 ImageUrl = new List<string>(),
+                ActivityStatus = (API.Dtos.BlogActivityStatus)Blog.Core.Domain.BlogActivityStatus.regular,
                 Status = (API.Dtos.BlogStatus)Blog.Core.Domain.BlogStatus.draft
             };
 

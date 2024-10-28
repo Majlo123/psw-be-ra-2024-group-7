@@ -13,5 +13,6 @@ namespace Explorer.Blog.Core.Domain.RepositoryInterfaces
         List<Blog> GetByActivityStatus(BlogActivityStatus status);
         PagedResult<Blog> GetPaged(int page, int pageSize);
         Blog Update(Blog blog);
+        Blog Create(Blog blog);
     }
 }

@@ -36,12 +36,7 @@ namespace Explorer.API.Controllers.Tourist
             var result = _blogService.Get(id);
             return CreateResponse(result);
         }
-        [HttpDelete("{id:int}")]
-        public ActionResult<BlogDto> Delete(int id)
-        {
-            var result = _blogService.Delete(id);
-            return CreateResponse(result);
-        }
+
 
         [HttpPut("{id:int}")]
         public ActionResult<BlogDto> Update([FromBody] BlogDto blog)

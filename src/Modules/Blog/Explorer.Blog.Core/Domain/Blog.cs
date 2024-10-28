@@ -17,9 +17,9 @@ namespace Explorer.Blog.Core.Domain
         public List<string> ImageUrl { get; set; } = new List<string>();
         public DateOnly Date {  get; init; }
         public BlogActivityStatus ActivityStatus { get; init; }
-        public long OwnerId { get; init; }
+        public int OwnerId { get; init; }
 
-        public Blog(string title, string description, BlogStatus status, DateOnly date, BlogActivityStatus activityStatus, long ownerId)
+        public Blog(string title, string description, BlogStatus status, DateOnly date, BlogActivityStatus activityStatus, int ownerId)
         {
             Title = title;
             Description = description;

@@ -39,5 +39,11 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return task.Result;
         }
 
+        public PagedResult<TourProblemReport> GetPaged(int page, int pageSize)
+        {
+            var totalCount = _context.TourProblemReports.Count();
+            var reports = _context.TourProblemReports.GetPagedById(page, pageSize);
+            return reports.Result;
+        }
     }
 }

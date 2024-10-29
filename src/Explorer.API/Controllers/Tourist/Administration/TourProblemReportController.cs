@@ -17,6 +17,14 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
         [HttpGet("{id:int}")]
+        [Authorize(Policy = "administratorPolicy")]
+        public ActionResult<TourProblemReportDto> Get(int id)
+        {
+            var result = _tourProblemReportService.Get(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet]
         [Authorize(Policy = "touristPolicy")]
         public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>> GetByTouristId(int id, [FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -55,6 +63,14 @@ namespace Explorer.API.Controllers.Tourist.Administration
         public ActionResult<TourProblemReportDto> Update([FromBody] TourProblemReportDto tourProblemReport)
         {
             var result = _tourProblemReportService.Update(tourProblemReport);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("set-deadline/{id:int}")]
+        [Authorize(Policy = "administratorPolicy")]
+        public ActionResult<TourProblemReportDto> SetSolvingDeadline(int id, [FromBody] TourProblemReportDto tourProblemReport)
+        {
+            var result = _tourProblemReportService.SetSolvingDeadline(id, tourProblemReport);
             return CreateResponse(result);
         }
 

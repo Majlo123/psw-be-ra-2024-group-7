@@ -9,6 +9,7 @@ namespace Explorer.Shopping.Core.Domain.RepositoryInterfaces
 {
     public interface IShoppingCartRepository
     {
+        public ShoppingCart GetByUser(long userId);
         ShoppingCart Get(long id);
         ShoppingCart Create(ShoppingCart shoppingCart);
         ShoppingCart Update(ShoppingCart shoppingCart);

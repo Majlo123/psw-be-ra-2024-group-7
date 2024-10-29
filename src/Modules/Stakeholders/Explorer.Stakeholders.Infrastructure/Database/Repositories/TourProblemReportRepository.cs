@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Infrastructure.Database;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,10 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
     {
         private readonly StakeholdersContext _context;
 
-        public TourProblemReportRepository(StakeholdersContext context) : base(context) { }
+        public TourProblemReportRepository(StakeholdersContext context) : base(context)
+        {
+            _context = context;
+        }
 
         public new TourProblemReport? Get(int id)
         {
@@ -24,10 +28,22 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return tourProblemReport;
         }
 
-        // Get a list of Tour Problems by their Priority
-        public List<TourProblemReport> GetByPriority(ProblemPriority priority)
+        // Get a list of Tour Problems by Tourist Id
+        public PagedResult<TourProblemReport> GetByTouristId(int touristId, int page, int pageSize)
         {
-            return _context.TourProblemReports.Where(tpr => tpr.Priority == priority).ToList();
+            var task = _context.TourProblemReports
+                .Where(tpr => tpr.TouristId == touristId)
+                .GetPagedById(page, pageSize);
+
+            task.Wait();
+            return task.Result;
+        }
+
+        public PagedResult<TourProblemReport> GetPaged(int page, int pageSize)
+        {
+            var totalCount = _context.TourProblemReports.Count();
+            var reports = _context.TourProblemReports.GetPagedById(page, pageSize);
+            return reports.Result;
         }
     }
 }

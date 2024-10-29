@@ -12,15 +12,15 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 {
     public class CompletedKeyPoints : ValueObject<CompletedKeyPoints>
     {
-        public KeyPoint CompletedKeyPoint { get; private set; }
+        public int CompletedKeyPointId { get; private set; }
         public DateTime ExecutionTime { get; private set; }
         public int TouristId { get; private set; }
         public int TourId { get; private set; }
 
         [JsonConstructor]
-        public CompletedKeyPoints(KeyPoint keyPoint, DateTime executionTime, int touristId, int tourId)
+        public CompletedKeyPoints(int keyPointId, DateTime executionTime, int touristId, int tourId)
         {
-            CompletedKeyPoint = keyPoint;
+            CompletedKeyPointId = keyPointId;
             ExecutionTime = executionTime;
             TouristId = touristId;
             TourId = tourId;
@@ -28,7 +28,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 
         protected override bool EqualsCore(CompletedKeyPoints completedKeyPoints)
         {
-            return CompletedKeyPoint == completedKeyPoints.CompletedKeyPoint
+            return CompletedKeyPointId == completedKeyPoints.CompletedKeyPointId
                        && ExecutionTime == completedKeyPoints.ExecutionTime
                        && TouristId == completedKeyPoints.TouristId
                        && TourId == completedKeyPoints.TourId;
@@ -38,12 +38,17 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         {
             unchecked
             {
-                int hashCode = CompletedKeyPoint.GetHashCode();
-                hashCode = (hashCode * 357) ^ ExecutionTime.GetHashCode();
-                hashCode = (hashCode * 357) ^ TouristId.GetHashCode();
-                hashCode = (hashCode * 357) ^ TourId.GetHashCode();
+                int hashCode = CompletedKeyPointId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ExecutionTime.GetHashCode();
+                hashCode = (hashCode * 397) ^ TouristId.GetHashCode();
+                hashCode = (hashCode * 397) ^ TourId.GetHashCode();
                 return hashCode;
             }
+        }
+
+        private void Validation(CompletedKeyPoints completedKeyPoints)
+        {
+            throw new NotImplementedException();
         }
     }
 }

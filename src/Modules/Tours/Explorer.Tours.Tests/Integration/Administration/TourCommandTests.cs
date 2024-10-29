@@ -233,7 +233,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime = null
                 },
                 400,
                 TourStatus.Draft
@@ -277,7 +278,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime=null
                 },
                 200,
                 TourStatus.Published
@@ -318,7 +320,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     TourDurations = new List<TourDurationDto>(),
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime=null
                 },
                 400,
                 TourStatus.Draft
@@ -362,7 +365,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime= null
                 },
                 400,
                 TourStatus.Draft

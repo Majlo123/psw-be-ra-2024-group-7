@@ -68,6 +68,14 @@ namespace Explorer.API.Controllers.Author.Administration
             return CreateResponse(result);
         }
 
+        [HttpPut]
+        [Route("archive/{id:int}")]
+        public ActionResult<TourDto> Archive([FromBody] TourDto tour)
+        {
+            var result = _tourService.Archive(tour);
+            return CreateResponse(result);
+        }
+
         private bool IsAuthorized(long id, string tokenHeader)
         {
             var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();

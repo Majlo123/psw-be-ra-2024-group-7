@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {
-    public enum Type
+    public enum NotificationType
     {
         CHAT,
         DEADLINE
@@ -22,16 +22,18 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public int SenderId { get; private set; }
         public int RecipientId { get; private set; }
         public bool IsRead { get; private set; }
-        public Type Type { get; private set; }
+        public NotificationType NotificationType { get; private set; }
         public string Content { get; private set; }
 
+        public Notification() { }
+
         [JsonConstructor]
-        public Notification(int senderId, int recipientId, bool isRead, Type type, string content) 
+        public Notification(int senderId, int recipientId, bool isRead, NotificationType notificationType, string content) 
         { 
             SenderId = senderId;
             RecipientId = recipientId;
             IsRead = isRead;
-            Type = type;
+            NotificationType = notificationType;
             Content = content;
         }
 
@@ -40,7 +42,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             return SenderId == other.SenderId &&
             RecipientId == other.RecipientId &&
             IsRead == other.IsRead &&
-            Type == other.Type &&
+            NotificationType == other.NotificationType &&
             Content == other.Content;
         }
 
@@ -51,7 +53,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
                 int hashCode = SenderId.GetHashCode();
                 hashCode = (hashCode * 397) ^ RecipientId.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsRead.GetHashCode();
-                hashCode = (hashCode * 397) ^ Type.GetHashCode();
+                hashCode = (hashCode * 397) ^ NotificationType.GetHashCode();
                 hashCode = (hashCode * 397) ^ Content.GetHashCode();
                 return hashCode;
             }

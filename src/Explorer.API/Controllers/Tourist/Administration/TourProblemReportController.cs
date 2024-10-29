@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,6 +65,14 @@ namespace Explorer.API.Controllers.Tourist.Administration
         {
             var result = _tourProblemReportService.Delete(id);
             return CreateResponse(result);
+        }
+
+
+        [HttpGet("notifications/{loggedId}")]
+        public ActionResult<List<NotificationDto>> GetLoggedUserNotifications(int loggedId, int page, int pageSize)
+        {
+            var notifications = _tourProblemReportService.GetLoggedUserNotifications(loggedId, page, pageSize);
+            return Ok(notifications); // Return the list of notifications
         }
     }
 }

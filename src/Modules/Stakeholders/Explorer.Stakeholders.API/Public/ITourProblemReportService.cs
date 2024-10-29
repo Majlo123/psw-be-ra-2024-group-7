@@ -12,5 +12,9 @@ namespace Explorer.Stakeholders.API.Public
         Result<TourProblemReportDto> Create(TourProblemReportDto tourProblemReport);
         Result<TourProblemReportDto> Update(TourProblemReportDto tourProblemReport);
         Result Delete(int id);
+
+        //Iva
+        List<NotificationDto> GetLoggedUserNotifications(int loggedId, int page, int pageSize);
+        //
     }
 }

@@ -30,6 +30,8 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<Tour>().Property(item => item.TourDurations).HasColumnType("jsonb");
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeyPoints).HasColumnType("jsonb");
+        modelBuilder.Entity<TourExecution>().Property(item => item.TransportationType).HasColumnType("jsonb");
+
     }
 
    

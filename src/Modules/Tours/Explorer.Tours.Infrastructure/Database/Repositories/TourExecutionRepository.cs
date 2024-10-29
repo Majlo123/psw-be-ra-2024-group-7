@@ -22,28 +22,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-        public TourExecution Create(List<Equipment> equipments, List<CompletedKeyPoints> completedKeyPoints)
+        public TourExecution Create(TourExecution tourExecution)
         {
-            TourExecution tourExecution = new TourExecution
-            {
-                TouristEquipment = equipments,
-                CompletedKeyPoints = completedKeyPoints
-            };
 
             _dbContext.TourExecutions.Add(tourExecution);
             _dbContext.SaveChanges();
 
             return tourExecution;
-        }
-
-        public TourExecution Read(long id)
-        {
-           
-            return _dbContext.TourExecutions
-                .Where(te => te.Id == id)
-                .Include(te => te.TouristEquipment)
-                .Include(te => te.CompletedKeyPoints)
-                .FirstOrDefault();
         }
 
         public TourExecution Update(TourExecution aggregateRoot)
@@ -62,6 +47,21 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
         }
 
+        public TourExecution Get(int id)
+        {
+            return _dbContext.TourExecutions
+               .Where(te => te.Id == id)
+               .Include(te => te.TouristEquipment)
+               .FirstOrDefault();
+        }
 
+        public TourExecution GetByUserAndTourIds(int touristId, int tourId)
+        {
+            return _dbContext.TourExecutions
+               .Where(te => te.TouristId == touristId
+                           && te.TourId == tourId)
+               .Include(te => te.TouristEquipment)
+               .FirstOrDefault();
+        }
     }
 }

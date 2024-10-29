@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Stakeholders.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,52 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public DateTime LastActivity { get; private set; }
         public ExecutionStatus Status { get; private set; }
         public float CompletedPercentage { get; private set; }
-        public List<Equipment> TouristEquipment { get;  set; }
+        public List<Equipment> TouristEquipment { get;  set; } = new List<Equipment>();
+        public List<CompletedKeyPoints> CompletedKeyPoints { get;  set; } = new List<CompletedKeyPoints>();
+        public List<TourDuration> TransportationType { get;  set; } = new List<TourDuration>();
 
-        public List<CompletedKeyPoints> CompletedKeyPoints { get;  set; }
         //public ... CurrentTouristLocation { get; private set; }
-        //public ... TransportationType { get; private set; }
+
+        public TourExecution(){  }
+        public TourExecution(int tourId, int touristId,DateTime tourStartDate,DateTime tourEndDate, DateTime lastActivity,ExecutionStatus status,float completedPercentage)
+        {
+            TourId = tourId;
+            TouristId = touristId;
+            TourStartDate = tourStartDate;
+            TourEndDate = tourEndDate;
+            LastActivity = lastActivity;
+            Status = status;
+            CompletedPercentage = completedPercentage;
+        }
+
+        public void StartNewTour()
+        { 
+            TourStartDate = DateTime.UtcNow;
+            LastActivity = DateTime.UtcNow;
+            Status = ExecutionStatus.ONGOING;
+            CompletedPercentage = 0;
+
+        }
+        public void LeaveTour()
+        {
+            TourEndDate = DateTime.UtcNow;
+            Status = ExecutionStatus.ABANDONED;
+        }
+
+        public void SuccesfullyFinishTour()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCompletedKeyPoint()
+        {
+            throw new NotImplementedException();
+        }
+
+         
+      
+
+
 
 
 

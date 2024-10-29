@@ -27,12 +27,12 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public DateTime Time { get; private set; }
         public Status Status { get; private set; }
         public int TouristId { get; private set; }
-        public string Comment { get; private set; }
         public DateTime? SolvingDeadline { get; private set; }
+        public string? Comment { get; private set; } = "";
         public List<Message> Messages { get; protected set; } = new List<Message>();
         public List<Notification> Notifications { get; protected set; } = new List<Notification>();
 
-        public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time, Status status, int touristId, string comment, DateTime? solvingDeadline)
+        public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time, Status status, int touristId, string comment)
         {
             //if (tourId < 0)
             //    throw new ArgumentException("TourId must be 0 or positive number", nameof(tourId));
@@ -49,9 +49,6 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             if (time > DateTime.Now)
                 throw new ArgumentException("Time cannot be in the future", nameof(time));
 
-            if (solvingDeadline < DateTime.Now)
-                throw new ArgumentException("Time cannot be in the past", nameof(solvingDeadline));
-
             TourId = tourId;
             Category = category;
             Priority = priority;
@@ -60,7 +57,6 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             Status = status;
             TouristId = touristId;
             Comment = comment;
-            SolvingDeadline = solvingDeadline;
         }
         public void SetSolvingDeadline(DateTime solvingDeadline)
         {

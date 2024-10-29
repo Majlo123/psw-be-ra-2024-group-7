@@ -1,7 +1,8 @@
 ﻿using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Shopping.Core.Domain;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
-using Explorer.Tours.Infrastructure.Database;
+using Explorer.Shopping.Core.Domain.ShoppingCarts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,12 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
         public ItemRepository(ShoppingContext dbContext) : base(dbContext)
         {
         }
-
+        public List<Item> GetItemsByTourIds(List<long> tourIds)
+        {
+            return DbContext.Items
+                .Where(item => tourIds.Contains(item.ItemId))
+                .ToList();
+        }
         public Item GetByItemId(long itemId)
         {
             var item = DbContext.Items.FirstOrDefault(i => i.ItemId== itemId);

@@ -1,7 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Domain.ShoppingCarts;
-using Explorer.Tours.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
         {
             return DbContext.PurchaseTokens.Where(t => t.UserId == userId).ToList();
         }
-
+       
         public bool ExistsByTourAndUser(long tourId, long userId)
         {
             return DbContext.PurchaseTokens.Any(t => t.TourId == tourId && t.UserId == userId);

@@ -19,34 +19,34 @@ public class ShoppingCartController : BaseApiController
         _shoppingCartService = shoppingCartService;
     }
 
-    [HttpGet]
-    public ActionResult<ShoppingCartDto> GetByUser([FromQuery] int touristId)
+    [HttpGet("{touristId:int}")]
+    public ActionResult<ShoppingCartDto> GetByUser(int touristId)
     {
-        if (User.PersonId() != touristId) return CreateResponse(Result.Fail(FailureCode.Forbidden));
-
         var result = _shoppingCartService.GetByUser(touristId);
         return CreateResponse(result);
     }
-
-    [HttpPut("add")]
-    public ActionResult<ShoppingCartDto> AddItem([FromBody] ItemDto orderItem)
+    [HttpGet("purchased/{touristId:int}")]
+    public ActionResult<ShoppingCartDto> GetPurchasedTours(int touristId)
     {
-        var result = _shoppingCartService.AddItem(orderItem, User.PersonId());
+        var result = _shoppingCartService.GetPurchasedTours(touristId);
+        return CreateResponse(result);
+    }
+    [HttpPut("add/{touristId:int}")]
+    public ActionResult<ShoppingCartDto> AddItem([FromBody] ItemDto orderItem, int touristId)
+    {
+        var result = _shoppingCartService.AddItem(orderItem, touristId);
         return CreateResponse(result);
     }
 
-    [HttpPut("remove")]
-    public ActionResult<ShoppingCartDto> RemoveItem([FromBody] ItemDto orderItem)
+    [HttpPut("remove/{touristId:int}")]
+    public ActionResult<ShoppingCartDto> RemoveItem([FromBody] ItemDto orderItem, int touristId)
     {
-        var result = _shoppingCartService.RemoveItem(orderItem, User.PersonId());
+        var result = _shoppingCartService.RemoveItem(orderItem, touristId);
         return CreateResponse(result);
     }
-
-    [HttpPut("checkout")]
-    public ActionResult<ShoppingCartDto> Checkout([FromQuery] int touristId)
+    [HttpPut("checkout/{touristId:int}")]
+    public ActionResult<ShoppingCartDto> Checkout(int touristId)
     {
-        if (User.PersonId() != touristId) return CreateResponse(Result.Fail(FailureCode.Forbidden));
-
         var result = _shoppingCartService.CheckOut(touristId);
         return CreateResponse(result);
     }

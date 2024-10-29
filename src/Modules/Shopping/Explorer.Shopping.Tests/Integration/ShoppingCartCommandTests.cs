@@ -1,7 +1,9 @@
 ﻿using Explorer.API.Controllers.Tourist.Shopping;
 using Explorer.Shopping.API.Dtos;
 using Explorer.Shopping.API.Public;
+using Explorer.Shopping.Infrastructure.Database;
 using Explorer.Shopping.Tests;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +15,6 @@ namespace Explorer.Payments.Tests.Integration
     public class ShoppingCartCommandTests : BaseShoppingIntegrationTest
     {
         public ShoppingCartCommandTests(ShoppingTestFactory factory) : base(factory) { }
-
         [Fact]
         public void Adds_item()
         {
@@ -24,14 +25,14 @@ namespace Explorer.Payments.Tests.Integration
 
             var item = new ItemDto()
             {
-                SellerId = -1,
-                ItemId = -4,
+                SellerId = -12,
+                ItemId = -3,
                 Name = "Zimovanje na Tari",
                 Price = 200
             };
 
             // Act
-            var result = ((ObjectResult)controller.AddItem(item).Result)?.Value as ShoppingCartDto;
+            var result = ((ObjectResult)controller.AddItem(item,-21).Result)?.Value as ShoppingCartDto;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -59,7 +60,7 @@ namespace Explorer.Payments.Tests.Integration
             };
 
             // Act
-            var result = ((ObjectResult)controller.RemoveItem(item).Result)?.Value as ShoppingCartDto;
+            var result = ((ObjectResult)controller.RemoveItem(item,-21).Result)?.Value as ShoppingCartDto;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -79,5 +80,6 @@ namespace Explorer.Payments.Tests.Integration
                 ControllerContext = BuildContext("-21")
             };
         }
+        
     }
 }

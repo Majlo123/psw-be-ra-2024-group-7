@@ -64,6 +64,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public void AddMessage(Message message)
         {
             if (message == null) throw new ArgumentNullException(nameof(message));
+            Messages ??= new List<Message>();
             Messages.Add(message);
         }
     }

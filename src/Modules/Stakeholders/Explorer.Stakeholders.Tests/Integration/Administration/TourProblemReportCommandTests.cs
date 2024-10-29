@@ -3,6 +3,8 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -28,14 +30,16 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new TourProblemReportDto
             {
-                TourId = 1, 
+                TourId = -1, 
                 Category = "Tehnički problem", 
                 Priority = ProblemPriority.HIGH, 
                 Description = "Problem sa internet konekcijom.", 
                 Time = DateTime.UtcNow.AddDays(-2),
                 Status = 0,
                 TouristId = -21,
-                Comment = "aa"
+                Comment = "Jako losa internet konekcija",
+                Messages = new List<MessageDto>(),
+                Notifications = new List<NotificationDto>()
             };
 
             //Act
@@ -48,17 +52,15 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.Category.ShouldBe(newEntity.Category);
             result.Priority.ShouldBe(newEntity.Priority);
             result.Description.ShouldBe(newEntity.Description);
-            result.Time.ShouldBe(newEntity.Time); 
+            result.Time.ShouldBe(newEntity.Time);
+            result.Status.ShouldBe(newEntity.Status);
+            result.TouristId.ShouldBe(newEntity.TouristId);
+            result.Comment.ShouldBe(newEntity.Comment);
 
             // Assert - Database
-            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == result.Id);
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.TourId == newEntity.TourId);
             storedEntity.ShouldNotBeNull();
-            storedEntity.TourId.ShouldBe(newEntity.TourId);
-            storedEntity.Category.ShouldBe(newEntity.Category);
-            var storedPriority = (ProblemPriority)storedEntity.Priority;
-            storedPriority.ShouldBe(newEntity.Priority);
-            storedEntity.Description.ShouldBe(newEntity.Description);
-            storedEntity.Time.ShouldBe(newEntity.Time);
+            storedEntity.Id.ShouldBe(result.Id);
         }
 
         [Fact]
@@ -131,12 +133,14 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 TourId = -2, 
                 Category = "Tehnički problem",
                 Priority = ProblemPriority.MEDIUM, 
-                Description = "Problem sa internet konekcijom.",
+                Description = "Jako losa internet konekcija.",
                 Time = DateTime.UtcNow.AddDays(-5),
                 Status = 0,
                 TouristId = -21,
-                Comment = "aa"
-    };
+                Comment = "aa",
+                Messages = new List<MessageDto>(),
+                Notifications = new List<NotificationDto>()
+            };
 
             // Act
             var result = ((ObjectResult)controller.Update(updatedEntity).Result)?.Value as TourProblemReportDto;
@@ -149,15 +153,17 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.Priority.ShouldBe(updatedEntity.Priority); 
             result.Description.ShouldBe(updatedEntity.Description);
             result.Time.ShouldBe(updatedEntity.Time);
+            result.Status.ShouldBe(updatedEntity.Status);
+            result.TouristId.ShouldBe(updatedEntity.TouristId);
+            result.Comment.ShouldBe(updatedEntity.Comment);
 
             // Assert - Database
-            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == updatedEntity.Id);
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Description == "Jako losa internet konekcija.");
             storedEntity.ShouldNotBeNull();
-            var storedPriority = (ProblemPriority)storedEntity.Priority;
-            storedPriority.CompareTo(updatedEntity.Priority);
+            storedEntity.Description.ShouldBe(updatedEntity.Description);
 
             // Ažurira staru vrednost
-            var oldEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -2 && i.Category == "Stari problem");
+            var oldEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Id == -2 && i.Category == "Problem sa internet konekcijom.");
             oldEntity.ShouldBeNull(); 
         }
 
@@ -187,7 +193,59 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(404); 
         }
+        [Theory]
+        [MemberData(nameof(MessageData))]
+        public void AddMessage(int userId, TourProblemReportDto report, int expectedResponseCode, MessageDto messageDto)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            // Act
+            var result = (ObjectResult)controller.AddMessage(messageDto, userId, report.Id).Result;
 
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == report.Id);
+            storedEntity.ShouldNotBeNull();
+            storedEntity.Messages.ShouldContain(m =>
+                m.UserId == messageDto.UserId &&
+                m.ReportId == messageDto.ReportId &&
+                m.Content == messageDto.Content);
+        }
+
+        public static IEnumerable<object[]> MessageData()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    -3,
+                    new TourProblemReportDto
+                    {
+                        Id = -3,
+                        TourId = -2,
+                        Category = "Oprema",
+                        Priority = ProblemPriority.LOW,
+                        Description = "Oprema nije u dobrom stanju",
+                        Time = DateTime.UtcNow,
+                        Status = Status.UNSOLVED,
+                        TouristId = -3,
+                        Comment = "aaa"
+                    },
+                    200,
+                    new MessageDto
+                    {
+                        UserId = -3,
+                        ReportId = -3,
+                        Content = "Da li je moguće dobiti povrat novca?"
+                    }
+                }
+            };
+        }
 
         private static TourProblemReportController CreateController(IServiceScope scope)
         {

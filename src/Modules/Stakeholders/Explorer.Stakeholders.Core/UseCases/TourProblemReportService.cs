@@ -42,7 +42,6 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             foreach (var report in reports.Results)
             {
-                _tourProblemReportRepository.Update(report);
                 var tourResult = _internalTourService.Get(report.TourId);
                 if(!tourResult.IsSuccess || tourResult.Value.AuthorId != authorId) continue;
                 var reportDto = new TourProblemReportDto
@@ -55,7 +54,13 @@ namespace Explorer.Stakeholders.Core.UseCases
                     Time = report.Time,
                     Status = (Status)report.Status,
                     TouristId = report.TouristId,
-                    Comment = report.Comment
+                    Comment = report.Comment,
+                    Messages = report.Messages.Select(message => new MessageDto
+                    {
+                        UserId = message.UserId,
+                        ReportId = message.ReportId,
+                        Content = message.Content
+                    }).ToList()
                 };
                 authorReports.Add(reportDto);
             }
@@ -68,6 +73,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             try
             {
                 var report = _tourProblemReportRepository.Get(reportId);
+                if (report == null) throw new Exception("Report not found.");
 
                 var message = _mapper.Map<MessageDto, Message>(messageDto);
                 message.UserId = userId;

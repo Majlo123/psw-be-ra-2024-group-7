@@ -14,5 +14,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         TourProblemReport Get(int id);
         PagedResult<TourProblemReport> GetByTouristId(int id, int page, int pageSize);
         PagedResult<TourProblemReport> GetPaged(int page, int pageSize);
+        TourProblemReport Update(TourProblemReport tourProblemReport);
     }
 }

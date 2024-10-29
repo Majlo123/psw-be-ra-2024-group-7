@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Shopping.API.Dtos;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Authorization;
@@ -63,6 +64,13 @@ namespace Explorer.API.Controllers.Tourist.Administration
         public ActionResult Delete(int id)
         {
             var result = _tourProblemReportService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("addMessage/{userId:int}/{reportId:int}")]
+        public ActionResult<TourProblemReportDto> AddMessage([FromBody] MessageDto message, int userId, int reportId)
+        {
+            var result = _tourProblemReportService.AddMessage(message, userId, reportId);
             return CreateResponse(result);
         }
     }

@@ -13,9 +13,9 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {
     public class Message : ValueObject<Message>
     {
-        public int UserId { get; private set; }
-        public int ReportId { get; private set; }
-        public string Content { get; private set; }
+        public int UserId { get; set; }
+        public int ReportId { get; set; }
+        public string Content { get; set; }
 
         [JsonConstructor]
         public Message(int userId, int reportId, string content) 

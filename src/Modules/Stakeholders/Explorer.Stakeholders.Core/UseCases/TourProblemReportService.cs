@@ -13,12 +13,20 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class TourProblemReportService : CrudService<TourProblemReportDto, TourProblemReport>, ITourProblemReportService
     {
+        private readonly IMapper _mapper;
         private readonly ITourProblemReportRepository _tourProblemReportRepository;
         private readonly IInternalTourService _internalTourService;
         public TourProblemReportService(ICrudRepository<TourProblemReport> repository, IMapper mapper, ITourProblemReportRepository tourProblemReportRepository, IInternalTourService internalTourService) : base(repository, mapper)
         {
+            _mapper = mapper;
             _tourProblemReportRepository = tourProblemReportRepository;
             _internalTourService = internalTourService;
+        }
+
+        public Result<PagedResult<TourProblemReportDto>> GetPaged(int page, int pageSize)
+        {
+            var result = _tourProblemReportRepository.GetPaged(page, pageSize);
+            return MapToDto(result);
         }
 
         public Result<PagedResult<TourProblemReportDto>> GetByTouristId(int id, int page, int pageSize)
@@ -34,6 +42,7 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             foreach (var report in reports.Results)
             {
+                _tourProblemReportRepository.Update(report);
                 var tourResult = _internalTourService.Get(report.TourId);
                 if(!tourResult.IsSuccess || tourResult.Value.AuthorId != authorId) continue;
                 var reportDto = new TourProblemReportDto
@@ -54,5 +63,30 @@ namespace Explorer.Stakeholders.Core.UseCases
             return new PagedResult<TourProblemReportDto>(authorReports, authorReports.Count);
         }
 
+        public Result<TourProblemReportDto> AddMessage(MessageDto messageDto, int userId, int reportId)
+        {
+            try
+            {
+                var report = _tourProblemReportRepository.Get(reportId);
+
+                var message = _mapper.Map<MessageDto, Message>(messageDto);
+                message.UserId = userId;
+                message.ReportId = reportId;
+
+                report.AddMessage(message);
+
+                var result = _tourProblemReportRepository.Update(report);
+
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
     }
 }

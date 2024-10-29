@@ -45,12 +45,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
 
-        
         public void DeleteEquipments(long id)
         {
             _tourRepository.DeleteEquipmenmts(id);
         }
 
+        public Result<TourDto> Publish(TourDto tourDto)
+        {
+            try
+            {
+                Tour tour = MapToDomain(tourDto);
+                tour = tour.Publish();
+                return base.Update(MapToDto(tour));
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
         public Result<List<TourDto>> GetMany(List<long> tourIds)
         {
             var tours = CrudRepository.GetMany(tourIds);

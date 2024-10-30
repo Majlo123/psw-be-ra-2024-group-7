@@ -1,4 +1,5 @@
-﻿using Explorer.API.Controllers.Tourist.Administration;
+﻿using Explorer.API.Controllers.User.TourProblem;
+using Explorer.API.Controllers.Tourist.TourProblem;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
@@ -26,7 +27,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new TourProblemReportDto
             {
@@ -43,7 +44,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
 
             //Act
-            var result = ((ObjectResult)controller.Create(newEntity).Result)?.Value as TourProblemReportDto;
+            var result = ((ObjectResult)touristController.Create(newEntity).Result)?.Value as TourProblemReportDto;
 
             //Assert - Response
             result.ShouldNotBeNull();
@@ -68,7 +69,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
             var updatedEntity = new TourProblemReportDto
             {
                 Priority = ProblemPriority.HIGH,
@@ -77,7 +78,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
 
             // Act
-            var result = (ObjectResult)controller.Create(updatedEntity).Result;
+            var result = (ObjectResult)touristController.Create(updatedEntity).Result;
 
             // Assert
             result.ShouldNotBeNull();
@@ -89,11 +90,11 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
-            var result = (OkResult)controller.Delete(-1);
+            var result = (OkResult)touristController.Delete(-1);
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -109,10 +110,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
 
             // Act
-            var result = (ObjectResult)controller.Delete(-1000);
+            var result = (ObjectResult)touristController.Delete(-1000);
 
             // Assert
             result.ShouldNotBeNull();
@@ -124,7 +125,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             var updatedEntity = new TourProblemReportDto
@@ -143,7 +144,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
 
             // Act
-            var result = ((ObjectResult)controller.Update(updatedEntity).Result)?.Value as TourProblemReportDto;
+            var result = ((ObjectResult)touristController.Update(updatedEntity).Result)?.Value as TourProblemReportDto;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -172,7 +173,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var touristController = CreateTouristController(scope);
             var updatedEntity = new TourProblemReportDto
             {
                 Id = -1000, 
@@ -187,7 +188,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
 
             // Act
-            var result = (ObjectResult)controller.Update(updatedEntity).Result;
+            var result = (ObjectResult)touristController.Update(updatedEntity).Result;
 
             // Assert
             result.ShouldNotBeNull();
@@ -199,10 +200,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreateController(scope);
+            var userController = CreateUserController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             // Act
-            var result = (ObjectResult)controller.AddMessage(messageDto, userId, report.Id).Result;
+            var result = (ObjectResult)userController.AddMessage(messageDto, userId, report.Id).Result;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -247,9 +248,16 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
         }
 
-        private static TourProblemReportController CreateController(IServiceScope scope)
+        private static TourProblemUserController CreateUserController(IServiceScope scope)
         {
-            return new TourProblemReportController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
+            return new TourProblemUserController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
+            {
+                ControllerContext = BuildContext("-1")
+            };
+        }
+        private static TourProblemTouristController CreateTouristController(IServiceScope scope)
+        {
+            return new TourProblemTouristController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
             {
                 ControllerContext = BuildContext("-1")
             };

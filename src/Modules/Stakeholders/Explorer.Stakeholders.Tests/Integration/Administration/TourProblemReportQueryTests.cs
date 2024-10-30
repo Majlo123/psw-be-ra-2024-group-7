@@ -1,4 +1,4 @@
-﻿using Explorer.API.Controllers.Tourist.Administration;
+﻿using Explorer.API.Controllers.Administrator.TourProblem;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
@@ -30,9 +30,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.TotalCount.ShouldBe(4);
         }
 
-        private static TourProblemReportController CreateController(IServiceScope scope)
+        private static TourProblemAdministratorController CreateController(IServiceScope scope)
         {
-            return new TourProblemReportController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
+            return new TourProblemAdministratorController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
             {
                 ControllerContext = BuildContext("-1")
             };

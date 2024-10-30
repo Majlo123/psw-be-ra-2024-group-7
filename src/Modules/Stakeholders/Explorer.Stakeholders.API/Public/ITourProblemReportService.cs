@@ -13,8 +13,7 @@ namespace Explorer.Stakeholders.API.Public
         Result<TourProblemReportDto> Create(TourProblemReportDto tourProblemReport);
         Result<TourProblemReportDto> Update(TourProblemReportDto tourProblemReport);
         Result Delete(int id);
-
+        Result<TourProblemReportDto> AddMessage(MessageDto messageDto, int userId, int reportId);
         Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReportDto);
-
     }
 }

@@ -15,21 +15,22 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class TourProblemReportService : CrudService<TourProblemReportDto, TourProblemReport>, ITourProblemReportService
     {
-        //private readonly ITourProblemReportRepository _tourProblemReportRepository;
-        private readonly ICrudRepository<TourProblemReport> _repository;
         private readonly IMapper _mapper;
-
-        public TourProblemReportService(ICrudRepository<TourProblemReport> repository, IMapper mapper) : base(repository, mapper)
-        {
-            _repository = repository;
-            _mapper = mapper;
-        }
+        private readonly ICrudRepository<TourProblemReport> _repository;
         private readonly ITourProblemReportRepository _tourProblemReportRepository;
         private readonly IInternalTourService _internalTourService;
         public TourProblemReportService(ICrudRepository<TourProblemReport> repository, IMapper mapper, ITourProblemReportRepository tourProblemReportRepository, IInternalTourService internalTourService) : base(repository, mapper)
         {
+            _mapper = mapper;
+            _repository = repository;
             _tourProblemReportRepository = tourProblemReportRepository;
             _internalTourService = internalTourService;
+        }
+
+        public Result<PagedResult<TourProblemReportDto>> GetPaged(int page, int pageSize)
+        {
+            var result = _tourProblemReportRepository.GetPaged(page, pageSize);
+            return MapToDto(result);
         }
 
         public Result<PagedResult<TourProblemReportDto>> GetByTouristId(int id, int page, int pageSize)
@@ -57,12 +58,45 @@ namespace Explorer.Stakeholders.Core.UseCases
                     Time = report.Time,
                     Status = (Status)report.Status,
                     TouristId = report.TouristId,
-                    Comment = report.Comment
+                    Comment = report.Comment,
+                    Messages = report.Messages.Select(message => new MessageDto
+                    {
+                        UserId = message.UserId,
+                        ReportId = message.ReportId,
+                        Content = message.Content
+                    }).ToList()
                 };
                 authorReports.Add(reportDto);
             }
 
             return new PagedResult<TourProblemReportDto>(authorReports, authorReports.Count);
+        }
+
+        public Result<TourProblemReportDto> AddMessage(MessageDto messageDto, int userId, int reportId)
+        {
+            try
+            {
+                var report = _tourProblemReportRepository.Get(reportId);
+                if (report == null) throw new Exception("Report not found.");
+
+                var message = _mapper.Map<MessageDto, Message>(messageDto);
+                message.UserId = userId;
+                message.ReportId = reportId;
+
+                report.AddMessage(message);
+
+                var result = _tourProblemReportRepository.Update(report);
+
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
         }
 
         public Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReportDto)

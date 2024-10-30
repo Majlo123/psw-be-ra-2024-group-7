@@ -2,6 +2,7 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -169,7 +170,7 @@ namespace Explorer.Stakeholders.Tests.Integration
 
         private static TouristLocationController CreateController(IServiceScope scope)
         {
-            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>())
+            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
             {
                 ControllerContext = BuildContext("-1")
             };

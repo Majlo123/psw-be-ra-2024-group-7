@@ -10,6 +10,7 @@ namespace Explorer.Stakeholders.API.Dtos
     {
         public int Id { get; set; }
         public int TouristId { get; set; }
+        public int TourId { get; set; }
         public float Longitude { get; set; }
         public float Latitude { get; set; }
         public bool IsTourActive { get; set; }

@@ -19,6 +19,8 @@ namespace Explorer.Tours.API.Public.Administration
         void DeleteEquipments(long id);
         Result<TourDto> Publish(TourDto tour);
         Result<TourDto> Archive(TourDto tour);
+        
+        Result<TourDto> UpdateTourLength(TourDto tour);
 
     }
 }

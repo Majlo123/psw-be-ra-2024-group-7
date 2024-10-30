@@ -73,6 +73,12 @@ namespace Explorer.Tours.Core.Domain
             ArchiveTime = DateTime.UtcNow;
             return this;
         }
+        
+        public Tour UpdateTourLength(double length)
+        {
+            Length= length;
+            return this;
+        }
 
         public bool CanArchive()
         {

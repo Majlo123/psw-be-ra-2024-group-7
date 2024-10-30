@@ -76,6 +76,14 @@ namespace Explorer.API.Controllers.Author.Administration
             return CreateResponse(result);
         }
 
+        [HttpPut]
+        [Route("length/{id:int}")]
+        public ActionResult<TourDto> UpdateTourLength([FromBody] TourDto tour)
+        {
+            var result = _tourService.UpdateTourLength(tour);
+            return CreateResponse(result);
+        }
+
         private bool IsAuthorized(long id, string tokenHeader)
         {
             var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();

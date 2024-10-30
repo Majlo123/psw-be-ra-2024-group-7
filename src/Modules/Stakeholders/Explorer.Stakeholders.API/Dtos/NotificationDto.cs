@@ -12,9 +12,9 @@ public enum NotificationType
 }
 public class NotificationDto
 {
-    public int SenderId { get; set; }
+    public int Id { get; set; }
+    public int ReportId { get; set; }
     public int RecipientId { get; set; }
     public bool IsRead { get; set; }
     public NotificationType NotificationType { get; set; }
-    public string Content { get; set; }
 }

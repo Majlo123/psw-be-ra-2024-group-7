@@ -68,11 +68,5 @@ namespace Explorer.API.Controllers.Tourist.Administration
         }
 
 
-        [HttpGet("notifications/{loggedId}")]
-        public ActionResult<List<NotificationDto>> GetLoggedUserNotifications(int loggedId, int page, int pageSize)
-        {
-            var notifications = _tourProblemReportService.GetLoggedUserNotifications(loggedId, page, pageSize);
-            return Ok(notifications); // Return the list of notifications
-        }
     }
 }

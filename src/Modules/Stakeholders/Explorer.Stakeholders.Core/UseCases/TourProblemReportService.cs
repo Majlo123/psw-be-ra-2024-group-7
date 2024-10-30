@@ -55,26 +55,7 @@ namespace Explorer.Stakeholders.Core.UseCases
         }
 
 
-        //Iva dodala za notifikacije
-        public List<NotificationDto> GetLoggedUserNotifications(int loggedId, int page, int pageSize)
-        {
-            // Retrieve the list of tour problem reports
-            var tourProblems = _tourProblemReportRepository.GetPaged(page, pageSize).Results;
-
-            // Get notifications for the logged-in user
-            var notifications = new TourProblemReport().getLoggedUserNotifications(tourProblems, loggedId);
-
-            // Map Notification to NotificationDto
-            return notifications.Select(notification => new NotificationDto
-            {
-                SenderId = notification.SenderId,
-                RecipientId = notification.RecipientId,
-                IsRead = notification.IsRead,
-                NotificationType = (API.Dtos.NotificationType)notification.NotificationType,
-                Content = notification.Content
-            }).ToList();
-        }
-        //
+        
 
     }
 }

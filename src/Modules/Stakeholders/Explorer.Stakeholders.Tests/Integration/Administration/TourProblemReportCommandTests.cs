@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.API.Controllers.Administrator.TourProblem;
 
 namespace Explorer.Stakeholders.Tests.Integration.Administration
 {
@@ -40,7 +41,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 TouristId = -21,
                 Comment = "Jako losa internet konekcija",
                 Messages = new List<MessageDto>(),
-                Notifications = new List<NotificationDto>()
+                Notifications = new List<NotificationDto>(),
+                SolvingDeadline = DateTime.UtcNow.AddYears(2)
             };
 
             //Act
@@ -57,6 +59,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.Status.ShouldBe(newEntity.Status);
             result.TouristId.ShouldBe(newEntity.TouristId);
             result.Comment.ShouldBe(newEntity.Comment);
+            result.SolvingDeadline.ShouldBe(newEntity.SolvingDeadline);
+
 
             // Assert - Database
             var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.TourId == newEntity.TourId);
@@ -140,7 +144,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 TouristId = -21,
                 Comment = "aa",
                 Messages = new List<MessageDto>(),
-                Notifications = new List<NotificationDto>()
+                Notifications = new List<NotificationDto>(),
+                SolvingDeadline = DateTime.UtcNow.AddDays(5)
             };
 
             // Act
@@ -157,6 +162,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.Status.ShouldBe(updatedEntity.Status);
             result.TouristId.ShouldBe(updatedEntity.TouristId);
             result.Comment.ShouldBe(updatedEntity.Comment);
+            result.SolvingDeadline.ShouldBe(updatedEntity.SolvingDeadline);
 
             // Assert - Database
             var storedEntity = dbContext.TourProblemReports.FirstOrDefault(i => i.Description == "Jako losa internet konekcija.");
@@ -184,7 +190,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Time = DateTime.Now,
                 Status = 0,
                 TouristId = -21,
-                Comment = "aa"
+                Comment = "aa",
+                SolvingDeadline = DateTime.UtcNow.AddDays(5)
             };
 
             // Act
@@ -247,6 +254,36 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 }
             };
         }
+        [Fact]
+        public void SetSolvingDeadline_throws_exception_for_past_date()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var authorController = CreateAdministratorController(scope);
+            var reportId = -1;
+            var updatedEntity = new TourProblemReportDto
+            {
+                Id = -1000,
+                TourId = 1,
+                Category = "Tehnički problem",
+                Priority = ProblemPriority.MEDIUM,
+                Description = "Problem sa internet konekcijom.",
+                Time = DateTime.Now,
+                Status = 0,
+                TouristId = -21,
+                Comment = "aa",
+                SolvingDeadline = DateTime.UtcNow.AddDays(-5)
+            };
+
+            // Act
+            var exception = Assert.Throws<ArgumentException>(() =>
+                authorController.SetSolvingDeadline(reportId, updatedEntity));
+
+            // Assert
+            exception.Message.ShouldBe("Time cannot be in the past");
+        }
+
+
 
         private static TourProblemUserController CreateUserController(IServiceScope scope)
         {
@@ -258,6 +295,13 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
         private static TourProblemTouristController CreateTouristController(IServiceScope scope)
         {
             return new TourProblemTouristController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
+            {
+                ControllerContext = BuildContext("-1")
+            };
+        }
+        private static TourProblemAdministratorController CreateAdministratorController(IServiceScope scope)
+        {
+            return new TourProblemAdministratorController(scope.ServiceProvider.GetRequiredService<ITourProblemReportService>())
             {
                 ControllerContext = BuildContext("-1")
             };

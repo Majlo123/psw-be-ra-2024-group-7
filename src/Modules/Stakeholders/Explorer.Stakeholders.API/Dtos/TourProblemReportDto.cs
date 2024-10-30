@@ -9,8 +9,10 @@ namespace Explorer.Stakeholders.API.Dtos
     }
     public enum Status
     {
-        UNSOLVED,
-        SOLVED,
+        REPORTED,    // Problem je prijavljen ali nije zadat rok za resavanje od strane admina
+        SOLVING,     // Admin je zadao rok za resavanje
+        SOLVED,      // Problem je rešen
+        UNSOLVED,    // Problem nije rešen
         CLOSED
     }
     public class TourProblemReportDto
@@ -23,6 +25,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public DateTime Time { get; set; }
         public Status Status { get;  set; }
         public int TouristId { get;  set; }
+        public DateTime SolvingDeadline { get; set; }
         public string? Comment { get; set; } = "";
         public List<MessageDto> Messages { get;  set; } = new List<MessageDto>();
         public List<NotificationDto> Notifications { get;  set; } = new List<NotificationDto>();

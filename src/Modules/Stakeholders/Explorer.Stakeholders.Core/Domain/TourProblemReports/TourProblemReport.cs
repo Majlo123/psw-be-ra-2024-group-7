@@ -12,9 +12,11 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 
     public enum Status
     {
-        UNSOLVED,
-        SOLVED,
-        CLOSED
+        REPORTED,    // Problem je prijavljen ali nije zadat rok za resavanje od strane admina
+        SOLVING,     // Admin je zadao rok za resavanje
+        SOLVED,      // Problem je rešen
+        UNSOLVED,    // Problem nije rešen
+        CLOSED       // Problem je zatvoren
     }
 
     public class TourProblemReport : Entity
@@ -26,6 +28,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public DateTime Time { get; private set; }
         public Status Status { get; private set; }
         public int TouristId { get; private set; }
+        public DateTime? SolvingDeadline { get; private set; }
         public string? Comment { get; private set; } = "";
         public List<Message> Messages { get; protected set; } = new List<Message>();
         public List<Notification> Notifications { get; protected set; } = new List<Notification>();
@@ -66,6 +69,14 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             if (message == null) throw new ArgumentNullException(nameof(message));
             Messages ??= new List<Message>();
             Messages.Add(message);
+        }
+        public void SetSolvingDeadline(DateTime solvingDeadline)
+        {
+            if (solvingDeadline < DateTime.Now)
+                throw new ArgumentException("Time cannot be in the past");
+
+            SolvingDeadline = solvingDeadline;
+            Status = Status.SOLVING;
         }
     }
 }

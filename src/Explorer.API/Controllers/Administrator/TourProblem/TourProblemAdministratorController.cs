@@ -23,6 +23,12 @@ namespace Explorer.API.Controllers.Administrator.TourProblem
             var result = _tourProblemReportService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+        [HttpPut("set-deadline/{id:int}")]
+        public ActionResult<TourProblemReportDto> SetSolvingDeadline(int id, [FromBody] TourProblemReportDto tourProblemReport)
+        {
+            var result = _tourProblemReportService.SetSolvingDeadline(id, tourProblemReport);
+            return CreateResponse(result);
+        }
     }
 }
 

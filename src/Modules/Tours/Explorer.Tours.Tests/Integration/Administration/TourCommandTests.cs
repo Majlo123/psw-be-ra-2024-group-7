@@ -210,6 +210,50 @@ public class TourCommandTests : BaseToursIntegrationTest
         storedEntity.Status.ShouldBe((Core.Domain.TourStatus)expectedStatus);
     }
 
+    [Theory]
+    [MemberData(nameof(ArchiveData))]
+    public void Archives(string authorId, TourDto tour, int expectedResponseCode, TourStatus expectedStatus)
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope, authorId);
+        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+        // Act
+        var result = (ObjectResult)controller.Archive(tour).Result;
+
+        // Assert - Response
+        result.ShouldNotBeNull();
+        result.StatusCode.ShouldBe(expectedResponseCode);
+
+        // Assert - Database
+        var storedEntity = dbContext.Tours.FirstOrDefault(t => t.Id == tour.Id);
+        storedEntity.ShouldNotBeNull();
+        storedEntity.Status.ShouldBe((Core.Domain.TourStatus)expectedStatus);
+    }
+
+    [Theory]
+    [MemberData(nameof(ReactivateData))]
+    public void Reactive(string authorId, TourDto tour, int expectedResponseCode, TourStatus expectedStatus)
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope, authorId);
+        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+        // Act
+        var result = (ObjectResult)controller.ReactivateTour(tour).Result;
+
+        // Assert - Response
+        result.ShouldNotBeNull();
+        result.StatusCode.ShouldBe(expectedResponseCode);
+
+        // Assert - Database
+        var storedEntity = dbContext.Tours.FirstOrDefault(t => t.Id == tour.Id);
+        storedEntity.ShouldNotBeNull();
+        storedEntity.Status.ShouldBe((Core.Domain.TourStatus)expectedStatus);
+    }
+
     public static IEnumerable<object[]> PublishData()
     {
         return new List<object[]>
@@ -233,7 +277,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime = null
                 },
                 400,
                 TourStatus.Draft
@@ -277,7 +322,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime=null
                 },
                 200,
                 TourStatus.Published
@@ -318,7 +364,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                     TourDurations = new List<TourDurationDto>(),
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime=null
                 },
                 400,
                 TourStatus.Draft
@@ -362,13 +409,147 @@ public class TourCommandTests : BaseToursIntegrationTest
                     },
                     Length = 0,
                     AuthorId = -12,
-                    PublishTime = null
+                    PublishTime = null,
+                    ArchiveTime= null
                 },
                 400,
                 TourStatus.Draft
             },
         };
+
+
     }
+
+    public static IEnumerable<object[]> ArchiveData()
+    {
+        return new List<object[]>
+        {
+            new object[]
+            {
+                "-12",
+                new TourDto
+                {
+                    Id = -1,
+                    Name = "Tura1",
+                    Difficulty = "Laka",
+                    Description = "Planinski hajk",
+                    Cost = 200,
+                    Status = (API.Dtos.TourStatus)TourStatus.Draft,
+                    Tags = "visina,priroda",
+                    KeyPoints = new List<KeyPointDto>(),
+                    TourDurations = new List<TourDurationDto>
+                    {
+                        new TourDurationDto { Duration = 10, TimeUnit = 0, TransportType = 0 }
+                    },
+                    Length = 0,
+                    AuthorId = -12,
+                    PublishTime = null,
+                    ArchiveTime = null
+                },
+                400,
+                TourStatus.Draft
+            },
+            new object[]
+            {
+                "-12",
+                new TourDto
+                {
+                    Id = -1,
+                    Name = "Tura1",
+                    Difficulty = "Laka",
+                    Description = "Planinski hajk",
+                    Cost = 200,
+                    Status = (API.Dtos.TourStatus)TourStatus.Published,
+                    Tags = "visina,priroda",
+                    KeyPoints = new List<KeyPointDto>
+                    {
+                         new KeyPointDto
+                            {
+                            Id = -1,
+                            Name = "test1",
+                            Description = "testDescription1",
+                            Image = "testImage1.jpg",
+                            Latitude = 10,
+                            Longitude = 101,
+                            },
+                            new KeyPointDto
+                            {
+                            Id = -2,
+                            Name = "test2",
+                            Description = "testDescription2",
+                            Image = "testImage2.jpg",
+                            Latitude = 20,
+                            Longitude = 22,
+                            },
+                    },
+                    TourDurations = new List<TourDurationDto>
+                    {
+                        new TourDurationDto { Duration = 10, TimeUnit = 0, TransportType = 0 }
+                    },
+                    Length = 0,
+                    AuthorId = -12,
+                    PublishTime = null,
+                    ArchiveTime=null
+                },
+                200,
+                TourStatus.Archived
+            }  
+        };
+    }
+
+    public static IEnumerable<object[]> ReactivateData()
+    {
+        return new List<object[]>
+        {
+            new object[]
+            {
+                "-12",
+                new TourDto
+                {
+                    Id = -1,
+                    Name = "Tura1",
+                    Difficulty = "Laka",
+                    Description = "Planinski hajk",
+                    Cost = 200,
+                    Status = (API.Dtos.TourStatus)TourStatus.Archived,
+                    Tags = "visina,priroda",
+                    KeyPoints = new List<KeyPointDto>
+                    {
+                         new KeyPointDto
+                            {
+                            Id = -1,
+                            Name = "test1",
+                            Description = "testDescription1",
+                            Image = "testImage1.jpg",
+                            Latitude = 10,
+                            Longitude = 101,
+                            },
+                            new KeyPointDto
+                            {
+                            Id = -2,
+                            Name = "test2",
+                            Description = "testDescription2",
+                            Image = "testImage2.jpg",
+                            Latitude = 20,
+                            Longitude = 22,
+                            },
+                    },
+                    TourDurations = new List<TourDurationDto>
+                    {
+                        new TourDurationDto { Duration = 10, TimeUnit = 0, TransportType = 0 }
+                    },
+                    Length = 0,
+                    AuthorId = -12,
+                    PublishTime = null,
+                    ArchiveTime=null
+                },
+                200,
+                TourStatus.Published
+            }
+        };
+    }
+
+
 
     private static TourController CreateController(IServiceScope scope, string authorId)
     {

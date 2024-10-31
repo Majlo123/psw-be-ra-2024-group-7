@@ -14,24 +14,18 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
     {
         public int CompletedKeyPointId { get; private set; }
         public DateTime ExecutionTime { get; private set; }
-        public int TouristId { get; private set; }
-        public int TourId { get; private set; }
 
         [JsonConstructor]
-        public CompletedKeyPoints(int keyPointId, DateTime executionTime, int touristId, int tourId)
+        public CompletedKeyPoints(DateTime executionTime, int completedKeyPointId)
         {
-            CompletedKeyPointId = keyPointId;
+            CompletedKeyPointId = completedKeyPointId;
             ExecutionTime = executionTime;
-            TouristId = touristId;
-            TourId = tourId;
         }
 
         protected override bool EqualsCore(CompletedKeyPoints completedKeyPoints)
         {
             return CompletedKeyPointId == completedKeyPoints.CompletedKeyPointId
-                       && ExecutionTime == completedKeyPoints.ExecutionTime
-                       && TouristId == completedKeyPoints.TouristId
-                       && TourId == completedKeyPoints.TourId;
+                       && ExecutionTime == completedKeyPoints.ExecutionTime;
         }
 
         protected override int GetHashCodeCore()
@@ -40,8 +34,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             {
                 int hashCode = CompletedKeyPointId.GetHashCode();
                 hashCode = (hashCode * 397) ^ ExecutionTime.GetHashCode();
-                hashCode = (hashCode * 397) ^ TouristId.GetHashCode();
-                hashCode = (hashCode * 397) ^ TourId.GetHashCode();
                 return hashCode;
             }
         }

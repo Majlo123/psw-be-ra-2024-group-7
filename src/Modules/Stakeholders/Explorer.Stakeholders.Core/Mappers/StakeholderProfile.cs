@@ -21,5 +21,6 @@ public class StakeholderProfile : Profile
         CreateMap<NotificationDto, Notification>().ReverseMap();
         // Mapiramo DTO na domensku klasu i obratno
         CreateMap<ApplicationGradeDto, ApplicationGrade>().ReverseMap();
+        CreateMap<TouristLocationDto, TouristLocation>().ReverseMap();
     }
 }

@@ -21,13 +21,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
                 .FirstOrDefault();
         }
 
-        public new TourProblemReport Update(TourProblemReport tourProblemReport)
-        {
-            DbContext.Entry(tourProblemReport).State = EntityState.Modified;
-            DbContext.SaveChanges();
-            return tourProblemReport;
-        }
-
         // Get a list of Tour Problems by Tourist Id
         public PagedResult<TourProblemReport> GetByTouristId(int touristId, int page, int pageSize)
         {
@@ -39,5 +32,11 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return task.Result;
         }
 
+        public PagedResult<TourProblemReport> GetPaged(int page, int pageSize)
+        {
+            var totalCount = _context.TourProblemReports.Count();
+            var reports = _context.TourProblemReports.GetPagedById(page, pageSize);
+            return reports.Result;
+        }
     }
 }

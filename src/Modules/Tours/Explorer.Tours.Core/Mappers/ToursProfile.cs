@@ -27,5 +27,6 @@ public class ToursProfile : Profile
                 .ToList()
             : new List<CompletedKeyPoints>())).ReverseMap();
 
+        CreateMap<TourDurationDto, TourDuration>().ReverseMap();
     }
 }

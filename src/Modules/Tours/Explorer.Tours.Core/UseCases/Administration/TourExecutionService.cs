@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class TourExecutionService : BaseService<TourExecutionDto, TourExecution>, ITourExecutionService
+    public class TourExecutionService : CrudService<TourExecutionDto, TourExecution>, ITourExecutionService
     {
         private readonly ITourExecutionRepository _tourExecutionRepository;
         public TourExecutionService(IMapper mapper, ITourExecutionRepository tourExecutionRepository)  : base(mapper)
@@ -59,21 +59,25 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         }
 
-        public Result<TourExecutionDto> StartNewTour(TourExecutionDto tourExecution)
+        public Result StartNewTour(TourExecutionDto tourExecution)
         {
             try
             {
-                TourExecution newTour = new TourExecution();
-                newTour = MapToDomain(tourExecution);
+                TourExecution newTour = MapToDomain(tourExecution);
                 newTour.StartNewTour();
-                var result = _tourExecutionRepository.Create(newTour);
-                return MapToDto(result);
+                var creationResult = _tourExecutionRepository.Create(newTour);
+
+                if (creationResult.IsSuccess)
+                {
+                    return Result.Ok(); 
+                }
+
+                return Result.Fail(creationResult.Errors); 
             }
             catch (ArgumentException e)
             {
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
-
         }
 
         public Result<TourExecutionDto> Update(TourExecutionDto tour)

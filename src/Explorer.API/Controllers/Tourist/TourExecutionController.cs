@@ -38,11 +38,20 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPost("startNewTour")]
-        public ActionResult<TourExecutionDto> StartNewTour([FromBody] TourExecutionDto tourExecution)
+        public IActionResult StartNewTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.StartNewTour(tourExecution);
-            return CreateResponse(result);
+ 
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
+    
 
         [HttpPost("leaveTour")]
         public ActionResult<TourExecutionDto> LeaveTour([FromBody] TourExecutionDto tourExecution)

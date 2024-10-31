@@ -84,20 +84,22 @@ namespace Explorer.Tours.Core.Domain
         {
             return Status == TourStatus.Published;
         }
-
-        public bool Valid()
-        {
-            throw new NotImplementedException();
-        }
         
         public void IncrementDuration(TourDuration tourDruation)
         {
             throw new NotImplementedException();
         }
 
-        public void IncrementLength(double length)
+        public Tour ReactivateTour()
         {
-            throw new NotSupportedException();
+            if (!CanReactivate())
+                throw new ArgumentException("Nije moguce re-aktivirati ovu turu jer nije arhivirana");
+            Status = TourStatus.Published;
+            return this;
+        }
+        public bool CanReactivate()
+        {
+            return Status == TourStatus.Archived;
         }
 
     }

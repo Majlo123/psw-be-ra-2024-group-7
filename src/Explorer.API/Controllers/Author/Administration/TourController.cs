@@ -84,6 +84,14 @@ namespace Explorer.API.Controllers.Author.Administration
             return CreateResponse(result);
         }
 
+        [HttpPut]
+        [Route("reactivate/{id:int}")]
+        public ActionResult<TourDto> ReactivateTour([FromBody] TourDto tour)
+        {
+            var result = _tourService.ReactivateTour(tour);
+            return CreateResponse(result);
+        }
+
         private bool IsAuthorized(long id, string tokenHeader)
         {
             var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();

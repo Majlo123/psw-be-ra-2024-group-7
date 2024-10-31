@@ -3,6 +3,7 @@ using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Explorer.Stakeholders.Core.Mappers;
 using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.Infrastructure.Authentication;
@@ -49,7 +50,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>),typeof(CrudDatabaseRepository<TouristEquipment, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<TouristLocation>), typeof(CrudDatabaseRepository<TouristLocation, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
-
+        services.AddScoped<ITourProblemReportRepository, TourProblemReportRepository>();
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         // Dodajemo repozitorijum za ApplicationGrade
         services.AddScoped(typeof(ICrudRepository<ApplicationGrade>), typeof(CrudDatabaseRepository<ApplicationGrade, StakeholdersContext>));

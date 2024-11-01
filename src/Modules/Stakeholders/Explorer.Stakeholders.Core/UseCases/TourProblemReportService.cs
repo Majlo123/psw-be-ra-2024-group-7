@@ -19,12 +19,15 @@ namespace Explorer.Stakeholders.Core.UseCases
         private readonly ICrudRepository<TourProblemReport> _repository;
         private readonly ITourProblemReportRepository _tourProblemReportRepository;
         private readonly IInternalTourService _internalTourService;
-        public TourProblemReportService(ICrudRepository<TourProblemReport> repository, IMapper mapper, ITourProblemReportRepository tourProblemReportRepository, IInternalTourService internalTourService) : base(repository, mapper)
+        private readonly INotificationService _notificationService;
+        public TourProblemReportService(ICrudRepository<TourProblemReport> repository, IMapper mapper, ITourProblemReportRepository tourProblemReportRepository, IInternalTourService internalTourService, INotificationService notificationService) : base(repository, mapper)
         {
             _mapper = mapper;
             _repository = repository;
             _tourProblemReportRepository = tourProblemReportRepository;
             _internalTourService = internalTourService;
+            _notificationService = notificationService;
+
         }
 
         public Result<PagedResult<TourProblemReportDto>> GetPaged(int page, int pageSize)
@@ -86,6 +89,27 @@ namespace Explorer.Stakeholders.Core.UseCases
                 report.AddMessage(message);
 
                 var result = _tourProblemReportRepository.Update(report);
+                //********Iva********
+                var autorId = _internalTourService.Get(report.TourId).Value.AuthorId;
+                if (userId == autorId)
+                {
+                    NotificationDto notification = new NotificationDto();
+                    notification.ReportId = reportId;
+                    notification.RecipientId = _tourProblemReportRepository.Get(reportId).TouristId;
+                    notification.IsRead = false;
+                    notification.NotificationType = API.Dtos.NotificationType.CHAT;
+                    _notificationService.Create(notification);
+                }
+                else
+                {
+                    NotificationDto notification = new NotificationDto();
+                    notification.ReportId = reportId;
+                    notification.RecipientId = autorId;
+                    notification.IsRead = false;
+                    notification.NotificationType = API.Dtos.NotificationType.CHAT;
+                    _notificationService.Create(notification);
+                }
+                //*******************
 
                 return MapToDto(result);
             }

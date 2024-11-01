@@ -5,30 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.Core.Domain
+namespace Explorer.Tours.Core.Domain
 {
     public class TouristLocation : Entity
     {
         public int TouristId { get; private set; }
-        public int TourId { get; private set; }
         public float Longitude { get; private set; }
         public float Latitude { get; private set; }
-        public bool IsTourActive { get; private set; }
 
-        public TouristLocation(int touristId, int tourId, float longitude, float latitude, bool isTourActive)
+        public TouristLocation(int touristId, float longitude, float latitude)
         {
             TouristId = touristId;
-            TourId = tourId;
             Longitude = longitude;
             Latitude = latitude;
-            IsTourActive = isTourActive;
             Validate();
         }
 
         public void Validate()
         {
             if (TouristId == 0) throw new ArgumentException("Invalid TouristId!");
-            if (TourId == 0) throw new ArgumentException("Invalid Tour!");
             if (Longitude == 0) throw new ArgumentException("Invalid Longitude!");
             if (Latitude == 0) throw new ArgumentException("Invalid Longitude!");
         }

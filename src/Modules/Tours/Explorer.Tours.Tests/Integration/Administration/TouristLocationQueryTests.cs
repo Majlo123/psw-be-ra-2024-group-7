@@ -2,6 +2,8 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,12 +14,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.Tests.Integration
+namespace Explorer.Tours.Tests.Integration
 {
     [Collection("Sequential")]
-    public class TouristLocationQueryTests : BaseStakeholdersIntegrationTest
+    public class TouristLocationQueryTests : BaseToursIntegrationTest
     {
-        public TouristLocationQueryTests(StakeholdersTestFactory factory) : base(factory) { }
+        public TouristLocationQueryTests(ToursTestFactory factory) : base(factory) { }
 
         [Fact]
         public void Retrieves_all()
@@ -39,7 +41,7 @@ namespace Explorer.Stakeholders.Tests.Integration
 
         private static TouristLocationController CreateController(IServiceScope scope)
         {
-            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
+            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>())
             {
                 ControllerContext = BuildContext("-1")
             };

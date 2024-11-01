@@ -17,7 +17,7 @@ public class ToursProfile : Profile
         CreateMap<KeyPointDto, KeyPoint>().ReverseMap();
         CreateMap<TourDto, Tour>().ReverseMap();
         CreateMap<TourObjectDto, TourObject>().ReverseMap();
-
+        CreateMap<TouristLocationDto, TouristLocation>().ReverseMap();
         CreateMap<CompletedKeyPointsDto, CompletedKeyPoints>().ReverseMap();
         CreateMap<TourExecutionDto, TourExecution>()
                 .ForMember(dest => dest.CompletedKeyPoints,

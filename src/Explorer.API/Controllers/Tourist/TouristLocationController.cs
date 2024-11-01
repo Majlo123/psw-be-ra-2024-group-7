@@ -2,6 +2,7 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,10 @@ namespace Explorer.API.Controllers.Tourist
     public class TouristLocationController : BaseApiController
     {
         private readonly ITouristLocationService _touristLocationService;
-        private readonly ITourService _tourService;
 
-        public TouristLocationController(ITouristLocationService touristLocationService, ITourService tourService)
+        public TouristLocationController(ITouristLocationService touristLocationService)
         {
             _touristLocationService = touristLocationService;
-            _tourService = tourService;
         }
 
         [HttpGet]
@@ -46,13 +45,6 @@ namespace Explorer.API.Controllers.Tourist
         public ActionResult Delete(int id)
         {
             var result = _touristLocationService.Delete(id);
-            return CreateResponse(result);
-        }
-
-        [HttpGet("{id:int}")]
-        public ActionResult<TourDto> Get(long id)
-        {
-            var result = _tourService.Get(id);
             return CreateResponse(result);
         }
     }

@@ -2,7 +2,10 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public;
 using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -12,12 +15,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.Tests.Integration
+namespace Explorer.Tours.Tests.Integration
 {
     [Collection("Sequential")]
-    public class TouristLocationCommandTest : BaseStakeholdersIntegrationTest
+    public class TouristLocationCommandTest : BaseToursIntegrationTest
     {
-        public TouristLocationCommandTest(StakeholdersTestFactory factory) : base(factory) { }
+        public TouristLocationCommandTest(ToursTestFactory factory) : base(factory) { }
 
         [Fact]
         public void Creates()
@@ -25,13 +28,12 @@ namespace Explorer.Stakeholders.Tests.Integration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var newEntity = new TouristLocationDto
             {
-                TouristId = 1,
+                TouristId = 4,
                 Latitude = 30.5421F,
-                Longitude = 84.9021F,
-                IsTourActive = false
+                Longitude = 84.9021F
             };
 
             //Act
@@ -40,13 +42,12 @@ namespace Explorer.Stakeholders.Tests.Integration
             //Assert - Response
             result.ShouldNotBeNull();
             result.Id.ShouldNotBe(0);
-            result.TouristId.ShouldBe(1);
+            result.TouristId.ShouldBe(4);
             result.Latitude.ShouldBe(30.5421F);
             result.Longitude.ShouldBe(84.9021F);
-            result.IsTourActive.ShouldBeFalse();
 
             //Assert - Database
-            var storedEntity = dbContext.TouristLocation.FirstOrDefault(i => i.TouristId == newEntity.TouristId && i.IsTourActive == newEntity.IsTourActive);
+            var storedEntity = dbContext.TouristLocation.FirstOrDefault(i => i.TouristId == newEntity.TouristId);
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
         }
@@ -77,14 +78,13 @@ namespace Explorer.Stakeholders.Tests.Integration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var updatedEntity = new TouristLocationDto
             {
                 Id = -3,
                 TouristId = 3,
                 Longitude = 11,
                 Latitude = 25,
-                IsTourActive = true
             };
 
             // Act
@@ -96,7 +96,6 @@ namespace Explorer.Stakeholders.Tests.Integration
             result.TouristId.ShouldBe(updatedEntity.TouristId);
             result.Longitude.ShouldBe(updatedEntity.Longitude);
             result.Latitude.ShouldBe(updatedEntity.Latitude);
-            result.IsTourActive.ShouldBe(updatedEntity.IsTourActive);
 
             // Assert - Database
             var storedEntity = dbContext.TouristLocation.FirstOrDefault(i => i.Longitude == 11);
@@ -104,7 +103,6 @@ namespace Explorer.Stakeholders.Tests.Integration
             storedEntity.TouristId.ShouldBe(updatedEntity.TouristId);
             storedEntity.Longitude.ShouldBe(updatedEntity.Longitude);
             storedEntity.Latitude.ShouldBe(updatedEntity.Latitude);
-            storedEntity.IsTourActive.ShouldBe(updatedEntity.IsTourActive);
             var oldEntity = dbContext.TouristLocation.FirstOrDefault(i => i.Longitude == 20);
             oldEntity.ShouldBeNull();
         }
@@ -120,8 +118,7 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Id = -1000,
                 TouristId = 20,
                 Longitude = 80,
-                Latitude = 21.421F,
-                IsTourActive = false
+                Latitude = 21.421F
             };
 
             // Act
@@ -138,7 +135,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             // Act
             var result = (OkResult)controller.Delete(-1);
@@ -170,7 +167,7 @@ namespace Explorer.Stakeholders.Tests.Integration
 
         private static TouristLocationController CreateController(IServiceScope scope)
         {
-            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
+            return new TouristLocationController(scope.ServiceProvider.GetRequiredService<ITouristLocationService>())
             {
                 ControllerContext = BuildContext("-1")
             };

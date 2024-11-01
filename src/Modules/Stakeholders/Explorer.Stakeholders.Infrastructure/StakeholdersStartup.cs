@@ -37,6 +37,7 @@ public static class StakeholdersStartup
         services.AddScoped<IToursitClubService, TouristClubService>();
 
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
+        services.AddScoped<ITouristLocationService, TouristLocationService>();
         // Dodajemo servis za ApplicationGrade
         services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
 
@@ -48,6 +49,7 @@ public static class StakeholdersStartup
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped(typeof(ICrudRepository<TouristClub>), typeof(CrudDatabaseRepository<TouristClub, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>),typeof(CrudDatabaseRepository<TouristEquipment, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<TouristLocation>), typeof(CrudDatabaseRepository<TouristLocation, StakeholdersContext>));
 
         services.AddScoped(typeof(ICrudRepository<Notification>), typeof(CrudDatabaseRepository<Notification, StakeholdersContext>));
         services.AddScoped<INotificationRepository, NotificationRepository>();

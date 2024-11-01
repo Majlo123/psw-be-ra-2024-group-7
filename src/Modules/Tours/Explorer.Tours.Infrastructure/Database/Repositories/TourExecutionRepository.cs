@@ -2,6 +2,7 @@
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,30 +23,20 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-        public TourExecution Create(List<Equipment> equipments, List<CompletedKeyPoints> completedKeyPoints)
+        public Result Create(TourExecution tourExecution)
         {
-            TourExecution tourExecution = new TourExecution
+            try
             {
-                TouristEquipment = equipments,
-                CompletedKeyPoints = completedKeyPoints
-            };
+                _dbContext.TourExecutions.Add(tourExecution);
+                _dbContext.SaveChanges();
 
-            _dbContext.TourExecutions.Add(tourExecution);
-            _dbContext.SaveChanges();
-
-            return tourExecution;
+                return Result.Ok(); 
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(ex.Message);
+            }
         }
-
-        public TourExecution Read(long id)
-        {
-           
-            return _dbContext.TourExecutions
-                .Where(te => te.Id == id)
-                .Include(te => te.TouristEquipment)
-                .Include(te => te.CompletedKeyPoints)
-                .FirstOrDefault();
-        }
-
         public TourExecution Update(TourExecution aggregateRoot)
         {
             
@@ -62,6 +53,19 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
         }
 
+        public TourExecution Get(int id)
+        {
+            return _dbContext.TourExecutions
+               .Where(te => te.Id == id)
+               .FirstOrDefault();
+        }
 
+        public TourExecution GetByUserAndTourIds(int touristId, int tourId)
+        {
+            return _dbContext.TourExecutions
+               .Where(te => te.TouristId == touristId
+                           && te.TourId == tourId)
+               .FirstOrDefault();
+        }
     }
 }

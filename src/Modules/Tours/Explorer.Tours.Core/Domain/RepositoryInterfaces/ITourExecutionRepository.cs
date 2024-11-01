@@ -1,4 +1,6 @@
-﻿using Explorer.Tours.Core.Domain.TourExecutions;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.Core.Domain.TourExecutions;
+using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,16 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface ITourExecutionRepository
     {
-        //Ovde unosimo metode potrebne za rad sa TourExecution
-       
+        PagedResult<TourExecution> GetPaged(int page, int pageSize);
+        TourExecution Get(int id);
+        Result Create(TourExecution execution);
+        TourExecution Update(TourExecution tour);
+
+        TourExecution GetByUserAndTourIds(int touristId, int tourId);
+
+
+
+
 
     }
 }

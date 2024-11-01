@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using System.Security.Cryptography;
 using Explorer.BuildingBlocks.Core.UseCases;
 using System.Collections.Generic;
 
@@ -13,9 +14,11 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 
     public enum Status
     {
-        UNSOLVED,
-        SOLVED,
-        CLOSED
+        REPORTED,    // Problem je prijavljen ali nije zadat rok za resavanje od strane admina
+        SOLVING,     // Admin je zadao rok za resavanje
+        SOLVED,      // Problem je rešen
+        UNSOLVED,    // Problem nije rešen
+        CLOSED       // Problem je zatvoren
     }
 
     public class TourProblemReport : Entity
@@ -27,18 +30,13 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public DateTime Time { get; private set; }
         public Status Status { get; private set; }
         public int TouristId { get; private set; }
+        public DateTime? SolvingDeadline { get; private set; }
         public string? Comment { get; private set; } = "";
         public List<Message> Messages { get; protected set; } = new List<Message>();
         public List<Notification> Notifications { get; protected set; } = new List<Notification>();
 
         public TourProblemReport()
         {
-
-        }
-
-        public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time, Status status, int touristId, string comment)
-        {
-
             TourId = tourId;
             Category = category;
             Priority = priority;
@@ -47,9 +45,6 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             Status = status;
             TouristId = touristId;
             Comment = comment;
-            List<Message> Messages = new List<Message>();
-            List<Notification> Notifications = new List<Notification>();
-
             Validate();
         }
 
@@ -71,25 +66,19 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
                 throw new ArgumentException("Time cannot be in the future", nameof(Time));
         }
 
-        public void addNotification(Notification notification)
+        public void AddMessage(Message message)
         {
-            Notifications.Add(notification);
+            if (message == null) throw new ArgumentNullException(nameof(message));
+            Messages ??= new List<Message>();
+            Messages.Add(message);
         }
-        public List<Notification> getLoggedUserNotifications(List<TourProblemReport> tourProblems, int loggedId)
+        public void SetSolvingDeadline(DateTime solvingDeadline)
         {
-            List<Notification> notifications = new List<Notification>();
+            if (solvingDeadline < DateTime.Now)
+                throw new ArgumentException("Time cannot be in the past");
 
-            foreach (var tourProblem in tourProblems)
-            {
-                // Add notifications for the logged-in user that are unread and of type CHAT
-                notifications.AddRange(tourProblem.Notifications
-                    .Where(notification => notification.RecipientId == loggedId
-                                           && !notification.IsRead));
-            }
-
-            return notifications;
+            SolvingDeadline = solvingDeadline;
+            Status = Status.SOLVING;
         }
-
-
     }
 }

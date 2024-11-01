@@ -21,13 +21,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
                 .FirstOrDefault();
         }
 
-        public new TourProblemReport Update(TourProblemReport tourProblemReport)
-        {
-            DbContext.Entry(tourProblemReport).State = EntityState.Modified;
-            DbContext.SaveChanges();
-            return tourProblemReport;
-        }
-
         // Get a list of Tour Problems by Tourist Id
         public PagedResult<TourProblemReport> GetByTouristId(int touristId, int page, int pageSize)
         {

@@ -1,5 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using System.Security.Cryptography;
+using Explorer.BuildingBlocks.Core.UseCases;
+using System.Collections.Generic;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {
@@ -33,7 +35,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public List<Message> Messages { get; protected set; } = new List<Message>();
         public List<Notification> Notifications { get; protected set; } = new List<Notification>();
 
-        public TourProblemReport(int tourId, string category, ProblemPriority priority, string description, DateTime time, Status status, int touristId, string comment)
+        public TourProblemReport()
         {
             TourId = tourId;
             Category = category;

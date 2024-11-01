@@ -60,12 +60,24 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             throw new NotImplementedException();
         }
 
-        public void AddCompletedKeyPoint()
+        public void AddCompletedKeyPoint(CompletedKeyPoints keyPoint)
         {
-            throw new NotImplementedException();
+            CompletedKeyPoints.Add(keyPoint);
+            LastActivity = DateTime.UtcNow;
         }
+        public void UpdateCompletedPercentage(int fullCount)
+        {
+            CompletedPercentage =((float)CompletedKeyPoints.Count/fullCount)*100;
+            CompletedPercentage = (float)Math.Round(CompletedPercentage, 2);
+        }
+         public void UpdateLocation(double latitude,double longitude)
+        {
+            //CurrentTouristLocation = ...
+            CurrentLatitude = latitude;
+            CurrentLongitude = longitude;
+            LastActivity = DateTime.UtcNow;
 
-         
+        }
       
 
 

@@ -21,7 +21,8 @@ namespace Explorer.Tours.API.Public.Administration
         Result StartNewTour(TourExecutionDto tourExecution);
 
         Result<TourExecutionDto> LeaveTour(int touristId, int tourId);
+        Result<TourExecutionDto> CheckLocation(int id, double latitude, double longitude);
+        Result<List<KeyPointDto>> GetCompletedKeyPoints(int id);
 
-        
     }
 }

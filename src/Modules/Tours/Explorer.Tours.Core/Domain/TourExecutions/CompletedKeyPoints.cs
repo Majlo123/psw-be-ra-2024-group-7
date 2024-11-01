@@ -14,7 +14,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
     {
         public int CompletedKeyPointId { get; private set; }
         public DateTime ExecutionTime { get; private set; }
-
+        public CompletedKeyPoints() { }
         [JsonConstructor]
         public CompletedKeyPoints(DateTime executionTime, int completedKeyPointId)
         {

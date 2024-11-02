@@ -32,9 +32,16 @@ namespace Explorer.API.Controllers.Administrator.TourProblem
         }
 
         [HttpPut("penalize-author-close-problem/{id:int}")]
-        public ActionResult<TourProblemReportDto> PenalizeAuthorAndCloseProblem(int id)
+        public ActionResult<TourProblemReportDto> PenalizeAuthorAndCloseProblem(int id, [FromBody] TourProblemReportDto tourProblemReport)
         {
             var result = _tourProblemReportService.PenalizeAuthorAndCloseProblem(id);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("addMessage/{userId:int}/{reportId:int}")]
+        public ActionResult<TourProblemReportDto> AddMessage([FromBody] MessageDto message, int userId, int reportId)
+        {
+            var result = _tourProblemReportService.AddMessage(message, userId, reportId);
             return CreateResponse(result);
         }
     }

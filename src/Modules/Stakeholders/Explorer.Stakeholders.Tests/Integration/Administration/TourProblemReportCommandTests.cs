@@ -286,7 +286,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
 
         [Theory]
         [MemberData(nameof(PenalizeData))]
-        public void PenalizeAuthorAndCloseProblem(int reportId, int expectedResponseCode)
+        public void PenalizeAuthorAndCloseProblem(TourProblemReportDto report, int expectedResponseCode)
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
@@ -294,14 +294,14 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
-            var result = (ObjectResult)adminController.PenalizeAuthorAndCloseProblem(reportId).Result;
+            var result = (ObjectResult)adminController.PenalizeAuthorAndCloseProblem(report.Id, report).Result;
 
             // Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(expectedResponseCode);
 
             // Assert - Database
-            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == reportId);
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == report.Id);
             storedEntity.ShouldNotBeNull();
         }
 
@@ -311,7 +311,19 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             {
                 new object[]
                 {
-                    -3,
+                    new TourProblemReportDto
+                    {
+                        Id = -3,
+                        TourId = -2,
+                        Category = "Oprema",
+                        Priority = ProblemPriority.LOW,
+                        Description = "Oprema nije u dobrom stanju",
+                        Time = DateTime.UtcNow,
+                        Status = Status.REPORTED,
+                        TouristId = -21,
+                        Comment = "aaa",
+                        SolvingDeadline = DateTime.UtcNow.AddDays(10)
+                    },
                     500
                 }
             };

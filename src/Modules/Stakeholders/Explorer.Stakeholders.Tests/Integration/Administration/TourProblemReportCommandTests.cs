@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Explorer.API.Controllers.Administrator.TourProblem;
+using FluentResults;
 
 namespace Explorer.Stakeholders.Tests.Integration.Administration
 {
@@ -144,8 +145,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 TouristId = -21,
                 Comment = "aa",
                 Messages = new List<MessageDto>(),
-                Notifications = new List<NotificationDto>(),
-                SolvingDeadline = DateTime.UtcNow.AddDays(5)
+                Notifications = new List<NotificationDto>()
             };
 
             // Act
@@ -254,6 +254,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 }
             };
         }
+
         [Fact]
         public void SetSolvingDeadline_throws_exception_for_past_date()
         {
@@ -283,6 +284,38 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             exception.Message.ShouldBe("Time cannot be in the past");
         }
 
+        [Theory]
+        [MemberData(nameof(PenalizeData))]
+        public void PenalizeAuthorAndCloseProblem(int reportId, int expectedResponseCode)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var adminController = CreateAdministratorController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+
+            // Act
+            var result = (ObjectResult)adminController.PenalizeAuthorAndCloseProblem(reportId).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == reportId);
+            storedEntity.ShouldNotBeNull();
+        }
+
+        public static IEnumerable<object[]> PenalizeData()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    -3,
+                    500
+                }
+            };
+        }
 
 
         private static TourProblemUserController CreateUserController(IServiceScope scope)

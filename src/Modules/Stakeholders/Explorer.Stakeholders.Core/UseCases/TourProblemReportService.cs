@@ -122,10 +122,12 @@ namespace Explorer.Stakeholders.Core.UseCases
             {
                 throw new Exception("TourProblemReport not found");
             }
-            if (tourProblemReport.SolvingDeadline != null && tourProblemReport.SolvingDeadline > DateTime.UtcNow && tourProblemReport.Status == Domain.TourProblemReports.Status.SOLVED)
-            {
-                return Result.Fail("Cannot penalize the author because the solving deadline has not passed yet or problem is solved.");
-            }
+
+            if (tourProblemReport.SolvingDeadline == null || (!(tourProblemReport.SolvingDeadline < DateTime.UtcNow) ||
+                                                              tourProblemReport.Status ==
+                                                              Domain.TourProblemReports.Status.SOLVED))
+                return Result.Fail(
+                    "Cannot penalize the author because the solving deadline has not passed yet or problem is solved.");
             _internalTourService.CloseTour(tourProblemReport.TourId);
 
             tourProblemReport.CloseUnsolvedProblem();

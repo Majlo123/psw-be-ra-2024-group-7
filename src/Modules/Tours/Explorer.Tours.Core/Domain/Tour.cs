@@ -12,7 +12,8 @@ namespace Explorer.Tours.Core.Domain
     {
         Draft = 0,
         Published = 1,
-        Archived = 2
+        Archived = 2,
+        Closed = 3
     }
 
     public class Tour : Entity
@@ -81,6 +82,11 @@ namespace Explorer.Tours.Core.Domain
         public void IncrementLength(double length)
         {
             throw new NotSupportedException();
+        }
+
+        public void CloseTour()
+        {
+            Status = TourStatus.Closed;
         }
 
     }

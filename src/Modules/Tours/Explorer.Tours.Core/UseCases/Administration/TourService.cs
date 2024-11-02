@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Explorer.Tours.API.Internal;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
+using Explorer.Stakeholders.API.Dtos;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
@@ -67,6 +68,19 @@ namespace Explorer.Tours.Core.UseCases.Administration
         {
             var tours = CrudRepository.GetMany(tourIds);
             return MapToDto(tours);
+        }
+
+        public Result<TourDto> CloseTour(int id)
+        {
+            var tour = CrudRepository.Get(id);
+            if (tour == null)
+            {
+                throw new Exception("Tour not found");
+            }
+            tour.CloseTour();
+            CrudRepository.Update(tour);
+
+            return Result.Ok(MapToDto(tour));
         }
     }
 }

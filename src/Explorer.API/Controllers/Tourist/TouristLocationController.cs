@@ -47,5 +47,11 @@ namespace Explorer.API.Controllers.Tourist
             var result = _touristLocationService.Delete(id);
             return CreateResponse(result);
         }
+        [HttpGet("{id:int}")]
+        public ActionResult<TouristLocationDto> GetByTouristId(long id)
+        {
+            var result = _touristLocationService.GetByTouristId(id);
+            return CreateResponse(result);
+        }
     }
 }

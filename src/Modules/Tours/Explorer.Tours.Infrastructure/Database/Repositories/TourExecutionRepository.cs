@@ -2,6 +2,7 @@
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,15 +23,20 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-        public TourExecution Create(TourExecution tourExecution)
+        public Result Create(TourExecution tourExecution)
         {
+            try
+            {
+                _dbContext.TourExecutions.Add(tourExecution);
+                _dbContext.SaveChanges();
 
-            _dbContext.TourExecutions.Add(tourExecution);
-            _dbContext.SaveChanges();
-
-            return tourExecution;
+                return Result.Ok(); 
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(ex.Message);
+            }
         }
-
         public TourExecution Update(TourExecution aggregateRoot)
         {
             
@@ -51,7 +57,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _dbContext.TourExecutions
                .Where(te => te.Id == id)
-               .Include(te => te.TouristEquipment)
                .FirstOrDefault();
         }
 
@@ -60,7 +65,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.TourExecutions
                .Where(te => te.TouristId == touristId
                            && te.TourId == tourId)
-               .Include(te => te.TouristEquipment)
                .FirstOrDefault();
         }
     }

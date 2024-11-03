@@ -4,7 +4,7 @@ using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Administrator.Administration
+namespace Explorer.API.Controllers.Author
 {
     [Authorize(Policy = "authorPolicy")]
     [Route("api/tours/object")]
@@ -25,14 +25,14 @@ namespace Explorer.API.Controllers.Administrator.Administration
         }
 
         [HttpPost]
-        public ActionResult<EquipmentDto> Create([FromBody] TourObjectDto objectt)
+        public ActionResult<TourObjectDto> Create([FromBody] TourObjectDto objectt)
         {
             var result = _objectService.Create(objectt);
             return CreateResponse(result);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<EquipmentDto> Update([FromBody] TourObjectDto objectt)
+        public ActionResult<TourObjectDto> Update([FromBody] TourObjectDto objectt)
         {
             var result = _objectService.Update(objectt);
             return CreateResponse(result);

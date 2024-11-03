@@ -14,6 +14,7 @@ public class ToursContext : DbContext
     public DbSet<Tour> Tours { get; set; }
     public DbSet<TourObject> TourObjects { get; set; }
     public DbSet<TourExecution>  TourExecutions { get; set; }
+    public DbSet<TouristLocation> TouristLocation { get; set; }
 
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
@@ -30,7 +31,6 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<Tour>().Property(item => item.TourDurations).HasColumnType("jsonb");
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeyPoints).HasColumnType("jsonb");
-        modelBuilder.Entity<TourExecution>().Property(item => item.TransportationType).HasColumnType("jsonb");
 
     }
 

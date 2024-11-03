@@ -23,11 +23,11 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public ExecutionStatus Status { get; private set; }
         public float CompletedPercentage { get; private set; }
         public List<CompletedKeyPoints> CompletedKeyPoints { get;  private set; } 
-        public double CurrentLongitude { get; private set; }
-        public double CurrentLatitude { get; private set; }
+        public float CurrentLongitude { get; private set; }
+        public float CurrentLatitude { get; private set; }
 
         public TourExecution(){  }
-        public TourExecution(int tourId, int touristId,DateTime tourStartDate,DateTime tourEndDate, DateTime lastActivity,ExecutionStatus status,float completedPercentage, double currentLongitude, double currentLatitude)
+        public TourExecution(int tourId, int touristId,DateTime tourStartDate,DateTime tourEndDate, DateTime lastActivity,ExecutionStatus status,float completedPercentage, float currentLongitude, float currentLatitude)
         {
             TourId = tourId;
             TouristId = touristId;
@@ -70,7 +70,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             CompletedPercentage =((float)CompletedKeyPoints.Count/fullCount)*100;
             CompletedPercentage = (float)Math.Round(CompletedPercentage, 2);
         }
-         public void UpdateLocation(double latitude,double longitude)
+         public void UpdateLocation(float latitude,float longitude)
         {
             //CurrentTouristLocation = ...
             CurrentLatitude = latitude;

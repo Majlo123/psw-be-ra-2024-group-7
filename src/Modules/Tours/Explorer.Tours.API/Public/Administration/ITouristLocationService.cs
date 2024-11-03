@@ -15,5 +15,6 @@ namespace Explorer.Tours.API.Public
         Result<TouristLocationDto> Create(TouristLocationDto tourProblemReport);
         Result<TouristLocationDto> Update(TouristLocationDto tourProblemReport);
         Result Delete(int id);
+        Result<TouristLocationDto> GetByTouristId(long id);
     }
 }

@@ -102,7 +102,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
-        public Result<TourExecutionDto> CheckLocation(int id, double latitude, double longitude)
+        public Result<TourExecutionDto> CheckLocation(int id, float latitude, float longitude)
         {
             try
             {
@@ -139,50 +139,51 @@ namespace Explorer.Tours.Core.UseCases.Administration
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
-                var completedKeyPoints = new List<KeyPoint>();
+                var completedKeyPoints = new List<KeyPointDto>();
                 //var result = tourExecution.CompletedKeyPoints;
                 foreach (var completed in tourExecution.CompletedKeyPoints)
                 {
                     var keyPoint = _keyPointRepository.Get(completed.CompletedKeyPointId);
                     if (keyPoint != null)
                     {
-                        completedKeyPoints.Add(new KeyPoint(keyPoint));
+                        var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
+                        completedKeyPoints.Add(keyPointDto);
                     }
                 }
                 var result = completedKeyPoints;
-                return Result.Ok(completedKeyPoints.Select(keyPoint => _mapper.Map<KeyPointDto>(keyPoint)).ToList());
+                return Result.Ok(completedKeyPoints);
             }
             catch (ArgumentException e)
             {
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
-        private bool FindNearbyCheckpoint(double latitude, double longitude, double keyLongitude, double keyLatitude)
+        private bool FindNearbyCheckpoint(float latitude, float longitude, float keyLongitude, float keyLatitude)
         {
 
-            double distance = CalculateDistance(latitude, longitude, keyLatitude, keyLongitude);
+            float distance = CalculateDistance(latitude, longitude, keyLatitude, keyLongitude);
             if (distance <= 20)
             {
                 return true;
             }
             return false;
         }
-        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        private float CalculateDistance(float lat1, float lon1, float lat2, float lon2)
         {
             // Haversine formula for distance calculation
-            const double R = 6371000; // Radius of the Earth in meters
-            double dLat = ToRadians(lat2 - lat1);
-            double dLon = ToRadians(lon2 - lon1);
-            double a =
-                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            const float R = 6371000; // Radius of the Earth in meters
+            float dLat = ToRadians(lat2 - lat1);
+            float dLon = ToRadians(lon2 - lon1);
+            float a =
+                (float)(Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
                 Math.Cos(ToRadians(lat1)) * Math.Cos(ToRadians(lat2)) *
-                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2));
+            float c = (float)(2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a)));
             return R * c; // Distance in meters
         }
-        private double ToRadians(double angle)
+        private float ToRadians(float angle)
         {
-            return angle * Math.PI / 180;
+            return (float)(angle * Math.PI / 180);
         }
     }
 }

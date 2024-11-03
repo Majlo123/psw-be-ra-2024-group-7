@@ -53,6 +53,7 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<TourObject>), typeof(CrudDatabaseRepository<TourObject, ToursContext>));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(ICrudRepository<TouristLocation>), typeof(CrudDatabaseRepository<TouristLocation, ToursContext>));
+        services.AddScoped(typeof(ITouristLocationRepository), typeof(TouristLocationRepository));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),

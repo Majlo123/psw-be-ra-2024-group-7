@@ -61,7 +61,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
         [HttpPut("checkLocation/{id:int}")]
-        public ActionResult CheckLocation([FromQuery] double latitude, [FromQuery] double longitude, int id)
+        public ActionResult CheckLocation([FromQuery] float latitude, [FromQuery] float longitude, int id)
         {
             var result = _tourExecutionService.CheckLocation(id, latitude, longitude);
 

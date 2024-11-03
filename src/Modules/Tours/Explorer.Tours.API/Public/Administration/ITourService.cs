@@ -18,6 +18,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> Get(long id);
         void DeleteEquipments(long id);
         Result<TourDto> Publish(TourDto tour);
+        public Result<PagedResult<BasicTourDetailsDto>> GetPublishedTour(int page, int pageSize);
         Result<TourDto> Archive(TourDto tour);
 
         Result<TourDto> UpdateTourLength(TourDto tour);

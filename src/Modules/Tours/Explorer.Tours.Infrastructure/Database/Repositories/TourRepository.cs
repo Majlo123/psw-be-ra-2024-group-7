@@ -68,10 +68,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return task.Result;
             
         }   
-        public void SaveChanges()
+
+        public PagedResult<Tour> GetPublishedTour(int page, int pageSize)
         {
-            _context.SaveChanges();
+            var task = _context.Tours.Include(t => t.KeyPoints).GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
         }
- 
     }
 }

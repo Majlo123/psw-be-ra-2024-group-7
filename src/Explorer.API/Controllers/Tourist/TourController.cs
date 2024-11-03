@@ -32,5 +32,13 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourService.Get(id);
             return CreateResponse(result);
         }
+
+        [HttpGet]
+        [Route("published")]
+        public ActionResult<PagedResult<TourDto>> GetPublished([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourService.GetPublishedTour(page, pageSize);
+            return CreateResponse(result);
+        }
     }
 }

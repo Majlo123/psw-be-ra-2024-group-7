@@ -28,5 +28,12 @@ public class ToursProfile : Profile
             : new List<CompletedKeyPoints>())).ReverseMap();
 
         CreateMap<TourDurationDto, TourDuration>().ReverseMap();
+        CreateMap<TourDto,Tour>()
+                .ForMember(dur=>dur.TourDurations,
+                 opt=>opt.MapFrom(src=>src.TourDurations != null
+                ? src.TourDurations
+                .Select(duration=>new TourDuration(duration.Duration,(Domain.TransportType)duration.TransportType,(Domain.TimeUnit)duration.TimeUnit))
+                .ToList()
+                :new List<TourDuration>())).ReverseMap();
     }
 }

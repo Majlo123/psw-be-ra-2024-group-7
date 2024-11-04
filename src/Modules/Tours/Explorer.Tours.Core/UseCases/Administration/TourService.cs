@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Explorer.Tours.API.Internal;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
+using TourStatus = Explorer.Tours.Core.Domain.TourStatus;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
@@ -110,9 +111,9 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tours);
         }
 
-        public Result<PagedResult<BasicTourDetailsDto>> GetPublishedTour(int page, int pageSize)
+        public Result<PagedResult<BasicTourDetailsDto>> GetPublishedTours(int page, int pageSize)
         {
-            var result = _tourRepository.GetPublishedTour(page, pageSize);
+            var result = _tourRepository.GetPublishedTours(page, pageSize);
             var items = result.Results.Select(t => new BasicTourDetailsDto
             {
                 Id = t.Id,
@@ -134,5 +135,62 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return new PagedResult<BasicTourDetailsDto>(items, result.TotalCount);
             //return MapToDto(result);
         }
+        public Result<BasicTourDetailsDto> GetPublishedTourPreview(long id)
+        {
+            var result = _tourRepository.Get(id);
+
+            if (result.Status != TourStatus.Published)
+                return Result.Fail("Tour is not Public");
+
+            var tourDto = new BasicTourDetailsDto
+            {
+                Id = result.Id,
+                Cost = result.Cost,
+                Description = result.Description,
+                Name = result.Name,
+                Length = result.Length,
+                AverageRate = result.getAverageRate(),
+                FirstKeyPoint = result.KeyPoints.Any() ? new KeyPointDto
+                {
+                    Id = (int)result.KeyPoints.First().Id,
+                    Name = result.KeyPoints.First().Name,
+                    Description = result.KeyPoints.First().Description,
+                    Image = result.KeyPoints.First().Image,
+                    Latitude = result.KeyPoints.First().Latitude,
+                    Longitude = result.KeyPoints.First().Longitude
+                } : null
+            };
+
+            return Result.Ok(tourDto);
+        }
+        public Result<TourDto> GetPublishedTourById(long id)
+        {
+            var result = _tourRepository.Get(id);
+
+            if (result.Status != TourStatus.Published)
+                return Result.Fail("Tour is not Public");
+
+            var tourDto = new TourDto
+            {
+                Id = (int)result.Id,
+                Cost = result.Cost,
+                Description = result.Description,
+                Name = result.Name,
+                Length = result.Length,
+                AverageRate = result.getAverageRate(),
+                KeyPoints = result.KeyPoints.Select(kp => new KeyPointDto
+                {
+                    Id = (int)kp.Id,
+                    Name = kp.Name,
+                    Description = kp.Description,
+                    Image = kp.Image,
+                    Latitude = kp.Latitude,
+                    Longitude = kp.Longitude
+                }).ToList()
+            };
+
+            return tourDto;
+        }
+
     }
 }

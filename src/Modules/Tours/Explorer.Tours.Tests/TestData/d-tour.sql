@@ -10,3 +10,6 @@ VALUES (-3, 'Zimska tura', 'Srednje','Skijanje',50,0,'hladno,sneg','[]'::jsonb,0
 INSERT INTO tours."Tours"(
     "Id", "Name", "Difficulty", "Description", "Cost", "Status", "Tags","TourDurations","Length","AuthorId", "PublishTime","ArchiveTime")
 VALUES (-4, 'Ljetnja tura', 'Teska','Plivanje',50,0,'more,voda','[]'::jsonb,0,-12, NULL, NULL);
+INSERT INTO tours."Tours"(
+    "Id", "Name", "Difficulty", "Description", "Cost", "Status", "Tags","TourDurations","Length","AuthorId", "PublishTime","ArchiveTime")
+VALUES (-5, 'Tura5', 'Lagana','Veslanje',50,1,'more,voda','[]'::jsonb,0,-12, NULL, NULL);

@@ -16,5 +16,6 @@ namespace Explorer.Blog.API.Public
         Result<BlogDto> Get(int id);
         Result<BlogDto> Create(BlogDto blog);
         Result<BlogDto> Update(BlogDto blog);
+        Result<BlogDto> UpdateRating(int id, RatingDto rationg);
     }
 }

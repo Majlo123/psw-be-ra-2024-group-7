@@ -50,6 +50,32 @@ namespace Explorer.Blog.Tests.Integration
             storedEntity.Id.ShouldBe(result.Id);
 
         }
+        [Fact]
+        public void UpdatesRating() {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+            int blogId = -1;
+            var rating = new RatingDto
+            {
+                UserId = -1,
+                CreationTime = DateTime.UtcNow,
+                Grade = true
+            };
+
+            //Act
+            var result = ((ObjectResult)controller.UpdateRating(blogId, rating).Result)?.Value as BlogDto;
+
+            //Assert - Response
+            result.ShouldNotBeNull();
+            result.Id.ShouldNotBe(0);
+            result.Id.ShouldBe(-1);
+
+            //Assert - Database
+            var stored = dbContext.Blogs.FirstOrDefault(b => b.Id == result.Id);
+            stored.ShouldNotBeNull();
+        }
 
         private static BlogController CreateController(IServiceScope scope)
         {

@@ -37,6 +37,13 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
+        [HttpPut("rating/{id:int}")]
+        public ActionResult<BlogDto> UpdateRating(int id, [FromBody] RatingDto rating)
+        {
+            rating.CreationTime = DateTime.Now;
+            var result = _blogService.UpdateRating(id, rating);
+            return CreateResponse(result);
+        }
 
         [HttpPut("{id:int}")]
         public ActionResult<BlogDto> Update([FromBody] BlogDto blog)

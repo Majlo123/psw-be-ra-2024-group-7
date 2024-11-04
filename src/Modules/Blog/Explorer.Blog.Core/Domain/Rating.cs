@@ -15,10 +15,10 @@ namespace Explorer.Blog.Core.Domain
         public DateTime CreationTime {  get; init; }
 
         [JsonConstructor]
-        public Rating(bool grade, int userId, DateTime date) {
+        public Rating(bool grade, int userId, DateTime creationTime) {
             Grade = grade;
             UserId = userId;
-            CreationTime = date;
+            CreationTime = creationTime;
         }
 
         protected override bool EqualsCore(Rating other)

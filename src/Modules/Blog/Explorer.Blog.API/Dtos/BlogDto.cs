@@ -18,8 +18,8 @@ namespace Explorer.Blog.API.Dtos
         public DateOnly Date { get; set; }
         public int OwnerId { get; set; }
         public BlogActivityStatus ActivityStatus { get; set; }
-        public IEnumerable<RatingDto> Ratings { get; set; } = new List<RatingDto>();
-        public IEnumerable<CommentDto> Comments { get; set; } = new List<CommentDto>();
+        public IEnumerable<RatingDto>? Ratings { get; set; }
+        public IEnumerable<CommentDto>? Comments { get; set; } 
     }
     public enum BlogStatus
     {

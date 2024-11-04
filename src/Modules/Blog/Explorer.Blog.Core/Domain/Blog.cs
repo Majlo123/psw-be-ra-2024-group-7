@@ -12,7 +12,7 @@ namespace Explorer.Blog.Core.Domain
         public string Title { get; init; }
         public string Description { get; init; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
-        public List<Rating> Ratings { get; set; } = new List<Rating>();
+        public List<Rating> Ratings { get; set; }
         public BlogStatus Status { get; init; }
         public List<string> ImageUrl { get; set; } = new List<string>();
         public DateOnly Date {  get; init; }
@@ -27,6 +27,7 @@ namespace Explorer.Blog.Core.Domain
             Date = date;
             ActivityStatus = activityStatus;
             OwnerId = ownerId;
+            Ratings = new List<Rating>();
             Validate();
         }
 

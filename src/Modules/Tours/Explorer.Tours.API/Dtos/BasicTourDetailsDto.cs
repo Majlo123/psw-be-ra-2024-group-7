@@ -14,5 +14,6 @@ public class BasicTourDetailsDto
     public double Cost { get; set; }
     public double Length { get; set; }
     public KeyPointDto FirstKeyPoint { get; set; } = new KeyPointDto();
+    public double AverageRate { get; set; }
 
 }

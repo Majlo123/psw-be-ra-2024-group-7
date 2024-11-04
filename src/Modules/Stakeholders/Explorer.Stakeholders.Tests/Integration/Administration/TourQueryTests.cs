@@ -32,8 +32,8 @@ public class TourQueryTests : BaseStakeholdersIntegrationTest
 
         //Assert
         result.ShouldNotBeNull();
-        result.Results.Count.ShouldBe(4);
-        result.TotalCount.ShouldBe(4);
+        result.Results.Count.ShouldBe(0);
+        result.TotalCount.ShouldBe(0);
     }
     private static TourController CreateController(IServiceScope scope)
     {

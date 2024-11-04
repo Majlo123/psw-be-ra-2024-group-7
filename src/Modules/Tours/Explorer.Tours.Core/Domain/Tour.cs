@@ -27,6 +27,7 @@ namespace Explorer.Tours.Core.Domain
         public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
         public List<Equipment> Equipments { get; set; } = new List<Equipment>();
         public List<TourDuration> TourDurations { get; set;} = new List<TourDuration>();
+        public List<TourReview> TourReviews { get; set; } = new List<TourReview>();
         public double Length { get; private set; }
         public int AuthorId { get; private set; }
         public DateTime? PublishTime { get; private set; } = null;
@@ -100,6 +101,15 @@ namespace Explorer.Tours.Core.Domain
         public bool CanReactivate()
         {
             return Status == TourStatus.Archived;
+        }
+        public double getAverageRate()
+        {
+            if (TourReviews == null || !TourReviews.Any())
+            {
+                return 0;
+            }
+
+            return TourReviews.Average(review => review.Rating);
         }
 
     }

@@ -134,24 +134,14 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         }
 
-        public Result<List<KeyPointDto>> GetCompletedKeyPoints(int id)
+        public Result<List<CompletedKeyPointsDto>> GetCompletedKeyPoints(int id)
         {
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
-                var completedKeyPoints = new List<KeyPointDto>();
-                //var result = tourExecution.CompletedKeyPoints;
-                foreach (var completed in tourExecution.CompletedKeyPoints)
-                {
-                    var keyPoint = _keyPointRepository.Get(completed.CompletedKeyPointId);
-                    if (keyPoint != null)
-                    {
-                        var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
-                        completedKeyPoints.Add(keyPointDto);
-                    }
-                }
+                var completedKeyPoints = new List<CompletedKeyPointsDto>();
                 var result = completedKeyPoints;
-                return Result.Ok(completedKeyPoints);
+                return completedKeyPoints;
             }
             catch (ArgumentException e)
             {

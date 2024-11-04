@@ -35,7 +35,7 @@ namespace Explorer.API.Controllers.User
             return CreateResponse(result);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("getByLoggedUser/{id:int}")]
         public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<NotificationDto>> GetByLoggedUser(int id, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _notificationService.GetByLoggedUser(id, page, pageSize);

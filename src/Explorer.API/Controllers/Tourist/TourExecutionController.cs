@@ -5,6 +5,7 @@ using Explorer.Tours.Core.UseCases.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Reflection.Metadata.Ecma335;
+using Explorer.Tours.Core.Domain;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -61,9 +62,9 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
         [HttpPut("checkLocation/{id:int}")]
-        public ActionResult CheckLocation([FromQuery] float latitude, [FromQuery] float longitude, int id)
+        public ActionResult CheckLocation([FromBody] TouristLocation touristLocation, int id)
         {
-            var result = _tourExecutionService.CheckLocation(id, latitude, longitude);
+            var result = _tourExecutionService.CheckLocation(id, touristLocation.Latitude, touristLocation.Longitude);
 
             return CreateResponse(result);
 

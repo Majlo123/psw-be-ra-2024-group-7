@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,11 @@ namespace Explorer.Tours.Core.Domain
             Length = length;
             AuthorId = authorId;
         }
+
+        public Tour()
+        {
+        }
+
         public void AddKeyPoint(KeyPoint keyPoint)
         {
             if (keyPoint == null) throw new ArgumentNullException(nameof(keyPoint));
@@ -83,6 +89,19 @@ namespace Explorer.Tours.Core.Domain
             throw new NotSupportedException();
         }
 
+        public Tour Preview()
+        {
+            var keyPoints = new List<KeyPoint>();
+            keyPoints.Add(KeyPoints.FirstOrDefault());
+            return new Tour
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Tags = Tags,
+                KeyPoints = keyPoints
+            };
+        }
     }
 }
 

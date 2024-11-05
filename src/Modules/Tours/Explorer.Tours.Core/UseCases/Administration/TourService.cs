@@ -69,29 +69,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tours);
         }
 
-        public Result<PagedResult<BasicTourDetailsDto>> GetPublishedTour(int page, int pageSize)
+        public Result<PagedResult<TourDto>> GetPublishedTour(int page, int pageSize)
         {
             var result = _tourRepository.GetPublishedTour(page, pageSize);
-            var items = result.Results.Select(t => new BasicTourDetailsDto
-            {
-                Id = t.Id,
-                Cost = t.Cost,
-                Description = t.Description,
-                Name = t.Name,
-                Length = t.Length,
-                FirstKeyPoint = t.KeyPoints.Any() ? new KeyPointDto
-                {
-                    Id = (int)t.KeyPoints.First().Id,
-                    Name = t.KeyPoints.First().Name,
-                    Description = t.KeyPoints.First().Description,
-                    Image = t.KeyPoints.First().Image,
-                    Latitude = t.KeyPoints.First().Latitude,
-                    Longitude = t.KeyPoints.First().Longitude
-                } : null 
-            }).ToList();
-
-            return new PagedResult<BasicTourDetailsDto>(items, result.TotalCount);
-            //return MapToDto(result);
+            return MapToDto(result);
         }
     }
 }

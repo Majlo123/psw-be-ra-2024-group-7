@@ -28,12 +28,12 @@ public class TourQueryTests : BaseStakeholdersIntegrationTest
         var controller = CreateController(scope);
 
         //Act
-        var result = ((ObjectResult)controller.GetPublished(0, 0).Result).Value as PagedResult<BasicTourDetailsDto>;
+        var result = ((ObjectResult)controller.GetPublished(0, 0).Result).Value as PagedResult<TourDto>;
 
         //Assert
         result.ShouldNotBeNull();
-        result.Results.Count.ShouldBe(1);
-        result.TotalCount.ShouldBe(1);
+        result.Results.Count.ShouldBe(2);
+        result.TotalCount.ShouldBe(2);
     }
 
     [Fact]

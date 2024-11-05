@@ -30,4 +30,12 @@ public class TourPurchaseTokenController : BaseApiController
             return NotFound();
         }
     }
+    [HttpGet("mytours/{touristId:int}")]
+    public ActionResult<List<long>> GetTouristPurchases(int touristId)
+    {
+        var result = _tourPurchaseTokenService.GetTouristPurchases(touristId);
+
+        return result;
+
+    }
 }

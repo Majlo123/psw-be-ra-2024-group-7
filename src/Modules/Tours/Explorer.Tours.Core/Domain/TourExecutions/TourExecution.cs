@@ -78,12 +78,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LastActivity = DateTime.UtcNow;
 
         }
-      
 
-
-
-
-
+        public void FinishTour()
+        {
+            TourEndDate = DateTime.UtcNow;
+            Status = ExecutionStatus.COMPLETED;
+        }
     }
 }
 

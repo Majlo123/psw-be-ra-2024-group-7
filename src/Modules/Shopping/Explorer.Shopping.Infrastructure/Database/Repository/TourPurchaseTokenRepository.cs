@@ -37,5 +37,15 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
         {
             return DbContext.PurchaseTokens.Count(t => t.TourId == tourId);
         }
+
+        public List<long> GetItemsByTouristId(long touristId)
+        {
+            var tourIds = DbContext.PurchaseTokens
+                             .Where(t => t.UserId == touristId)
+                             .Select(t => t.TourId)
+                             .ToList();
+
+            return tourIds; ;
+        }
     }
 }

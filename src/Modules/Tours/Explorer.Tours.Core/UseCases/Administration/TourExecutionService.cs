@@ -134,24 +134,14 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         }
 
-        public Result<List<KeyPointDto>> GetCompletedKeyPoints(int id)
+        public Result<List<CompletedKeyPointsDto>> GetCompletedKeyPoints(int id)
         {
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
-                var completedKeyPoints = new List<KeyPointDto>();
-                //var result = tourExecution.CompletedKeyPoints;
-                foreach (var completed in tourExecution.CompletedKeyPoints)
-                {
-                    var keyPoint = _keyPointRepository.Get(completed.CompletedKeyPointId);
-                    if (keyPoint != null)
-                    {
-                        var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
-                        completedKeyPoints.Add(keyPointDto);
-                    }
-                }
+                var completedKeyPoints = new List<CompletedKeyPointsDto>();
                 var result = completedKeyPoints;
-                return Result.Ok(completedKeyPoints);
+                return completedKeyPoints;
             }
             catch (ArgumentException e)
             {
@@ -184,6 +174,41 @@ namespace Explorer.Tours.Core.UseCases.Administration
         private float ToRadians(float angle)
         {
             return (float)(angle * Math.PI / 180);
+        }
+
+        public Result<List<TourExecutionDto>> GetAllTouristTours(int touristId)
+        {
+            try
+            {
+                var result = _tourExecutionRepository.GetAllByUserId(touristId);
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+        }
+
+        public Result<TourExecutionDto> GetActiveTour(int touristId)
+        {
+            try
+            {
+                var result = _tourExecutionRepository.GetUserActiveTour(touristId);
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+        }
+
+        public Result<TourExecutionDto> FinishTour(int touristId, int tourId)
+        {
+            var tourToFinish = _tourExecutionRepository.GetByUserAndTourIds(touristId, tourId);
+            tourToFinish.FinishTour();
+
+            var result = _tourExecutionRepository.Update(tourToFinish);
+            return MapToDto(result);
         }
     }
 }

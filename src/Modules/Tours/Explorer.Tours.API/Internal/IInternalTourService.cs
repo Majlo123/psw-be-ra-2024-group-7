@@ -12,5 +12,6 @@ namespace Explorer.Tours.API.Internal
     {
         Result<TourDto> Get(long tourId);
         Result<List<TourDto>> GetMany(List<long> tourIds);
+        Result<TourDto> CloseTour(int id);
     }
 }

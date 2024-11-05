@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.Domain;
+﻿using System.Runtime.InteropServices.ComTypes;
+using Explorer.BuildingBlocks.Core.Domain;
 using System.Security.Cryptography;
 using Explorer.BuildingBlocks.Core.UseCases;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         public ProblemPriority Priority { get; private set; }
         public string Description { get; private set; }
         public DateTime Time { get; private set; }
-        public Status Status { get; private set; }
+        public Status Status { get; private set; } = Status.REPORTED;
         public int TouristId { get; private set; }
         public DateTime? SolvingDeadline { get; private set; }
         public string? Comment { get; private set; } = "";
@@ -79,6 +80,11 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 
             SolvingDeadline = solvingDeadline;
             Status = Status.SOLVING;
+        }
+
+        public void CloseUnsolvedProblem()
+        {
+            Status = Status.CLOSED;
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Explorer.Tours.Core.Domain
     {
         Draft = 0,
         Published = 1,
-        Archived = 2
+        Archived = 2,
+        Closed = 3
     }
 
     public class Tour : Entity
@@ -110,6 +111,11 @@ namespace Explorer.Tours.Core.Domain
             }
 
             return TourReviews.Average(review => review.Rating);
+        }
+
+        public void CloseTour()
+        {
+            Status = TourStatus.Closed;
         }
 
     }

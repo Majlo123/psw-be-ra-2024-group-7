@@ -10,7 +10,8 @@ namespace Explorer.Tours.API.Dtos
     {
         Draft = 0,
         Published = 1,
-        Archived = 2
+        Archived = 2,
+        Closed = 3
     }
     public class TourDto
     {

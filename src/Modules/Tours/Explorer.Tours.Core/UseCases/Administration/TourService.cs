@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Explorer.Tours.API.Internal;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
+using Explorer.Stakeholders.API.Dtos;
 using TourStatus = Explorer.Tours.Core.Domain.TourStatus;
 
 namespace Explorer.Tours.Core.UseCases.Administration
@@ -111,6 +112,18 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tours);
         }
 
+        public Result<TourDto> CloseTour(int id)
+        {
+            var tour = CrudRepository.Get(id);
+            if (tour == null)
+            {
+                throw new Exception("Tour not found");
+            }
+            tour.CloseTour();
+            CrudRepository.Update(tour);
+
+            return Result.Ok(MapToDto(tour));
+        }
         public Result<PagedResult<BasicTourDetailsDto>> GetPublishedTours(int page, int pageSize)
         {
             var result = _tourRepository.GetPublishedTours(page, pageSize);
@@ -191,6 +204,5 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
             return tourDto;
         }
-
     }
 }

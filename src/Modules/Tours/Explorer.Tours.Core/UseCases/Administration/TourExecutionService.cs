@@ -175,5 +175,40 @@ namespace Explorer.Tours.Core.UseCases.Administration
         {
             return (float)(angle * Math.PI / 180);
         }
+
+        public Result<List<TourExecutionDto>> GetAllTouristTours(int touristId)
+        {
+            try
+            {
+                var result = _tourExecutionRepository.GetAllByUserId(touristId);
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+        }
+
+        public Result<TourExecutionDto> GetActiveTour(int touristId)
+        {
+            try
+            {
+                var result = _tourExecutionRepository.GetUserActiveTour(touristId);
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+        }
+
+        public Result<TourExecutionDto> FinishTour(int touristId, int tourId)
+        {
+            var tourToFinish = _tourExecutionRepository.GetByUserAndTourIds(touristId, tourId);
+            tourToFinish.FinishTour();
+
+            var result = _tourExecutionRepository.Update(tourToFinish);
+            return MapToDto(result);
+        }
     }
 }

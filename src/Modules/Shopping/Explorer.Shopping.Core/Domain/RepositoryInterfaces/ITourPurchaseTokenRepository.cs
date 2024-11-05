@@ -15,5 +15,7 @@ namespace Explorer.Shopping.Core.Domain.RepositoryInterfaces
         public bool HasPurchasedTour(long tourId, long userId);
         public List<long> GetSoldToursIds();
         public int GetPurchasesNumberForTour(long tourId);
+
+        public List<long> GetItemsByTouristId(long touristId);
     }
 }

@@ -20,9 +20,11 @@ namespace Explorer.Tours.API.Public.Administration
 
         Result StartNewTour(TourExecutionDto tourExecution);
 
+        Result<TourExecutionDto> FinishTour(int touristId, int tourId);
         Result<TourExecutionDto> LeaveTour(int touristId, int tourId);
         Result<TourExecutionDto> CheckLocation(int id, float latitude, float longitude);
         Result<List<CompletedKeyPointsDto>> GetCompletedKeyPoints(int id);
-
+        Result<List<TourExecutionDto>> GetAllTouristTours(int touristId);
+        Result<TourExecutionDto> GetActiveTour(int touristId);
     }
 }

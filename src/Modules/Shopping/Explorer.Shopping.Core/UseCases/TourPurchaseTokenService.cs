@@ -27,4 +27,9 @@ public class TourPurchaseTokenService : BaseService<TourPurchaseTokenDto, TourPu
     {
         return _purchaseTokenRepository.ExistsByTourAndUser(tourId, touristId);
     }
+
+    public List<long> GetTouristPurchases(int touristId)
+    {
+        return _purchaseTokenRepository.GetItemsByTouristId(touristId);
+    }
 }

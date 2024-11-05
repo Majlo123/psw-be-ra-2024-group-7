@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
@@ -66,6 +67,22 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                .Where(te => te.TouristId == touristId
                            && te.TourId == tourId)
                .FirstOrDefault();
+        }
+
+        public List<TourExecution> GetAllByUserId(int touristId)
+        {
+            return _dbContext.TourExecutions
+               .Where(te => te.TouristId == touristId)
+               .ToList();
+
+        }
+
+        public TourExecution GetUserActiveTour(int touristId)
+        {
+            return _dbContext.TourExecutions
+                .Where(te => te.TouristId == touristId
+                            && te.Status == ExecutionStatus.ONGOING)
+                .FirstOrDefault();
         }
     }
 }

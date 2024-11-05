@@ -37,7 +37,23 @@ namespace Explorer.API.Controllers.Tourist
         [Route("published")]
         public ActionResult<PagedResult<TourDto>> GetPublished([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetPublishedTour(page, pageSize);
+            var result = _tourService.GetPublishedTours(page, pageSize);
+            return CreateResponse(result);
+        }
+
+        [HttpGet]
+        [Route("published/preview/{id:int}")]
+        public ActionResult<BasicTourDetailsDto> GetPublishedTourPreview(long id)
+        {
+            var result = _tourService.GetPublishedTourPreview(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet]
+        [Route("published/{id:int}")]
+        public ActionResult<TourDto> GetPublishedTourById(long id)
+        {
+            var result = _tourService.GetPublishedTourById(id);
             return CreateResponse(result);
         }
     }

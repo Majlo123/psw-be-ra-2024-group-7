@@ -10,7 +10,8 @@ namespace Explorer.Tours.API.Dtos
     {
         Draft = 0,
         Published = 1,
-        Archived = 2
+        Archived = 2,
+        Closed = 3
     }
     public class TourDto
     {
@@ -23,6 +24,7 @@ namespace Explorer.Tours.API.Dtos
         public string Tags { get; set; }
         public double Length { get; set; }
         public int AuthorId { get; set; }
+        public double AverageRate { get; set; }
         public IEnumerable<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public IEnumerable<EquipmentDto> Equipments { get; set; } = new List<EquipmentDto>();
         public IEnumerable<TourDurationDto> TourDurations { get; set; } = new List<TourDurationDto>();

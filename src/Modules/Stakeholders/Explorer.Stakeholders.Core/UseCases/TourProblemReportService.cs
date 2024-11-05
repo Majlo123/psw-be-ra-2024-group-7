@@ -138,5 +138,27 @@ namespace Explorer.Stakeholders.Core.UseCases
             var dto = _mapper.Map<TourProblemReportDto>(aggregate);
             return Result.Ok(dto);
         }
+
+        public Result<TourProblemReportDto> PenalizeAuthorAndCloseProblem(int id)
+        {
+            var tourProblemReport = _repository.Get(id);
+            if (tourProblemReport == null)
+            {
+                throw new Exception("TourProblemReport not found");
+            }
+
+            if (tourProblemReport.SolvingDeadline == null || (!(tourProblemReport.SolvingDeadline < DateTime.UtcNow) ||
+                                                              tourProblemReport.Status ==
+                                                              Domain.TourProblemReports.Status.SOLVED))
+                return Result.Fail(
+                    "Cannot penalize the author because the solving deadline has not passed yet or problem is solved.");
+            _internalTourService.CloseTour(tourProblemReport.TourId);
+
+            tourProblemReport.CloseUnsolvedProblem();
+            var result = _tourProblemReportRepository.Update(tourProblemReport);
+
+            var dto = _mapper.Map<TourProblemReportDto>(tourProblemReport);
+            return Result.Ok(dto);
+        }
     }
 }

@@ -3,6 +3,7 @@ using Explorer.Payments.Core.UseCases;
 using Explorer.Shopping.API.Public;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Mappers;
+using Explorer.Shopping.Core.UseCases;
 using Explorer.Shopping.Infrastructure.Database;
 using Explorer.Shopping.Infrastructure.Database.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Explorer.Shopping.Infrastructure
         private static void SetupCore(IServiceCollection services)
         {
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)

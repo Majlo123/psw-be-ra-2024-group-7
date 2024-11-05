@@ -35,6 +35,22 @@ public class TourQueryTests : BaseStakeholdersIntegrationTest
         result.Results.Count.ShouldBe(1);
         result.TotalCount.ShouldBe(1);
     }
+
+    [Fact]
+    public async void Retreives_published_by_id()
+    {
+        //Arragne
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+
+        //Act
+        var result = ((ObjectResult)controller.GetPublishedTourById(-5).Result)?.Value as TourDto;
+
+        //Assert
+        result.ShouldNotBeNull();
+        result.Id.ShouldBe(-5);
+        result.Name.ShouldBe("Tura5");
+    }
     private static TourController CreateController(IServiceScope scope)
     {
         return new TourController(scope.ServiceProvider.GetRequiredService<ITourService>())

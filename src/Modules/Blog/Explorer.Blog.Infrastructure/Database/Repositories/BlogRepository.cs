@@ -58,5 +58,20 @@ namespace Explorer.Blog.Infrastructure.Database.Repositories
             }
             return blog;
         }
+        
+
+        List<Core.Domain.Blog> IBlogRepository.GetActiveBlogs()
+        {
+            return _context.Blogs
+                           .Where(b => b.ActivityStatus == BlogActivityStatus.active)
+                           .ToList();
+        }
+
+        List<Core.Domain.Blog> IBlogRepository.GetFamousBlogs()
+        {
+            return _context.Blogs
+                           .Where(b => b.ActivityStatus == BlogActivityStatus.famous)
+                           .ToList();
+        }
     }
 }

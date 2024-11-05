@@ -9,11 +9,11 @@ namespace Explorer.Blog.Core.Domain
 {
     public class Comment : Entity 
     {
-        public int UserId { get; private set; }  
-        public string Username { get; private set; }
-        public DateTime CreatedAt { get; private set; }  
-        public string Text { get; private set; }  
-        public DateTime? LastModified { get; private set; }  
+        public int UserId { get;  set; }  
+        public string Username { get;  set; }
+        public DateTime CreatedAt { get;  set; }  
+        public string Text { get;  set; }  
+        public DateTime? LastModified { get;  set; }  
 
         public Comment(int userId, string username, string text)
         {

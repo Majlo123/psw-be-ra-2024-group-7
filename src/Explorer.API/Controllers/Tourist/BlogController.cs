@@ -51,5 +51,39 @@ namespace Explorer.API.Controllers.Tourist
             var result = _blogService.Update(blog);
             return CreateResponse(result);
         }
+        [HttpGet("active")]
+        public ActionResult<List<BlogDto>> GetActiveBlogs()
+        {
+            var result = _blogService.GetActiveBlogs();
+            return CreateResponse(result);
+        }
+
+        // New endpoint to get famous blogs
+        [HttpGet("famous")]
+        public ActionResult<List<BlogDto>> GetFamousBlogs()
+        {
+            var result = _blogService.GetFamousBlogs();
+            return CreateResponse(result);
+        }
+        [HttpPost("{id:int}/comments")]
+        public ActionResult<BlogDto> AddComment(int id, [FromBody] CommentDto commentDto)
+        {
+            var result = _blogService.AddComment(id, commentDto);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
+        }
+
+        [HttpPut("{id:int}/comments/{commentId:int}")]
+        public ActionResult<BlogDto> UpdateComment(int id, int commentId, [FromBody] string newText)
+        {
+            var result = _blogService.UpdateComment(id, commentId, newText);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
+        }
+
+        [HttpDelete("{id:int}/comments/{commentId:int}")]
+        public ActionResult<BlogDto> DeleteComment(int id, int commentId)
+        {
+            var result = _blogService.DeleteComment(id, commentId);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
+        }
     }
 }

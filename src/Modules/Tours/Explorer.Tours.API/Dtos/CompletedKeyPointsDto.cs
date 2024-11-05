@@ -11,8 +11,6 @@ namespace Explorer.Tours.API.Dtos
     {
         public int CompletedKeyPointId { get;  set; }
         public DateTime ExecutionTime { get;  set; }
-        public int TouristId { get;  set; }
-        public int TourId { get;  set; }
 
     }
 }

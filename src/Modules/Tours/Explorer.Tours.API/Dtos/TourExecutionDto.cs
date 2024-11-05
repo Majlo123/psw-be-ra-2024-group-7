@@ -18,14 +18,13 @@ namespace Explorer.Tours.API.Dtos
         public int TourId { get; set; }
         public int TouristId { get; set; }
         public DateTime TourStartDate { get;  set; }
-        public DateTime TourEndDate { get;  set; }
-        public DateTime LastActivity { get;  set; }
+        public DateTime? TourEndDate { get;  set; }
+        public DateTime? LastActivity { get;  set; }
         public ExecutionStatus Status { get;  set; }
         public float CompletedPercentage { get;  set; }
-        public IEnumerable<EquipmentDto> TouristEquipment { get; set; } = new List<EquipmentDto>();
-
-        public IEnumerable<CompletedKeyPointsDto> CompletedKeyPoints { get; set; } = new List<CompletedKeyPointsDto>(); 
-        public IEnumerable<TourDurationDto> TransportationType { get;  set; } = new List<TourDurationDto>();
+        public List<CompletedKeyPointsDto>? CompletedKeyPoints { get; set; }
+        public double CurrentLongitude { get;  set; }
+        public double CurrentLatitude { get;  set; }
 
 
     }

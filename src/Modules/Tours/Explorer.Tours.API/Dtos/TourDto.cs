@@ -27,5 +27,6 @@ namespace Explorer.Tours.API.Dtos
         public IEnumerable<EquipmentDto> Equipments { get; set; } = new List<EquipmentDto>();
         public IEnumerable<TourDurationDto> TourDurations { get; set; } = new List<TourDurationDto>();
         public DateTime? PublishTime { get;  set; } = null;
+        public DateTime? ArchiveTime { get; set; } = null;
     }
 }

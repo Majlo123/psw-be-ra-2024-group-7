@@ -63,6 +63,47 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
         }
+
+        public Result<TourDto> Archive(TourDto tourDto)
+        {
+            try
+            {
+                Tour tour = MapToDomain(tourDto);
+                tour = tour.Archive();
+                return base.Update(MapToDto(tour));
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
+
+        public Result<TourDto> UpdateTourLength(TourDto tourDto)
+        {
+            try
+            {
+                Tour tour = MapToDomain(tourDto);
+                tour = tour.UpdateTourLength(tour.Length);
+                return base.Update(MapToDto(tour));
+            }
+            catch(ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
+
+        public Result<TourDto> ReactivateTour(TourDto tourDto)
+        {
+            try
+            {
+                Tour tour = MapToDomain(tourDto);
+                tour = tour.ReactivateTour();
+                return base.Update(MapToDto(tour));
+            } catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
         public Result<List<TourDto>> GetMany(List<long> tourIds)
         {
             var tours = CrudRepository.GetMany(tourIds);

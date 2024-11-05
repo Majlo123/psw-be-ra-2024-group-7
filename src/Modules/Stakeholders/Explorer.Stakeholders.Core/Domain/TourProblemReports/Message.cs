@@ -8,14 +8,16 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Explorer.Stakeholders.API.Dtos;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {
     public class Message : ValueObject<Message>
     {
-        public int UserId { get; private set; }
-        public int ReportId { get; private set; }
-        public string Content { get; private set; }
+        public int UserId { get; set; }
+        public int ReportId { get; set; }
+        public string Content { get; set; }
 
         [JsonConstructor]
         public Message(int userId, int reportId, string content) 
@@ -23,6 +25,13 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
             UserId = userId;
             ReportId = reportId;
             Content = content;
+            Validate();
+        }
+
+        private void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Content))
+                throw new ArgumentException("Content cannot be empty", nameof(Content));
         }
 
         protected override bool EqualsCore(Message other)

@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Explorer.BuildingBlocks.Infrastructure.Database;
 
@@ -57,5 +58,10 @@ public class CrudDatabaseRepository<TEntity, TDbContext> : ICrudRepository<TEnti
         var entity = Get(id);
         _dbSet.Remove(entity);
         DbContext.SaveChanges();
+    }
+
+    public List<TEntity> GetMany(List<long> ids)
+    {
+        return _dbSet.Where(e => ids.Contains(e.Id)).ToList();
     }
 }

@@ -12,38 +12,35 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 {
     public class CompletedKeyPoints : ValueObject<CompletedKeyPoints>
     {
-        public KeyPoint CompletedKeyPoint { get; private set; }
+        public int CompletedKeyPointId { get; private set; }
         public DateTime ExecutionTime { get; private set; }
-        public int TouristId { get; private set; }
-        public int TourId { get; private set; }
-
+        public CompletedKeyPoints() { }
         [JsonConstructor]
-        public CompletedKeyPoints(KeyPoint keyPoint, DateTime executionTime, int touristId, int tourId)
+        public CompletedKeyPoints(DateTime executionTime, int completedKeyPointId)
         {
-            CompletedKeyPoint = keyPoint;
+            CompletedKeyPointId = completedKeyPointId;
             ExecutionTime = executionTime;
-            TouristId = touristId;
-            TourId = tourId;
         }
 
         protected override bool EqualsCore(CompletedKeyPoints completedKeyPoints)
         {
-            return CompletedKeyPoint == completedKeyPoints.CompletedKeyPoint
-                       && ExecutionTime == completedKeyPoints.ExecutionTime
-                       && TouristId == completedKeyPoints.TouristId
-                       && TourId == completedKeyPoints.TourId;
+            return CompletedKeyPointId == completedKeyPoints.CompletedKeyPointId
+                       && ExecutionTime == completedKeyPoints.ExecutionTime;
         }
 
         protected override int GetHashCodeCore()
         {
             unchecked
             {
-                int hashCode = CompletedKeyPoint.GetHashCode();
-                hashCode = (hashCode * 357) ^ ExecutionTime.GetHashCode();
-                hashCode = (hashCode * 357) ^ TouristId.GetHashCode();
-                hashCode = (hashCode * 357) ^ TourId.GetHashCode();
+                int hashCode = CompletedKeyPointId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ExecutionTime.GetHashCode();
                 return hashCode;
             }
+        }
+
+        private void Validation(CompletedKeyPoints completedKeyPoints)
+        {
+            throw new NotImplementedException();
         }
     }
 }

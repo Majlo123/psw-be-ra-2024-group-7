@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,19 @@ namespace Explorer.API.Controllers.Tourist.Administration
 
         [HttpGet("{id:int}")]
         [Authorize(Policy = "touristPolicy")]
-        public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>> GetByTouristId(int id,
-            [FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>> GetByTouristId(int id, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _tourProblemReportService.GetByTouristId(id, page, pageSize);
             return CreateResponse(result);
+        }
+
+        [HttpGet]
+        [Route("authorView/{id:int}")]
+        [Authorize(Policy = "authorPolicy")]
+        public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TourProblemReportDto>> GetByAuthorId(int id, [FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourProblemReportService.GetByAuthorId(id, page, pageSize);
+            return result;
         }
 
         [HttpGet]
@@ -57,5 +66,7 @@ namespace Explorer.API.Controllers.Tourist.Administration
             var result = _tourProblemReportService.Delete(id);
             return CreateResponse(result);
         }
+
+
     }
 }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Explorer.Tours.API.Dtos;
 using Npgsql;
+using TourStatus = Explorer.Tours.Core.Domain.TourStatus;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -59,7 +60,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         // Get a list of Tours by their Status
         public List<Tour> GetByStatus(int status)
         {
-            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.Status == status).ToList();
+            return _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => (int) t.Status == status).ToList();
         }
         public PagedResult<Tour> GetPaged(int page, int pageSize)
         {
@@ -69,6 +70,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             
         }   
 
- 
+        public PagedResult<Tour> GetPublishedTours(int page, int pageSize)
+        {
+            var task = _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == Core.Domain.TourStatus.Published).Select(t => t.Preview()).GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
+        }
     }
 }

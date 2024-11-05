@@ -54,4 +54,9 @@ public class KeyPointRepository : IKeyPointRepository
         }
         return keyPoint;
     }
+    public KeyPoint Get(long id)
+    {
+        var entity = _dbSet.FirstOrDefault(k => k.Id == id);
+        return entity;
+    }
 }

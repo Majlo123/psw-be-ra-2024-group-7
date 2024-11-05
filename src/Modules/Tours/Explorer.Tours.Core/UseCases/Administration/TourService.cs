@@ -114,7 +114,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         public Result<PagedResult<TourDto>> GetPublishedTour(int page, int pageSize)
         {
-            var result = _tourRepository.GetPublishedTour(page, pageSize);
+            var result = _tourRepository.GetPublishedTours(page, pageSize);
             return MapToDto(result);
         }
         public Result<TourDto> CloseTour(int id)

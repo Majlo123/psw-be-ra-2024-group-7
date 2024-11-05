@@ -37,7 +37,7 @@ namespace Explorer.API.Controllers.Tourist
         [Route("published")]
         public ActionResult<PagedResult<TourDto>> GetPublished([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetPublishedTours(page, pageSize);
+            var result = _tourService.GetPublishedTour(page, pageSize);
             return CreateResponse(result);
         }
 

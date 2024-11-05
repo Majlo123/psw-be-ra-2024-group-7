@@ -72,10 +72,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public PagedResult<Tour> GetPublishedTours(int page, int pageSize)
         {
-            var task = _context.Tours
-                .Include(t => t.KeyPoints)
-                .Where(t => t.Status == TourStatus.Published)
-                .GetPagedById(page, pageSize);
+            var task = _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == Core.Domain.TourStatus.Published).Select(t => t.Preview()).GetPagedById(page, pageSize);
             task.Wait();
             return task.Result;
         }

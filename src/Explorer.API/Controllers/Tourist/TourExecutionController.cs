@@ -4,6 +4,8 @@ using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.UseCases.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata.Ecma335;
+using Explorer.Tours.Core.Domain;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -38,16 +40,39 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPost("startNewTour")]
-        public ActionResult<TourExecutionDto> StartNewTour([FromBody] TourExecutionDto tourExecution)
+        public IActionResult StartNewTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.StartNewTour(tourExecution);
-            return CreateResponse(result);
+ 
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
+    
 
         [HttpPost("leaveTour")]
         public ActionResult<TourExecutionDto> LeaveTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.LeaveTour(tourExecution.TouristId, tourExecution.TourId);
+            return CreateResponse(result);
+        }
+        [HttpPut("checkLocation/{id:int}")]
+        public ActionResult CheckLocation([FromBody] TouristLocation touristLocation, int id)
+        {
+            var result = _tourExecutionService.CheckLocation(id, touristLocation.Latitude, touristLocation.Longitude);
+
+            return CreateResponse(result);
+
+        }
+        [HttpGet("completed/{id:int}")]
+        public ActionResult<TourExecutionDto> GetCompletedKeyPoints(int id)
+        {
+            var result = _tourExecutionService.GetCompletedKeyPoints(id);
             return CreateResponse(result);
         }
     }

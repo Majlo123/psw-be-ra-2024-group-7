@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,11 @@ namespace Explorer.Tours.Core.Domain
         public List<KeyPoint> KeyPoints { get; set; } = new List<KeyPoint>();
         public List<Equipment> Equipments { get; set; } = new List<Equipment>();
         public List<TourDuration> TourDurations { get; set;} = new List<TourDuration>();
+        public List<TourReview> TourReviews { get; set; } = new List<TourReview>();
         public double Length { get; private set; }
         public int AuthorId { get; private set; }
         public DateTime? PublishTime { get; private set; } = null;
+        public DateTime? ArchiveTime { get; private set; } = null;
 
         public Tour(string name, string difficulty, string description, double cost, TourStatus status, string tags, double length,int authorId)
         {
@@ -64,14 +67,24 @@ namespace Explorer.Tours.Core.Domain
                    !string.IsNullOrEmpty(Tags) && KeyPoints.Count >= 2 && TourDurations.Count >= 1;
         }
 
-        public bool Archive()
+        public Tour Archive()
         {
-            throw new NotImplementedException();
+            if (!CanArchive())
+                throw new ArgumentException("Nije moguce arhivirati turu jer");
+            Status = TourStatus.Archived;
+            ArchiveTime = DateTime.UtcNow;
+            return this;
+        }
+        
+        public Tour UpdateTourLength(double length)
+        {
+            Length= length;
+            return this;
         }
 
-        public bool Valid()
+        public bool CanArchive()
         {
-            throw new NotImplementedException();
+            return Status == TourStatus.Published;
         }
         
         public void IncrementDuration(TourDuration tourDruation)
@@ -79,9 +92,25 @@ namespace Explorer.Tours.Core.Domain
             throw new NotImplementedException();
         }
 
-        public void IncrementLength(double length)
+        public Tour ReactivateTour()
         {
-            throw new NotSupportedException();
+            if (!CanReactivate())
+                throw new ArgumentException("Nije moguce re-aktivirati ovu turu jer nije arhivirana");
+            Status = TourStatus.Published;
+            return this;
+        }
+        public bool CanReactivate()
+        {
+            return Status == TourStatus.Archived;
+        }
+        public double getAverageRate()
+        {
+            if (TourReviews == null || !TourReviews.Any())
+            {
+                return 0;
+            }
+
+            return TourReviews.Average(review => review.Rating);
         }
 
         public void CloseTour()

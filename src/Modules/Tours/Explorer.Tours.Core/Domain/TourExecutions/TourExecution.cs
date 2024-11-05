@@ -1,5 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using Explorer.Stakeholders.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +22,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public DateTime LastActivity { get; private set; }
         public ExecutionStatus Status { get; private set; }
         public float CompletedPercentage { get; private set; }
-        public List<Equipment> TouristEquipment { get;  set; } = new List<Equipment>();
-        public List<CompletedKeyPoints> CompletedKeyPoints { get;  set; } = new List<CompletedKeyPoints>();
-        public List<TourDuration> TransportationType { get;  set; } = new List<TourDuration>();
-
-        //public ... CurrentTouristLocation { get; private set; }
+        public List<CompletedKeyPoints> CompletedKeyPoints { get;  private set; } 
+        public float CurrentLongitude { get; private set; }
+        public float CurrentLatitude { get; private set; }
 
         public TourExecution(){  }
-        public TourExecution(int tourId, int touristId,DateTime tourStartDate,DateTime tourEndDate, DateTime lastActivity,ExecutionStatus status,float completedPercentage)
+        public TourExecution(int tourId, int touristId,DateTime tourStartDate,DateTime tourEndDate, DateTime lastActivity,ExecutionStatus status,float completedPercentage, float currentLongitude, float currentLatitude)
         {
             TourId = tourId;
             TouristId = touristId;
@@ -39,6 +36,9 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LastActivity = lastActivity;
             Status = status;
             CompletedPercentage = completedPercentage;
+            CurrentLongitude = currentLongitude;
+            CurrentLatitude = currentLatitude;
+            CompletedKeyPoints = new List<CompletedKeyPoints>();
         }
 
         public void StartNewTour()
@@ -60,12 +60,24 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             throw new NotImplementedException();
         }
 
-        public void AddCompletedKeyPoint()
+        public void AddCompletedKeyPoint(CompletedKeyPoints keyPoint)
         {
-            throw new NotImplementedException();
+            CompletedKeyPoints.Add(keyPoint);
+            LastActivity = DateTime.UtcNow;
         }
+        public void UpdateCompletedPercentage(int fullCount)
+        {
+            CompletedPercentage =((float)CompletedKeyPoints.Count/fullCount)*100;
+            CompletedPercentage = (float)Math.Round(CompletedPercentage, 2);
+        }
+         public void UpdateLocation(float latitude,float longitude)
+        {
+            //CurrentTouristLocation = ...
+            CurrentLatitude = latitude;
+            CurrentLongitude = longitude;
+            LastActivity = DateTime.UtcNow;
 
-         
+        }
       
 
 

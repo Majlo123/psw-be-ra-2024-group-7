@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Explorer.Tours.API.Dtos;
 using Npgsql;
+using TourStatus = Explorer.Tours.Core.Domain.TourStatus;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -68,10 +69,15 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return task.Result;
             
         }   
-        public void SaveChanges()
+
+        public PagedResult<Tour> GetPublishedTours(int page, int pageSize)
         {
-            _context.SaveChanges();
+            var task = _context.Tours
+                .Include(t => t.KeyPoints)
+                .Where(t => t.Status == TourStatus.Published)
+                .GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
         }
- 
     }
 }

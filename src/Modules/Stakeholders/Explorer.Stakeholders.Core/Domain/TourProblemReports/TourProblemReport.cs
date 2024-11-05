@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using Explorer.BuildingBlocks.Core.Domain;
 using System.Security.Cryptography;
+using Explorer.BuildingBlocks.Core.UseCases;
+using System.Collections.Generic;
 
 namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
 {

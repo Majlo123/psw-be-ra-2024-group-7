@@ -23,5 +23,6 @@ public class StakeholderProfile : Profile
         //CreateMap<TourProblemReportDto, TourProblemReport>().IncludeAllDerived().ForMember(key => key.Messages, opt => opt.MapFrom(src => src.Messages.Select((message, index) => new Message(message.UserId, message.ReportId, message.Content))));
         // Mapiramo DTO na domensku klasu i obratno
         CreateMap<ApplicationGradeDto, ApplicationGrade>().ReverseMap();
+        
     }
 }

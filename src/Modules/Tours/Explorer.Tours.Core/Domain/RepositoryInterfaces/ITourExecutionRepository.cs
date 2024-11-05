@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.Core.Domain.TourExecutions;
+using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         PagedResult<TourExecution> GetPaged(int page, int pageSize);
         TourExecution Get(int id);
-        TourExecution Create(TourExecution execution);
+        Result Create(TourExecution execution);
         TourExecution Update(TourExecution tour);
 
         TourExecution GetByUserAndTourIds(int touristId, int tourId);

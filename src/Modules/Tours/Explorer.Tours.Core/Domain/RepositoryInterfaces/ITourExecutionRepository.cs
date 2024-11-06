@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using FluentResults;
 using System;
@@ -18,6 +19,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 
         TourExecution GetByUserAndTourIds(int touristId, int tourId);
         List<TourExecution> GetAllByUserId(int touristId);
-        TourExecution GetUserActiveTour(int touristId);
+        TourExecution GetUserActiveTour(int touristId)
     }
 }

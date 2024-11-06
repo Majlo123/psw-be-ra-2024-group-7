@@ -67,10 +67,10 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
-        [HttpPost("finishTour")]
-        public ActionResult<TourExecutionDto> FinishTour([FromBody] TourExecutionDto tourExecution)
+        [HttpPost("finishTour/{tourId:int}")]
+        public ActionResult<TourExecutionDto> FinishTour(int tourId)
         {
-            var result = _tourExecutionService.FinishTour(tourExecution.TouristId, tourExecution.TourId);
+            var result = _tourExecutionService.FinishTour(tourId);
             return CreateResponse(result);
         }
 

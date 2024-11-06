@@ -60,17 +60,17 @@ namespace Explorer.API.Controllers.Tourist
             }
         }
 
-        [HttpPost("leaveTour")]
+        [HttpPut("leaveTour")]
         public ActionResult<TourExecutionDto> LeaveTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.LeaveTour(tourExecution.TouristId, tourExecution.TourId);
             return CreateResponse(result);
         }
 
-        [HttpPost("finishTour")]
-        public ActionResult<TourExecutionDto> FinishTour([FromBody] TourExecutionDto tourExecution)
+        [HttpPut("finishTour/{tourId:int}")]
+        public ActionResult<TourExecutionDto> FinishTour(int tourId)
         {
-            var result = _tourExecutionService.FinishTour(tourExecution.TouristId, tourExecution.TourId);
+            var result = _tourExecutionService.FinishTour(tourId);
             return CreateResponse(result);
         }
 

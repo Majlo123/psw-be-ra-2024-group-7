@@ -141,14 +141,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         }
 
-        public Result<List<CompletedKeyPointsDto>> GetCompletedKeyPoints(int id)
+        public Result<List<KeyPointDto>> GetCompletedKeyPoints(int id)
         {
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
-                var completedKeyPoints = new List<CompletedKeyPointsDto>();
+                var completedKeyPoints = new List<KeyPointDto>();
+                //var result = tourExecution.CompletedKeyPoints;
+                foreach (var completed in tourExecution.CompletedKeyPoints)
+                {
+                    var keyPoint = _keyPointRepository.Get(completed.CompletedKeyPointId);
+                    if (keyPoint != null)
+                    {
+                        var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
+                        completedKeyPoints.Add(keyPointDto);
+                    }
+                }
                 var result = completedKeyPoints;
-                return completedKeyPoints;
+                return Result.Ok(completedKeyPoints);
             }
             catch (ArgumentException e)
             {
@@ -209,13 +219,14 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
 
-        public Result<TourExecutionDto> FinishTour(int touristId, int tourId)
+        public Result<TourExecutionDto> FinishTour(int tourExecutionId)
         {
-            var tourToFinish = _tourExecutionRepository.GetByUserAndTourIds(touristId, tourId);
+            var tourToFinish = _tourExecutionRepository.Get(tourExecutionId);
             tourToFinish.FinishTour();
 
             var result = _tourExecutionRepository.Update(tourToFinish);
             return MapToDto(result);
         }
+
     }
 }

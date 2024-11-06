@@ -77,5 +77,69 @@ namespace Explorer.Blog.Core.UseCases
             
 
         }
+        public Result<BlogDto> UpdateBlogStatus(int blogId)
+        {
+            try
+            {
+                var blog = _blogRepository.Get(blogId);
+                if (blog == null)
+                    return Result.Fail(FailureCode.NotFound).WithError("Blog not found");
+
+                blog.UpdateActivityStatus();
+                var updatedBlog = _blogRepository.Update(blog);
+                return MapToDto(updatedBlog);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
+        public Result<BlogDto> AddComment(int blogId, CommentDto commentDto)
+        {
+            var blog = _blogRepository.Get(blogId);
+            if (blog == null)
+                return Result.Fail(FailureCode.NotFound).WithError("Blog not found");
+
+            var comment = _mapper.Map<Comment>(commentDto);
+            blog.AddComment(comment);
+            var updatedBlog = _blogRepository.Update(blog);
+            return MapToDto(updatedBlog);
+        }
+
+        public Result<BlogDto> UpdateComment(int blogId, int commentId, string newText)
+        {
+            var blog = _blogRepository.Get(blogId);
+            if (blog == null)
+                return Result.Fail(FailureCode.NotFound).WithError("Blog not found");
+
+            blog.UpdateComment(commentId, newText);
+            var updatedBlog = _blogRepository.Update(blog);
+            return MapToDto(updatedBlog);
+        }
+
+        public Result<BlogDto> DeleteComment(int blogId, int commentId)
+        {
+            var blog = _blogRepository.Get(blogId);
+            if (blog == null)
+                return Result.Fail(FailureCode.NotFound).WithError("Blog not found");
+
+            blog.DeleteComment(commentId);
+            var updatedBlog = _blogRepository.Update(blog);
+            return MapToDto(updatedBlog);
+        }
+        public Result<List<BlogDto>> GetActiveBlogs()
+        {
+            var activeBlogs = _blogRepository.GetByActivityStatus(Domain.BlogActivityStatus.active);
+            return Result.Ok(activeBlogs.Select(MapToDto).ToList());
+        }
+
+        public Result<List<BlogDto>> GetFamousBlogs()
+        {
+            var famousBlogs = _blogRepository.GetByActivityStatus(Domain.BlogActivityStatus.famous);
+            return Result.Ok(famousBlogs.Select(MapToDto).ToList());
+        }
+
+
+
     }
 }

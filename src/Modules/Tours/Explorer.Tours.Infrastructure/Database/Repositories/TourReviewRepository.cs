@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Infrastructure.Database;
+using FluentResults;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -22,11 +25,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _context.TourReview.FirstOrDefault(tr => tr.Id == reviewId);
         }
 
-        public List<TourReview> GetReviewsForTour(int tourId)
+        public PagedResult<TourReview> GetReviewsForTour(int tourId, int pageIndex, int pageSize)
         {
-            return  _context.TourReview
-                                 .Where(tr => tr.TourId == tourId)
-                                 .ToList();
+            var task = _context.TourReview
+                                 .Where(tr => tr.TourId == tourId).GetPagedById(pageIndex, pageSize);
+            task.Wait();
+            return task.Result;
         }
 
         

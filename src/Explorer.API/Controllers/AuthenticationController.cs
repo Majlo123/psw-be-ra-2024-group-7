@@ -27,4 +27,11 @@ public class AuthenticationController : BaseApiController
         var result = _authenticationService.Login(credentials);
         return CreateResponse(result);
     }
+
+    [HttpGet("username/{id:int}")]
+    public ActionResult<string> GetUsername(int userId)
+    {
+        var result = _authenticationService.GetUsername(userId);
+        return CreateResponse(result);
+    }
 }

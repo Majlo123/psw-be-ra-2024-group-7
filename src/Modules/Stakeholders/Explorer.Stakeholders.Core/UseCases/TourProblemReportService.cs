@@ -29,7 +29,11 @@ namespace Explorer.Stakeholders.Core.UseCases
             _notificationService = notificationService;
 
         }
-
+        public Result<TourProblemReportDto> Get(int id)
+        {
+            var result = _tourProblemReportRepository.Get(id);
+            return MapToDto(result);
+        }
         public Result<PagedResult<TourProblemReportDto>> GetPaged(int page, int pageSize)
         {
             var result = _tourProblemReportRepository.GetPaged(page, pageSize);
@@ -123,7 +127,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
         }
 
-        public Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReportDto)
+        public Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReport)
         {
             var aggregate = _repository.Get(id);
             if (aggregate == null)
@@ -131,9 +135,19 @@ namespace Explorer.Stakeholders.Core.UseCases
                 throw new Exception("Agregat TourProblemReport nije pronađen");
             }
 
-            aggregate.SetSolvingDeadline(tourProblemReportDto.SolvingDeadline);
+            aggregate.SetSolvingDeadline(tourProblemReport.SolvingDeadline);
 
             _repository.Update(aggregate);
+
+            var report = _tourProblemReportRepository.Get((int)aggregate.Id);
+            var autorId = _internalTourService.Get(report.TourId).Value.AuthorId;
+            NotificationDto notification = new NotificationDto();
+            notification.ReportId = (int)aggregate.Id;
+            notification.RecipientId = autorId;
+            notification.IsRead = false;
+            notification.NotificationType = API.Dtos.NotificationType.DEADLINE;
+            _notificationService.Create(notification);
+
 
             var dto = _mapper.Map<TourProblemReportDto>(aggregate);
             return Result.Ok(dto);

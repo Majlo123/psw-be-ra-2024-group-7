@@ -29,6 +29,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 TouristId = -11,
                 VisitDate = DateTime.UtcNow.AddDays(-2), // Make sure to use UTC
                 ReviewDate = DateTime.UtcNow.AddDays(-1), // Make sure to use UTC
+                CompletedPercentage = 60,
                 Images = new List<string> { "image1.jpg", "image2.jpg" }
             };
 
@@ -44,6 +45,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.TouristId.ShouldBe(newReview.TouristId);
             result.VisitDate.ShouldBe(newReview.VisitDate);
             result.ReviewDate.ShouldBe(newReview.ReviewDate);
+            result.CompletedPercentage.ShouldBe(newReview.CompletedPercentage);
             result.Images.ShouldBe(newReview.Images);
 
             // Assert - Database
@@ -55,6 +57,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             storedReview.TouristId.ShouldBe(newReview.TouristId);
             storedReview.VisitDate.ShouldBe(newReview.VisitDate);
             storedReview.ReviewDate.ShouldBe(newReview.ReviewDate);
+            storedReview.CompletedPercentage.ShouldBe(newReview.CompletedPercentage);
             storedReview.Images.ShouldBe(newReview.Images);
         }
 
@@ -133,6 +136,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 TouristId = 101,
                 VisitDate = DateTime.UtcNow.AddDays(-5),
                 ReviewDate = DateTime.UtcNow.AddDays(-4),
+                CompletedPercentage = 50,
                 Images = new List<string> { "updated_image1.jpg" }
             };
 

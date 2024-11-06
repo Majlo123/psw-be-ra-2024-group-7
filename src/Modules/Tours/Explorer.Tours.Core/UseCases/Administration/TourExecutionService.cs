@@ -103,24 +103,31 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
         public Result<TourExecutionDto> CheckLocation(int id, float latitude, float longitude)
-        {
+            {
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
                 var tour = _tourRepository.Get(tourExecution.TourId);
                 tourExecution.UpdateLocation(latitude, longitude);
                 //var checkpoint = _tourExecutionRepository.FindNearbyCheckpoint(latitude, longitude,tour);
-                foreach (KeyPoint keyPoint in tour.KeyPoints)
+                for (int i = 0; i < tour.KeyPoints.Count; i++)
                 {
-                    if (FindNearbyCheckpoint(latitude, longitude, keyPoint.Longitude, keyPoint.Latitude) && tourExecution.CompletedKeyPoints.All(k => k.CompletedKeyPointId != keyPoint.Id) && tourExecution.CompletedKeyPoints.Count>=(keyPoint.Id-1))
+                    var keyPoint = tour.KeyPoints[i];
+                    bool isNearby = FindNearbyCheckpoint(latitude, longitude, keyPoint.Longitude, keyPoint.Latitude);
+                    bool isAlreadyCompleted = tourExecution.CompletedKeyPoints.Any(k => k.CompletedKeyPointId == keyPoint.Id);
+                    bool isNextInOrder = tourExecution.CompletedKeyPoints.Count == i;
+
+                    if (isNearby && !isAlreadyCompleted && isNextInOrder)
                     {
-                        CompletedKeyPoints completedKey = new CompletedKeyPoints(DateTime.UtcNow,Convert.ToInt32(keyPoint.Id));
+                        var completedKey = new CompletedKeyPoints(DateTime.UtcNow, Convert.ToInt32(keyPoint.Id));
                         tourExecution.AddCompletedKeyPoint(completedKey);
                         tourExecution.UpdateCompletedPercentage(tour.KeyPoints.Count);
                         var result = _tourExecutionRepository.Update(tourExecution);
                         return MapToDto(result);
                     }
                 }
+
+                // Update location if no checkpoint was completed
                 return MapToDto(_tourExecutionRepository.Update(tourExecution));
             }
             catch (KeyNotFoundException e)
@@ -134,14 +141,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         }
 
-        public Result<List<CompletedKeyPointsDto>> GetCompletedKeyPoints(int id)
+        public Result<List<KeyPointDto>> GetCompletedKeyPoints(int id)
         {
             try
             {
                 var tourExecution = _tourExecutionRepository.Get(id);
-                var completedKeyPoints = new List<CompletedKeyPointsDto>();
+                var completedKeyPoints = new List<KeyPointDto>();
+                //var result = tourExecution.CompletedKeyPoints;
+                foreach (var completed in tourExecution.CompletedKeyPoints)
+                {
+                    var keyPoint = _keyPointRepository.Get(completed.CompletedKeyPointId);
+                    if (keyPoint != null)
+                    {
+                        var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
+                        completedKeyPoints.Add(keyPointDto);
+                    }
+                }
                 var result = completedKeyPoints;
-                return completedKeyPoints;
+                return Result.Ok(completedKeyPoints);
             }
             catch (ArgumentException e)
             {
@@ -202,13 +219,14 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
         }
 
-        public Result<TourExecutionDto> FinishTour(int touristId, int tourId)
+        public Result<TourExecutionDto> FinishTour(int tourExecutionId)
         {
-            var tourToFinish = _tourExecutionRepository.GetByUserAndTourIds(touristId, tourId);
+            var tourToFinish = _tourExecutionRepository.Get(tourExecutionId);
             tourToFinish.FinishTour();
 
             var result = _tourExecutionRepository.Update(tourToFinish);
             return MapToDto(result);
         }
+
     }
 }

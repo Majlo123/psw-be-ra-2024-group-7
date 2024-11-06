@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;

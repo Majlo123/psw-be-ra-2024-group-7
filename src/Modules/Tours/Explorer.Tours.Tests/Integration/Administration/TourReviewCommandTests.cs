@@ -26,9 +26,10 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 TourId = 1,
                 Rating = 5,
                 Comment = "Absolutely loved this tour! The guide was amazing and the views were breathtaking.",
-                TouristId = -11,
-                VisitDate = DateTime.UtcNow.AddDays(-2), // Make sure to use UTC
-                ReviewDate = DateTime.UtcNow.AddDays(-1), // Make sure to use UTC
+                TouristId = 1,
+                VisitDate = DateTime.UtcNow.AddDays(-2),
+                ReviewDate = DateTime.UtcNow.AddDays(-1),
+                CompletedPercentage = 60,
                 Images = new List<string> { "image1.jpg", "image2.jpg" }
             };
 
@@ -44,6 +45,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.TouristId.ShouldBe(newReview.TouristId);
             result.VisitDate.ShouldBe(newReview.VisitDate);
             result.ReviewDate.ShouldBe(newReview.ReviewDate);
+            result.CompletedPercentage.ShouldBe(newReview.CompletedPercentage);
             result.Images.ShouldBe(newReview.Images);
 
             // Assert - Database
@@ -55,6 +57,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             storedReview.TouristId.ShouldBe(newReview.TouristId);
             storedReview.VisitDate.ShouldBe(newReview.VisitDate);
             storedReview.ReviewDate.ShouldBe(newReview.ReviewDate);
+            storedReview.CompletedPercentage.ShouldBe(newReview.CompletedPercentage);
             storedReview.Images.ShouldBe(newReview.Images);
         }
 
@@ -133,6 +136,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 TouristId = 101,
                 VisitDate = DateTime.UtcNow.AddDays(-5),
                 ReviewDate = DateTime.UtcNow.AddDays(-4),
+                CompletedPercentage = 60,
                 Images = new List<string> { "updated_image1.jpg" }
             };
 
@@ -148,6 +152,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.TouristId.ShouldBe(updatedReview.TouristId);
             result.VisitDate.ShouldBe(updatedReview.VisitDate);
             result.ReviewDate.ShouldBe(updatedReview.ReviewDate);
+            result.CompletedPercentage.ShouldBe(updatedReview.CompletedPercentage);
             result.Images.ShouldBe(updatedReview.Images);
 
             // Assert - Database

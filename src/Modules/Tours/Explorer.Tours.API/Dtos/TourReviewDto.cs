@@ -21,6 +21,7 @@ namespace Explorer.Tours.API.Dtos
         public DateTime VisitDate { get; set; }
 
         public DateTime ReviewDate { get; set; }
+        public float CompletedPercentage { get; set; }
 
         public List<string> Images { get; set; }
     }

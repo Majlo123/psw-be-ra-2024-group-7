@@ -28,7 +28,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPost]
         public ActionResult<TourReviewDto> Create([FromBody] TourReviewDto review)
         {
-            review.TouristId = User.PersonId()+1;
+            review.TouristId = User.PersonId() + 1;
             var result = _tourReviewService.Create(review);
             return CreateResponse(result);
         }
@@ -36,7 +36,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPut("{id:int}")]
         public ActionResult<TourReviewDto> Update([FromBody] TourReviewDto review)
         {
-            review.TouristId = User.PersonId()+1;
+            review.TouristId = User.PersonId() + 1;
             var result = _tourReviewService.Update(review);
             return CreateResponse(result);
         }

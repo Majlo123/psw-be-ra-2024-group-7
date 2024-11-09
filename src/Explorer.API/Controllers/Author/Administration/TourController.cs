@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Explorer.Tours.Core.UseCases.Administration;
 using Explorer.Stakeholders.API.Dtos;
 using System.IdentityModel.Tokens.Jwt;
+using Explorer.Stakeholders.Infrastructure.Authentication;
 
 namespace Explorer.API.Controllers.Author.Administration
 {
@@ -30,6 +31,7 @@ namespace Explorer.API.Controllers.Author.Administration
         [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Create([FromBody] TourDto tour)
         {
+            tour.AuthorId = this.User.PersonId();
             var result = _tourService.Create(tour);
             return CreateResponse(result);
         }
@@ -38,6 +40,8 @@ namespace Explorer.API.Controllers.Author.Administration
         [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Update([FromBody] TourDto tour)
         {
+            if (this.User.PersonId() != tour.AuthorId)
+                return Unauthorized("You can not update this tour because this tour is not yours!");
             _tourService.DeleteEquipments(tour.Id);
             var result = _tourService.Update(tour);
             return CreateResponse(result);
@@ -62,9 +66,8 @@ namespace Explorer.API.Controllers.Author.Administration
         [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Publish([FromBody] TourDto tour)
         {
-            //var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString();
-            //if(!IsAuthorized(tour.AuthorId, tokenHeader)) 
-            //    return Unauthorized("Nemate privilegije za ovu operaciju");
+            if(this.User.PersonId() != tour.AuthorId)
+                return Unauthorized("You can not publish this tour because this tour is not yours!");
             var result = _tourService.Publish(tour);
             return CreateResponse(result);
         }
@@ -73,6 +76,8 @@ namespace Explorer.API.Controllers.Author.Administration
         [Route("archive/{id:int}")]
         public ActionResult<TourDto> Archive([FromBody] TourDto tour)
         {
+            if (this.User.PersonId() != tour.AuthorId)
+                return Unauthorized("You can not archive this tour because this tour is not yours!");
             var result = _tourService.Archive(tour);
             return CreateResponse(result);
         }
@@ -81,6 +86,8 @@ namespace Explorer.API.Controllers.Author.Administration
         [Route("length/{id:int}")]
         public ActionResult<TourDto> UpdateTourLength([FromBody] TourDto tour)
         {
+            if (this.User.PersonId() != tour.AuthorId)
+                return Unauthorized("You can not update length on this tour because this tour is not yours!");
             var result = _tourService.UpdateTourLength(tour);
             return CreateResponse(result);
         }
@@ -89,6 +96,8 @@ namespace Explorer.API.Controllers.Author.Administration
         [Route("reactivate/{id:int}")]
         public ActionResult<TourDto> ReactivateTour([FromBody] TourDto tour)
         {
+            if (this.User.PersonId() != tour.AuthorId)
+                return Unauthorized("You can not reactive this tour because this tour is not yours!");
             var result = _tourService.ReactivateTour(tour);
             return CreateResponse(result);
         }

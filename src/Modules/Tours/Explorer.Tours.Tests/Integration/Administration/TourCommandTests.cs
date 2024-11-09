@@ -126,7 +126,7 @@ public class TourCommandTests : BaseToursIntegrationTest
     {
         // Arrange
         using var scope = Factory.Services.CreateScope();
-        var controller = CreateController(scope, "-1");
+        var controller = CreateController(scope, "-12");
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var updatedEntity = new TourDto
         {
@@ -167,11 +167,12 @@ public class TourCommandTests : BaseToursIntegrationTest
     {
         // Arrange
         using var scope = Factory.Services.CreateScope();
-        var controller = CreateController(scope, "-1");
+        var controller = CreateController(scope, "-12");
         var updatedEntity = new TourDto
         {
             Id = -1000,
-            Name = "Tura1"
+            Name = "Tura1",
+            AuthorId = -12
         };
 
         // Act

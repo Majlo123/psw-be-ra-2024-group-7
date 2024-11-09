@@ -59,6 +59,7 @@ namespace Explorer.API.Controllers.Author.Administration
 
         [HttpPut]
         [Route("publish/{id:int}")]
+        [Authorize(Policy = "authorPolicy")]
         public ActionResult<TourDto> Publish([FromBody] TourDto tour)
         {
             //var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString();

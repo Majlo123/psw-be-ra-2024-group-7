@@ -19,9 +19,27 @@ namespace Explorer.Tours.Core.UseCases.Administration
     public class TourService : CrudService<TourDto,Tour>, ITourService, IInternalTourService
     {
         private readonly ITourRepository _tourRepository;
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base (repository, mapper)
+        private readonly IKeyPointRepository _keyPointRepository;
+
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository, IKeyPointRepository keyPointRepository) : base (repository, mapper)
         {
             _tourRepository = tourRepository;
+            _keyPointRepository = keyPointRepository;
+        }
+        public Result<TourDto> Create(TourDto dto)
+        {
+            try
+            {
+                dto.PublishTime = null;
+                dto.ArchiveTime = null;
+                var tour = _tourRepository.Create(MapToDomain(dto));
+                return MapToDto(tour);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+           
         }
         public Result<PagedResult<TourDto>> GetPaged(int page, int pageSize)
         {
@@ -58,7 +76,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.Publish();
-                return base.Update(MapToDto(tour));
+                return MapToDto(_tourRepository.Update(tour));
             }
             catch (ArgumentException e)
             {
@@ -72,7 +90,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.Archive();
-                return base.Update(MapToDto(tour));
+                return MapToDto(_tourRepository.Update(tour));
             }
             catch (ArgumentException e)
             {
@@ -86,7 +104,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.UpdateTourLength(tour.Length);
-                return base.Update(MapToDto(tour));
+                return MapToDto(_tourRepository.Update(tour));
             }
             catch(ArgumentException e)
             {
@@ -100,7 +118,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.ReactivateTour();
-                return base.Update(MapToDto(tour));
+                return MapToDto(_tourRepository.Update(tour));
             } catch (ArgumentException e)
             {
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
@@ -208,6 +226,26 @@ namespace Explorer.Tours.Core.UseCases.Administration
             };
 
             return tourDto;
+        }
+
+        public Result<TourDto> Update(TourDto tourDto)
+        {
+            try
+            {
+                var tour = MapToDomain(tourDto);
+                foreach (var kp in tour.KeyPoints)
+                {
+                    _keyPointRepository.Update(kp);
+                }
+                _tourRepository.Update(tour);
+                return MapToDto(tour);
+            }
+            catch (Exception ex) 
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(ex.Message);
+            }
+
+            
         }
     }
 }

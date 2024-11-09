@@ -66,6 +66,7 @@ public class TourCommandTests : BaseToursIntegrationTest
         var controller = CreateController(scope, "-1");
         var updatedEntity = new TourDto
         {
+            Name = "",
             Difficulty = "Laka",
             Description = "Planinski hajk",
             Cost = 0,

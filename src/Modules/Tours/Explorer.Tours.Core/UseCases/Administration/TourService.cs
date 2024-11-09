@@ -244,8 +244,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 return Result.Fail(FailureCode.NotFound).WithError(ex.Message);
             }
-
-            
+        }
+        public Result<PagedResult<TourDto>> GetByAuthorId(int id, int page, int pageSize)
+        {
+            var result = _tourRepository.GetByAuthorId(id, page, pageSize);
+            return MapToDto(result);
         }
     }
 }

@@ -105,5 +105,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 throw new Exception();
             }
         }
+
+        public PagedResult<Tour> GetByAuthorId(int id, int page, int pageSize)
+        {
+            var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.AuthorId == id).GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
+        }
     }
 }

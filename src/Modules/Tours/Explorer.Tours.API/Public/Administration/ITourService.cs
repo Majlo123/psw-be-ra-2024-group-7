@@ -25,6 +25,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> Archive(TourDto tour);
         Result<TourDto> UpdateTourLength(TourDto tour);
         Result<TourDto> ReactivateTour(TourDto tour);
-
+        Result<PagedResult<TourDto>> GetByAuthorId(int id, int page, int pageSize);
     }
 }

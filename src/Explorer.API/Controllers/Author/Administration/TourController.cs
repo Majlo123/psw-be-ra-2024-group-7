@@ -102,6 +102,14 @@ namespace Explorer.API.Controllers.Author.Administration
             return CreateResponse(result);
         }
 
+        [HttpGet]
+        [Route("user")]
+        public ActionResult<PagedResult<TourDto>> GetForUser([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourService.GetByAuthorId(this.User.PersonId(), page, pageSize);
+            return CreateResponse(result);
+        }
+
         private bool IsAuthorized(long id, string tokenHeader)
         {
             var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();

@@ -61,9 +61,6 @@ namespace Explorer.API.Controllers.Author.Administration
         [Route("publish/{id:int}")]
         public ActionResult<TourDto> Publish([FromBody] TourDto tour)
         {
-            //var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString();
-            //if(!IsAuthorized(tour.AuthorId, tokenHeader)) 
-            //    return Unauthorized("Nemate privilegije za ovu operaciju");
             var result = _tourService.Publish(tour);
             return CreateResponse(result);
         }
@@ -90,19 +87,6 @@ namespace Explorer.API.Controllers.Author.Administration
         {
             var result = _tourService.ReactivateTour(tour);
             return CreateResponse(result);
-        }
-
-        private bool IsAuthorized(long id, string tokenHeader)
-        {
-            var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(accessToken);
-
-            var userId = jwtToken.Claims.First(claim => claim.Type == "id").Value;
-
-            if (userId != id.ToString())
-                return false;
-            return true;
         }
     }
 }

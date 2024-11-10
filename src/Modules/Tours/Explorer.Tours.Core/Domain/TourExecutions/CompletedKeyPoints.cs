@@ -37,10 +37,5 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
                 return hashCode;
             }
         }
-
-        private void Validation(CompletedKeyPoints completedKeyPoints)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

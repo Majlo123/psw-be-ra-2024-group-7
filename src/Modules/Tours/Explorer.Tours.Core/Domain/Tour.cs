@@ -93,11 +93,6 @@ namespace Explorer.Tours.Core.Domain
         {
             return Status == TourStatus.Published;
         }
-        
-        public void IncrementDuration(TourDuration tourDruation)
-        {
-            throw new NotImplementedException();
-        }
 
         public Tour ReactivateTour()
         {

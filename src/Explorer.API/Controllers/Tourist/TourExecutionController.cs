@@ -76,7 +76,7 @@ namespace Explorer.API.Controllers.Tourist
 
 
         [HttpPut("checkLocation/{id:int}")]
-        public ActionResult CheckLocation([FromBody] TouristLocation touristLocation, int id)
+        public ActionResult CheckLocation([FromBody] TouristLocationDto touristLocation, int id)
         {
             var result = _tourExecutionService.CheckLocation(id, touristLocation.Latitude, touristLocation.Longitude);
 

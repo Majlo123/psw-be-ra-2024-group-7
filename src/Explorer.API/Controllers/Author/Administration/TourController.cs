@@ -109,18 +109,5 @@ namespace Explorer.API.Controllers.Author.Administration
             var result = _tourService.GetByAuthorId(this.User.PersonId(), page, pageSize);
             return CreateResponse(result);
         }
-
-        private bool IsAuthorized(long id, string tokenHeader)
-        {
-            var accessToken = tokenHeader.Substring("Bearer ".Length).Trim();
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(accessToken);
-
-            var userId = jwtToken.Claims.First(claim => claim.Type == "id").Value;
-
-            if (userId != id.ToString())
-                return false;
-            return true;
-        }
     }
 }

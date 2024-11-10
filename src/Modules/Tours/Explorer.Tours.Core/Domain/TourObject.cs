@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain
 { 
-    //public enum Category { WC, Restaurant, Parking, Other};
     public class TourObject : Entity
     {
         public string Name { get; private set; }

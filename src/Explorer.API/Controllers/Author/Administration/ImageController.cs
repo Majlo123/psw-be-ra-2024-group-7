@@ -11,7 +11,8 @@ public class ImageController : BaseApiController
         if (file == null || file.Length == 0)
             return BadRequest("No file uploaded.");
 
-        var path = Path.Combine("C:\\Users\\PC\\Desktop", file.FileName);
+        //var path = Path.Combine("C:\\Users\\PC\\Desktop", file.FileName);
+        var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), file.FileName);
 
         using (var stream = new FileStream(path, FileMode.Create))
         {

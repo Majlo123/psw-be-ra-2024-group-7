@@ -13,13 +13,13 @@ namespace Explorer.Blog.Core.Domain
         public string Description { get; init; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Rating> Ratings { get; set; }
-        public BlogStatus Status { get; init; }
-        public List<string> ImageUrl { get; set; } = new List<string>();
+        public BlogStatus Status { get; private set; }
+        public List<string> ImageUrl { get; set; }
         public DateOnly Date {  get; init; }
         public BlogActivityStatus ActivityStatus { get; private set; }
         public int OwnerId { get; init; }
 
-        public Blog(string title, string description, BlogStatus status, DateOnly date, BlogActivityStatus activityStatus, int ownerId)
+        public Blog(string title, string description, BlogStatus status, DateOnly date, BlogActivityStatus activityStatus, int ownerId, List<string> imageUrl)
         {
             Title = title;
             Description = description;
@@ -28,6 +28,7 @@ namespace Explorer.Blog.Core.Domain
             ActivityStatus = activityStatus;
             OwnerId = ownerId;
             Ratings = new List<Rating>();
+            ImageUrl = imageUrl;
             Validate();
             UpdateActivityStatus();
         }
@@ -119,6 +120,14 @@ namespace Explorer.Blog.Core.Domain
             UpdateActivityStatus();
         }
 
+        public void PublishBlog()
+        {
+            this.Status = BlogStatus.published;
+        }
+        public void CloseBlog()
+        {
+            this.Status = BlogStatus.closed;
+        }
 
     }
 

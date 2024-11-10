@@ -22,6 +22,8 @@ namespace Explorer.Blog.API.Public
         Result<BlogDto> DeleteComment(int blogId, int commentId);
         Result<List<BlogDto>> GetActiveBlogs();
         Result<List<BlogDto>> GetFamousBlogs();
+        Result<BlogDto> PublishBlog(int id);
+        Result<BlogDto> CloseBlog(int id);
 
     }
 }

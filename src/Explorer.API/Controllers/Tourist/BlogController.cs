@@ -36,10 +36,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _blogService.Get(id);
             return CreateResponse(result);
         }
-        [HttpDelete("{id:int}")]
-        public ActionResult<BlogDto> Delete(int id)
+
+        [HttpPut("rating/{id:int}")]
+        public ActionResult<BlogDto> UpdateRating(int id, [FromBody] RatingDto rating)
         {
-            var result = _blogService.Delete(id);
+            rating.CreationTime = DateTime.Now;
+            var result = _blogService.UpdateRating(id, rating);
             return CreateResponse(result);
         }
 

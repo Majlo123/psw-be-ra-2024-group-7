@@ -37,12 +37,4 @@ public class TourDuration : ValueObject<TourDuration>
             return hashCode;
         }
     }
-    public void Add()
-    {
-        throw new NotImplementedException();
-    }
-    public bool Valid()
-    {
-        throw new NotImplementedException();
-    }
 }

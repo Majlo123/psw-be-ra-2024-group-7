@@ -55,9 +55,10 @@ public class AuthenticationService : IAuthenticationService
         }
     }
 
-    public Result<string> GetUsername(long userId)
+    public Result<CredentialsDto> GetUsername(long userId)
     {
         var user = _userRepository.GetUsername(userId);
-        return user;
+        CredentialsDto dto = new CredentialsDto { Password = user.Password, Username = user.Username };
+        return dto;
     }
 }

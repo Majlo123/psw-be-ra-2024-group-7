@@ -33,6 +33,20 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return task.Result;
         }
 
+        public float GetAverageGrade(int tourId, int pageIndex, int pageSize)
+        {
+            var task = _context.TourReview.Where(tr => tr.TourId == tourId).GetPagedById(pageIndex, pageSize);
+            task.Wait();
+            float counter = _context.TourReview.Where(tr => tr.TourId == tourId).Count();
+            float sum = 0;
+            foreach (TourReview review in task.Result.Results)
+            {
+                sum += review.Rating;
+            }
+            float result = sum / counter;
+            return result;
+        }
+
         
     }
 }

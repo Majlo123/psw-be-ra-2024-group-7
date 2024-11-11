@@ -19,6 +19,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourReviewDto> Update(TourReviewDto tourReview);
 
         Result<PagedResult<TourReviewDto>> GetReviewsByTourId(int id, int pageIndex, int pageSize);
+        Result<double> GetAverageGrade(int tourId, int pageIndex, int pageSize);
         Result Delete(int id);
     }
 }

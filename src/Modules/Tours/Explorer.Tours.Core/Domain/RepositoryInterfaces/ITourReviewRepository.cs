@@ -11,5 +11,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         public TourReview Get(int id);
         public PagedResult<TourReview> GetReviewsForTour(int id, int pageIndex, int pageSize);
+        public float GetAverageGrade(int tourId, int pageIndex, int pageSize);
     }
 }

@@ -7,5 +7,5 @@ public interface IAuthenticationService
 {
     Result<AuthenticationTokensDto> Login(CredentialsDto credentials);
     Result<AuthenticationTokensDto> RegisterTourist(AccountRegistrationDto account);
-    Result<string> GetUsername(long userId);
+    Result<CredentialsDto> GetUsername(long userId);
 }

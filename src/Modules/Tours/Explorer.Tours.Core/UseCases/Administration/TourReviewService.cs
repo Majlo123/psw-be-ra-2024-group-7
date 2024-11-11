@@ -26,5 +26,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var result = _tourReviewRepository.GetReviewsForTour(id, pageIndex, pageSize);
             return MapToDto(result);
         }
+
+        public Result<double> GetAverageGrade(int tourId, int pageIndex, int pageSize)
+        {
+            var result = _tourReviewRepository.GetAverageGrade(tourId, pageIndex, pageSize);
+            return Convert.ToDouble(result);
+        }
     }
 }

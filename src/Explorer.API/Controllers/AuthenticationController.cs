@@ -1,5 +1,6 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers;
@@ -28,8 +29,8 @@ public class AuthenticationController : BaseApiController
         return CreateResponse(result);
     }
 
-    [HttpGet("username/{id:int}")]
-    public ActionResult<string> GetUsername(int userId)
+    [HttpGet("username/{userId:int}")]
+    public ActionResult<CredentialsDto> GetUsername([FromRoute] int userId)
     {
         var result = _authenticationService.GetUsername(userId);
         return CreateResponse(result);

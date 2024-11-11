@@ -13,5 +13,6 @@ namespace Explorer.Shopping.Core.Domain.RepositoryInterfaces
         List<Item> GetItemsByTourIds(List<long> tourIds);
         public Item GetByItemId(long itemId);
         void DeleteByItemId(long itemId);
+        public new Item Update(Item item);
     }
 }

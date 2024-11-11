@@ -2,13 +2,14 @@
 using Explorer.Shopping.API.Dtos;
 using Explorer.Shopping.API.Public;
 using Explorer.Stakeholders.Infrastructure.Authentication;
+using Explorer.Tours.API.Dtos;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist.Shopping;
 
-[Authorize(Policy = "touristPolicy")]
+[Authorize(Policy = "userPolicy")]
 [Route("api/shopping/shopping-cart")]
 public class ShoppingCartController : BaseApiController
 {
@@ -36,6 +37,30 @@ public class ShoppingCartController : BaseApiController
     {
         var result = _shoppingCartService.AddItem(orderItem, touristId);
         return CreateResponse(result);
+    }
+    [HttpPost("create/{touristId:int}")]
+    public ActionResult<ShoppingCartDto> CreateCart(int touristId)
+    {
+        var result = _shoppingCartService.CreateCart(touristId);
+        return CreateResponse(result);
+    }
+    [HttpPost("create/item")]
+    public ActionResult<ItemDto> CreateItem([FromBody] TourDto tour)
+    {
+        
+        if (_shoppingCartService.GetById(tour.Id)!=null)
+        {
+            return CreateResponse(_shoppingCartService.UpdateItemByTourId(tour.Id,(int)tour.Cost));
+        }
+        else
+        {
+            ItemDto item = new ItemDto();
+            item.SellerId = tour.AuthorId;
+            item.ItemId = tour.Id;
+            item.Price = tour.Cost;
+            item.Name = tour.Name;
+            return CreateResponse(_shoppingCartService.CreateItem(item));
+        }
     }
 
     [HttpPut("remove/{touristId:int}")]

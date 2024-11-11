@@ -12,7 +12,7 @@ namespace Explorer.Shopping.Core.Domain
         public long SellerId { get; init; }
         public long ItemId { get; init; }
         public string Name { get; private set; }
-        public int Price { get; private set; }
+        public int Price { get; set; }
 
         public Item(long sellerId, long itemId, string name, int price)
         {

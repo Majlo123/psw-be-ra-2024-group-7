@@ -6,6 +6,7 @@ using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Domain.ShoppingCarts;
 using Explorer.Shopping.Core.Domain;
 using FluentResults;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Explorer.Payments.Core.UseCases;
 
@@ -158,6 +159,34 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
 
         _shoppingCartRepository.Update(shoppingCart);
     }
-   
+
+    public Result<ShoppingCartDto> CreateCart(int touristId)
+    {
+        ShoppingCart shoppingCart = new ShoppingCart(touristId);
+        return MapToDto(_shoppingCartRepository.Create(shoppingCart));
+    }
+
+    public Result<ItemDto> CreateItem(ItemDto item)
+    {
+        Item newItem = _mapper.Map<ItemDto, Item>(item);
+        return _mapper.Map < Item,ItemDto>(_itemRepository.Create(newItem));
+    }
+
+    public Result<ItemDto> GetById(int id)
+    {
+        if(_itemRepository.GetByItemId(id) == null)
+        {
+            return null;
+        }
+        return _mapper.Map < Item,ItemDto >(_itemRepository.GetByItemId(id));
+    }
+
+    public Result<ItemDto> UpdateItemByTourId(int tourId,int price)
+    {
+        Item newItem = _itemRepository.GetByItemId(tourId);
+        newItem.Price = price;
+        return _mapper.Map<Item, ItemDto>(_itemRepository.Update(newItem));
+
+    }
 }
 

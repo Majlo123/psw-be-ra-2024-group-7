@@ -15,5 +15,9 @@ namespace Explorer.Shopping.API.Public
         Result<ShoppingCartDto> AddItem(ItemDto itemDto, int userId);
         Result<ShoppingCartDto> RemoveItem(ItemDto itemDto, int userId);
         Result<ShoppingCartDto> CheckOut(long userId);
+        Result<ShoppingCartDto> CreateCart(int touristId);
+        Result<ItemDto> CreateItem(ItemDto item);
+        Result<ItemDto> GetById(int id);
+        Result<ItemDto> UpdateItemByTourId(int tourId,int price);
     }
 }

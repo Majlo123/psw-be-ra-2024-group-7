@@ -14,7 +14,7 @@ namespace Explorer.Blog.API.Dtos
         public string Title { get; set; }
         public string Description { get; set; }
         public BlogStatus Status { get; set; }
-        public IEnumerable<string> ImageUrl { get; set; } = new List<string>();
+        public IEnumerable<string>? ImageUrl { get; set; }
         public DateOnly Date { get; set; }
         public int OwnerId { get; set; }
         public BlogActivityStatus ActivityStatus { get; set; }

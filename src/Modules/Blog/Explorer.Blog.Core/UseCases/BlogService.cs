@@ -139,7 +139,35 @@ namespace Explorer.Blog.Core.UseCases
             return Result.Ok(famousBlogs.Select(MapToDto).ToList());
         }
 
+        public Result<BlogDto> PublishBlog(int id)
+        {
+            try
+            {
+                Domain.Blog b = _blogRepository.Get(id);
+                b.PublishBlog();
+                var result = _blogRepository.Update(b);
+                return MapToDto(result);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
 
+        }
+        public Result<BlogDto> CloseBlog(int id)
+        {
+            try
+            {
+                Domain.Blog b = _blogRepository.Get(id);
+                b.CloseBlog();
+                var result = _blogRepository.Update(b);
+                return MapToDto(result);
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+        }
 
     }
 }

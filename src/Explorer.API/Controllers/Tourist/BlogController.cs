@@ -85,5 +85,18 @@ namespace Explorer.API.Controllers.Tourist
             var result = _blogService.DeleteComment(id, commentId);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
         }
+        [HttpPut("publish/{id:int}")]
+        public ActionResult<BlogDto> Publish(int id, [FromBody] BlogDto blog)
+        {
+            var result = _blogService.PublishBlog(id);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("close/{id:int}")]
+        public ActionResult<BlogDto> Close(int id, [FromBody] BlogDto blog)
+        {
+            var result = _blogService.CloseBlog(id);
+            return CreateResponse(result);
+        }
     }
 }

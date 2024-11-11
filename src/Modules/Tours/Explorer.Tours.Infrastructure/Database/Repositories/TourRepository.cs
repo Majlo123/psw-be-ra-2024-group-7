@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Explorer.Tours.API.Dtos;
 using Npgsql;
 using TourStatus = Explorer.Tours.Core.Domain.TourStatus;
+using System.Security.Cryptography;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -73,6 +74,41 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public PagedResult<Tour> GetPublishedTours(int page, int pageSize)
         {
             var task = _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == Core.Domain.TourStatus.Published).Select(t => t.Preview()).GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
+        }
+
+        public Tour Create(Tour tour)
+        {
+            List<KeyPoint> keyPoints = new List<KeyPoint>();
+            foreach(var kp in tour.KeyPoints)
+            {
+                keyPoints.Add(_keyPointRepository.Create(kp));
+            }
+            tour.KeyPoints = keyPoints;
+            _context.Tours.Add(tour);
+            _context.SaveChanges();
+            return tour;
+        }
+
+        public Tour Update(Tour tour)
+        {
+            try
+            {
+                DeleteEquipmenmts(tour.Id);
+                _context.Update(tour);
+                _context.SaveChanges();
+                return tour;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
+
+        public PagedResult<Tour> GetByAuthorId(int id, int page, int pageSize)
+        {
+            var task = _context.Tours.Include(t => t.KeyPoints).Include(t => t.Equipments).Where(t => t.AuthorId == id).GetPagedById(page, pageSize);
             task.Wait();
             return task.Result;
         }

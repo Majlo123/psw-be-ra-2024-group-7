@@ -17,6 +17,13 @@ namespace Explorer.API.Controllers.Administrator.TourProblem
             _tourProblemReportService = tourProblemReportService;
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult<PagedResult<TourProblemReportDto>> GetById(int id)
+        {
+            var result = _tourProblemReportService.Get(id);
+            return CreateResponse(result);
+        }
+
         [HttpGet]
         public ActionResult<PagedResult<TourProblemReportDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {

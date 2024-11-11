@@ -55,11 +55,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Status = ExecutionStatus.ABANDONED;
         }
 
-        public void SuccesfullyFinishTour()
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddCompletedKeyPoint(CompletedKeyPoints keyPoint)
         {
             CompletedKeyPoints.Add(keyPoint);
@@ -78,12 +73,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LastActivity = DateTime.UtcNow;
 
         }
-      
 
-
-
-
-
+        public void FinishTour()
+        {
+            TourEndDate = DateTime.UtcNow;
+            Status = ExecutionStatus.COMPLETED;
+        }
     }
 }
 

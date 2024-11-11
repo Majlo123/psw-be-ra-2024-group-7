@@ -17,10 +17,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         TourExecution Update(TourExecution tour);
 
         TourExecution GetByUserAndTourIds(int touristId, int tourId);
-
-
-
-
-
+        List<TourExecution> GetAllByUserId(int touristId);
+        TourExecution GetUserActiveTour(int touristId);
     }
 }

@@ -32,6 +32,8 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourExecutionService.Get(id);
             return CreateResponse(result);
         }
+
+
         [HttpGet("{touristId:int}/{tourId:int}")]
         public ActionResult<TourExecutionDto> GetByUserAndTourIds(int touristId, int tourId)
         {
@@ -39,9 +41,13 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
-        [HttpPost("startNewTour")]
-        public IActionResult StartNewTour([FromBody] TourExecutionDto tourExecution)
+        [HttpPost("startNewTour/{touristId:int}")]
+        public IActionResult StartNewTour(int touristId,[FromBody] TourDto tour)
         {
+            TourExecutionDto tourExecution = new TourExecutionDto();
+            tourExecution.TourId = tour.Id;
+            tourExecution.TouristId = touristId;
+
             var result = _tourExecutionService.StartNewTour(tourExecution);
  
             if (result.IsSuccess)
@@ -53,16 +59,24 @@ namespace Explorer.API.Controllers.Tourist
                 return BadRequest(result.Errors);
             }
         }
-    
 
-        [HttpPost("leaveTour")]
+        [HttpPut("leaveTour")]
         public ActionResult<TourExecutionDto> LeaveTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.LeaveTour(tourExecution.TouristId, tourExecution.TourId);
             return CreateResponse(result);
         }
+
+        [HttpPut("finishTour/{tourId:int}")]
+        public ActionResult<TourExecutionDto> FinishTour(int tourId)
+        {
+            var result = _tourExecutionService.FinishTour(tourId);
+            return CreateResponse(result);
+        }
+
+
         [HttpPut("checkLocation/{id:int}")]
-        public ActionResult CheckLocation([FromBody] TouristLocation touristLocation, int id)
+        public ActionResult CheckLocation([FromBody] TouristLocationDto touristLocation, int id)
         {
             var result = _tourExecutionService.CheckLocation(id, touristLocation.Latitude, touristLocation.Longitude);
 
@@ -75,6 +89,23 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourExecutionService.GetCompletedKeyPoints(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("allMyTours/{touristId:int}")]
+        public ActionResult<List<TourExecutionDto>> GetAllTouristTours(int touristId)
+        {   
+            var tourExecutions = _tourExecutionService.GetAllTouristTours(touristId);
+            return CreateResponse(tourExecutions);
+
+        }
+
+        [HttpGet("activeTour/{touristId:int}")]
+        public ActionResult<TourExecutionDto> GetActiveTour(int touristId)
+        {
+            var activeTour = _tourExecutionService.GetActiveTour(touristId);
+            return CreateResponse(activeTour);
+        }
+
+
     }
 
 }

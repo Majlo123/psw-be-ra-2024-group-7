@@ -39,6 +39,7 @@ namespace Explorer.Blog.Tests.Integration
             {
                 UserId = 1,  // Korisnički ID je integer
                 Text = "This is a test comment",
+                Username = "mika",
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -69,6 +70,7 @@ namespace Explorer.Blog.Tests.Integration
             {
                 Id = -1,
                 UserId = 2,  // Ažuriramo UserId na 2
+                Username = "mika",
                 Text = "Updated comment text",
                 CreatedAt = DateTime.UtcNow.AddDays(-1),
                 LastModified = DateTime.UtcNow
@@ -97,7 +99,7 @@ namespace Explorer.Blog.Tests.Integration
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
 
-            var existingComment = new Comment(1, "Comment to delete");  // Kreiramo komentar sa UserId = 1
+            var existingComment = new Comment(1, "mika", "Comment to delete");  // Kreiramo komentar sa UserId = 1
             dbContext.Comments.Add(existingComment);
             dbContext.SaveChanges();
 

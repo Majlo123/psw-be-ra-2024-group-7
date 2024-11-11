@@ -9,4 +9,6 @@ namespace Explorer.Shopping.API.Public;
 public interface ITourPurchaseTokenService
 {
     bool ExistsByTourAndUser(int tourId, int touristId);
+
+    List<long> GetTouristPurchases(int touristId);
 }

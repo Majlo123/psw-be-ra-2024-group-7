@@ -68,15 +68,24 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPost("finishTour/{tourId:int}")]
-        public ActionResult<TourExecutionDto> FinishTour(int tourId)
+        public ActionResult<TourExecutionDto> FinishTour(int tourExecutionId)
         {
-            var result = _tourExecutionService.FinishTour(tourId);
-            return CreateResponse(result);
+
+            var tourExecution = _tourExecutionService.Get(tourExecutionId).Value;
+            if (tourExecution.CompletedPercentage == 100.0)
+            {
+                var result = _tourExecutionService.FinishTour(tourExecutionId);
+                return CreateResponse(result);
+            }
+            else
+            {
+                return BadRequest("Tour must be completed (CompletedPercentage = 100) to be finished");
+            }
         }
 
 
         [HttpPut("checkLocation/{id:int}")]
-        public ActionResult CheckLocation([FromBody] TouristLocation touristLocation, int id)
+        public ActionResult CheckLocation([FromBody] TouristLocationDto touristLocation, int id)
         {
             var result = _tourExecutionService.CheckLocation(id, touristLocation.Latitude, touristLocation.Longitude);
 

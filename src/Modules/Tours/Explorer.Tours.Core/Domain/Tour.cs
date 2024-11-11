@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -91,11 +92,6 @@ namespace Explorer.Tours.Core.Domain
         public bool CanArchive()
         {
             return Status == TourStatus.Published;
-        }
-        
-        public void IncrementDuration(TourDuration tourDruation)
-        {
-            throw new NotImplementedException();
         }
 
         public Tour ReactivateTour()

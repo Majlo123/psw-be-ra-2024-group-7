@@ -46,7 +46,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
 
             //Act
             var result = ((ObjectResult)controller.GetAllTouristTours(-21).Result)?.Value as List<TourExecutionDto>;
-           
+
             //Assert
             result.ShouldNotBeNull();
             result.Count.ShouldBe(3);
@@ -78,14 +78,29 @@ namespace Explorer.Tours.Tests.Integration.Administration
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetByUserAndTourIds(-22,-4).Result)?.Value as TourExecutionDto;
+            var result = ((ObjectResult)controller.GetByUserAndTourIds(-22, -4).Result)?.Value as TourExecutionDto;
 
             //Assert
             result.ShouldNotBeNull();
             result.Id.ShouldBe(-4);
-            result.CompletedPercentage.ShouldBe(67);
+            result.CompletedPercentage.ShouldBe(100);
 
 
+        }
+
+        [Fact]
+        public void Retrieves_completed_key_points()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+
+            //Act
+            var result = ((ObjectResult)controller.GetCompletedKeyPoints(-6).Result)?.Value as List<KeyPointDto>;
+
+            //Assert
+            result.ShouldNotBeNull();
+            result.Count.ShouldBeGreaterThan(0);
         }
 
         private static TourExecutionController CreateController(IServiceScope scope)

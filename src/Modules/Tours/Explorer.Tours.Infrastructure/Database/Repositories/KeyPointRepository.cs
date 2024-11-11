@@ -45,6 +45,8 @@ public class KeyPointRepository : IKeyPointRepository
     {
         try
         {
+            if(keyPoint.Id == 0)
+                Create(keyPoint);
             _dbContext.Update(keyPoint);
             _dbContext.SaveChanges();
         }

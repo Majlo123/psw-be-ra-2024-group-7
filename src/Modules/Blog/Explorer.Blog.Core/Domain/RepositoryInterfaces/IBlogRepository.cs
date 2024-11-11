@@ -14,5 +14,7 @@ namespace Explorer.Blog.Core.Domain.RepositoryInterfaces
         PagedResult<Blog> GetPaged(int page, int pageSize);
         Blog Update(Blog blog);
         Blog Create(Blog blog);
+        List<Blog> GetActiveBlogs();
+        List<Blog> GetFamousBlogs();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Authentication;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
@@ -45,6 +46,20 @@ namespace Explorer.API.Controllers.Tourist
         public ActionResult Delete(int id)
         {
             var result = _tourReviewService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetReviewsByTourId(int id, [FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourReviewService.GetReviewsByTourId(id, page, pageSize);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("grade/{tourId:int}")]
+        public ActionResult<double> GetAverageGrade(int tourId, [FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourReviewService.GetAverageGrade(tourId, page, pageSize);
             return CreateResponse(result);
         }
     }

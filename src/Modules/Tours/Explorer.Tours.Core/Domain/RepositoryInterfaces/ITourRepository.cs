@@ -17,5 +17,8 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         void Delete(long id);
         void DeleteEquipmenmts(long id);
         PagedResult<Tour> GetPublishedTours(int page, int pageSize);
+        Tour Create(Tour tour);
+        Tour Update(Tour tour);
+        PagedResult<Tour> GetByAuthorId(int id, int page, int pageSize);
     }
 }

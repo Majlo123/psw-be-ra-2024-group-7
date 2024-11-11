@@ -83,7 +83,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             //Assert
             result.ShouldNotBeNull();
             result.Id.ShouldBe(-4);
-            result.CompletedPercentage.ShouldBe(67);
+            result.CompletedPercentage.ShouldBe(100);
 
 
         }

@@ -54,4 +54,11 @@ public class AuthenticationService : IAuthenticationService
             // There is a subtle issue here. Can you find it?
         }
     }
+
+    public Result<CredentialsDto> GetUsername(long userId)
+    {
+        var user = _userRepository.GetUsername(userId);
+        CredentialsDto dto = new CredentialsDto { Password = user.Password, Username = user.Username };
+        return dto;
+    }
 }

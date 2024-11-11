@@ -60,18 +60,27 @@ namespace Explorer.API.Controllers.Tourist
             }
         }
 
-        [HttpPut("leaveTour")]
+        [HttpPost("leaveTour")]
         public ActionResult<TourExecutionDto> LeaveTour([FromBody] TourExecutionDto tourExecution)
         {
             var result = _tourExecutionService.LeaveTour(tourExecution.TouristId, tourExecution.TourId);
             return CreateResponse(result);
         }
 
-        [HttpPut("finishTour/{tourId:int}")]
-        public ActionResult<TourExecutionDto> FinishTour(int tourId)
+        [HttpPost("finishTour/{tourId:int}")]
+        public ActionResult<TourExecutionDto> FinishTour(int tourExecutionId)
         {
-            var result = _tourExecutionService.FinishTour(tourId);
-            return CreateResponse(result);
+
+            var tourExecution = _tourExecutionService.Get(tourExecutionId).Value;
+            if (tourExecution.CompletedPercentage == 100.0)
+            {
+                var result = _tourExecutionService.FinishTour(tourExecutionId);
+                return CreateResponse(result);
+            }
+            else
+            {
+                return BadRequest("Tour must be completed (CompletedPercentage = 100) to be finished");
+            }
         }
 
 

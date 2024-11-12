@@ -67,7 +67,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
-        [HttpPut("finishTour/{tourId:int}")]
+        [HttpPut("finishTour/{tourExecutionId:int}")]
         public ActionResult<TourExecutionDto> FinishTour(int tourExecutionId)
         {
 

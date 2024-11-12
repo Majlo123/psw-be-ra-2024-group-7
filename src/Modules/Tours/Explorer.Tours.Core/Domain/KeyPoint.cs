@@ -26,4 +26,19 @@ public class KeyPoint : Entity
         Latitude = latitude;
         Longitude = longitude;
     }
+    public KeyPoint(KeyPoint keyPoint)
+    {
+        Name = keyPoint.Name;
+        Description = keyPoint.Description;
+        Image = keyPoint.Image;
+        Latitude = keyPoint.Latitude;
+        Longitude = keyPoint.Longitude;
+    }
+
+    public bool Valid()
+    {
+         throw new NotImplementedException();
+    }
+
+
 }

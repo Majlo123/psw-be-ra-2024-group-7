@@ -1,4 +1,5 @@
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
@@ -11,6 +12,7 @@ public class StakeholdersContext : DbContext
     public DbSet<Person> People { get; set; }
     public DbSet<TouristEquipment> TouristEquipments{get;set; }
     public DbSet<TourProblemReport> TourProblemReports { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     public DbSet<TouristClub> TouristClub { get; set; }
 
@@ -19,6 +21,7 @@ public class StakeholdersContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TourProblemReport>().Property(item => item.Messages).HasColumnType("jsonb");
         modelBuilder.HasDefaultSchema("stakeholders");
 
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();

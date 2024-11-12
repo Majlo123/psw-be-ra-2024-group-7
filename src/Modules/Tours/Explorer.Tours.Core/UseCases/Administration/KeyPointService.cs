@@ -26,8 +26,15 @@ public class KeyPointService : BaseService<KeyPointDto, KeyPoint>, IKeyPointServ
     {
         try
         {
-            var result = _keyPointRepository.Create(MapToDomain(keyPoint));
-            return MapToDto(result);
+            if (!_keyPointRepository.DoesExistByCoordinates(keyPoint.Longitude, keyPoint.Latitude))
+            {
+                var result = _keyPointRepository.Create(MapToDomain(keyPoint));
+                return MapToDto(result);
+            }
+            else
+            {
+               return Result.Fail(FailureCode.InvalidArgument).WithError("Taj keypoint vec postoji!");
+            }
         }
         catch (ArgumentException e)
         {

@@ -45,6 +45,8 @@ public class KeyPointRepository : IKeyPointRepository
     {
         try
         {
+            if(keyPoint.Id == 0)
+                Create(keyPoint);
             _dbContext.Update(keyPoint);
             _dbContext.SaveChanges();
         }
@@ -53,5 +55,17 @@ public class KeyPointRepository : IKeyPointRepository
             throw new KeyNotFoundException(e.Message);
         }
         return keyPoint;
+    }
+    public KeyPoint Get(long id)
+    {
+        var entity = _dbSet.FirstOrDefault(k => k.Id == id);
+        return entity;
+    }
+
+    public bool DoesExistByCoordinates(float longitude, float latitude)
+    {
+        var entity = _dbSet.FirstOrDefault(k => k.Longitude == longitude && k.Latitude == latitude);
+        if (entity == null) return false;
+        return true;
     }
 }

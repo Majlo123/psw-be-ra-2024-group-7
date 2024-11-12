@@ -13,4 +13,5 @@ public interface IKeyPointRepository
     void Delete(long id);
     KeyPoint Update(KeyPoint keyPoint);
     KeyPoint Get(long id);
+    bool DoesExistByCoordinates(float longitude, float latitude);
 }

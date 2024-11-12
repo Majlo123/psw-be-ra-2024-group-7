@@ -30,5 +30,6 @@ namespace Explorer.Tours.API.Dtos
         public IEnumerable<TourDurationDto> TourDurations { get; set; } = new List<TourDurationDto>();
         public DateTime? PublishTime { get;  set; } = null;
         public DateTime? ArchiveTime { get; set; } = null;
+        public string Image { get; set; } = string.Empty;
     }
 }

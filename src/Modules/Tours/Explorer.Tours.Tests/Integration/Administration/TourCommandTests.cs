@@ -39,7 +39,8 @@ public class TourCommandTests : BaseToursIntegrationTest
             Tags = "visina,priroda",
             Length = 0,
             TourDurations = new List<TourDurationDto>(),
-            AuthorId = -12
+            AuthorId = -12,
+            Image="testImage1.jpg"
         };
 
         //Act
@@ -74,7 +75,8 @@ public class TourCommandTests : BaseToursIntegrationTest
             Tags = "visina,priroda",
             Length = 0,
             TourDurations = new List<TourDurationDto>(),
-            AuthorId = -12
+            AuthorId = -12,
+            Image="testImage1.jpg"
 
         };
 
@@ -139,7 +141,8 @@ public class TourCommandTests : BaseToursIntegrationTest
             Tags = "visina,priroda",
             TourDurations = new List<TourDurationDto>(),
             Length = 0,
-            AuthorId = -12
+            AuthorId = -12,
+            Image="testImage1.jpg"
         };
 
         // Act
@@ -272,6 +275,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = 0,
                     Tags = "visina,priroda",
+                    Image="testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>(),
                     TourDurations = new List<TourDurationDto>
                     {
@@ -297,6 +301,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = 0,
                     Tags = "visina,priroda",
+                    Image="testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>
                     {
                          new KeyPointDto
@@ -342,6 +347,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = 0,
                     Tags = "visina,priroda",
+                    Image="testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>
                     {
                          new KeyPointDto
@@ -384,6 +390,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 50,
                     Status = 0,
                     Tags = "more,voda",
+                    Image = "testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>
                     {
                          new KeyPointDto
@@ -438,6 +445,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Draft,
                     Tags = "visina,priroda",
+                    Image="testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>(),
                     TourDurations = new List<TourDurationDto>
                     {
@@ -463,6 +471,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Published,
                     Tags = "visina,priroda",
+                    Image = "testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>
                     {
                          new KeyPointDto
@@ -515,6 +524,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Archived,
                     Tags = "visina,priroda",
+                    Image="testImage1.jpg",
                     KeyPoints = new List<KeyPointDto>
                     {
                          new KeyPointDto

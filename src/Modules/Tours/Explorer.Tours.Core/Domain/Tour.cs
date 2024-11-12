@@ -35,8 +35,9 @@ namespace Explorer.Tours.Core.Domain
         public int AuthorId { get; private set; }
         public DateTime? PublishTime { get; private set; } = null;
         public DateTime? ArchiveTime { get; private set; } = null;
+        public string Image { get; private set; }
 
-        public Tour(string name, string difficulty, string description, double cost, TourStatus status, string tags, double length,int authorId)
+        public Tour(string name, string difficulty, string description, double cost, TourStatus status, string tags, double length,int authorId,string image)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -47,6 +48,7 @@ namespace Explorer.Tours.Core.Domain
             Tags = tags;
             Length = length;
             AuthorId = authorId;
+            Image = image;
         }
 
         public Tour()

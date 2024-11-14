@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers.Tourist.TourProblem
         }
 
         [HttpPut("setAsSolvedOrUnsolved/{id:int}")]
-        public ActionResult<TourProblemReportDto> SetProblemAsSolvedOrUnsolved(int id, [FromQuery] bool isSolved, [FromQuery] string comment)
+        public ActionResult<TourProblemReportDto> SetProblemAsSolvedOrUnsolved(int id, [FromBody] bool isSolved, [FromQuery] string comment)
         {
             var result = _tourProblemReportService.SetProblemAsSolvedOrUnsolved(id, isSolved, comment);
             return CreateResponse(result);

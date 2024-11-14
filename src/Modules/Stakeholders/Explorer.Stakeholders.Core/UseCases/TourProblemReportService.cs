@@ -186,9 +186,8 @@ namespace Explorer.Stakeholders.Core.UseCases
                 return Result.Fail(
                     "Cannot change status to solved/unsolved when current status is closed or already solved/unsolved.");
             
-            if (isSolved)
-                tourProblemReport.SetAsSolved();
-            tourProblemReport.SetAsUnsolved(comment);
+            if (isSolved) tourProblemReport.SetAsSolved();
+            else tourProblemReport.SetAsUnsolved(comment);
 
             _tourProblemReportRepository.Update(tourProblemReport);
 

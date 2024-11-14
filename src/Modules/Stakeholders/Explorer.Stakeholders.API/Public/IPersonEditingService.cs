@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.BuildingBlocks.Core.UseCases;
 
 namespace Explorer.Stakeholders.API.Public
 {
@@ -12,5 +13,6 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<PersonDto> Update(PersonDto personDto);
         Result<PersonDto> Get(int id);
+        Result<PagedResult<PersonDto>> GetPaged(int page, int pageSize);
     }
 }

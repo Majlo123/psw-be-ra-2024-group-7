@@ -3,24 +3,17 @@ using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.User.ProfileAdministration
+namespace Explorer.API.Controllers.Administrator
 {
-    [Authorize(Policy = "userPolicy")]
-    [Route("api/profile-administration/edit")]
-    public class ProfileEditingController : BaseApiController
+
+    [Authorize(Policy = "administratorPolicy")]
+    [Route("api/profile-administrator/")]
+    public class UserController : BaseApiController
     {
         private readonly IPersonEditingService _personEditingService;
-
-        public ProfileEditingController(IPersonEditingService personEditingService)
+        public UserController(IPersonEditingService personEditingService)
         {
             _personEditingService = personEditingService;
-        }
-
-        [HttpPut]
-        public ActionResult<PersonDto> Edit([FromForm] PersonDto person)
-        {
-            var result = _personEditingService.Update(person);
-            return CreateResponse(result);
         }
 
         [HttpGet("{id:int}")]
@@ -31,7 +24,7 @@ namespace Explorer.API.Controllers.User.ProfileAdministration
         }
 
         [HttpGet]
-        public ActionResult<PersonDto> GetAllUsers([FromQuery]int page, [FromQuery]int pageSize)
+        public ActionResult<PersonDto> GetAllUsers([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _personEditingService.GetPaged(page, pageSize);
             return CreateResponse(result);

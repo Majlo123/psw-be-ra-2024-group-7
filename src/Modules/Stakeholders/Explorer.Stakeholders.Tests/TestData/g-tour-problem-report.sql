@@ -4,7 +4,7 @@ VALUES (-1, -1, 'Tehnički problem', 1, 'Problem sa internet konekcijom', '2024-
 
 INSERT INTO stakeholders."TourProblemReports"(
      "Id", "TourId", "Category", "Priority", "Description", "Time", "Status", "TouristId", "Comment", "SolvingDeadline", "Messages")
-VALUES (-2, -1, 'Bezbednosni problem', 1, 'Nedostupnost vodiča', '2024-10-02 11:30:00.246+02', 0, -21, 'aaa', '2024-10-05 11:30:00.246+02', '[]'::jsonb);
+VALUES (-2, -1, 'Bezbednosni problem', 1, 'Nedostupnost vodiča', '2024-10-02 11:30:00.246+02', 4, -21, 'aaa', '2024-10-05 11:30:00.246+02', '[]'::jsonb);
 
 INSERT INTO stakeholders."TourProblemReports"(
      "Id", "TourId", "Category", "Priority", "Description", "Time", "Status", "TouristId", "Comment", "SolvingDeadline", "Messages")

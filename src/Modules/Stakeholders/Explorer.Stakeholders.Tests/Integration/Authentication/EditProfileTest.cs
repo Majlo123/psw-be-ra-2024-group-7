@@ -20,17 +20,19 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var userId = -21; 
+            var userId = -21;
             var updateProfileDto = new PersonDto
             {
-                Id = userId, 
-                UserId = userId, 
+                Id = userId,
+                UserId = userId,
                 Name = "UpdatedName",
                 Surname = "UpdatedSurname",
                 Email = "updated.email@example.com",
                 Biography = "Updated biography",
                 Motto = "Updated motto",
-                ProfilePictureUrl = "https://example.com/newprofile.png"
+                ProfilePictureUrl = "https://example.com/newprofile.png",
+                Following = new List<int>(),
+                Followers = new List<int>()
             };
 
             // Act
@@ -71,7 +73,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 UserId = 1, // Osiguraj da postaviš validan UserId
                 Name = "UpdatedName",
                 Surname = "UpdatedSurname",
-                Email = "updated.email@example.com"
+                Email = "updated.email@example.com",
+                Following = new List<int>(),
+                Followers = new List<int>()
             };
 
             // Act

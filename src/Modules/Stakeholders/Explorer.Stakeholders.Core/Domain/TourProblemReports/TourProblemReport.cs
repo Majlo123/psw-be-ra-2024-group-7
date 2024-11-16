@@ -86,5 +86,16 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         {
             Status = Status.CLOSED;
         }
+
+        public void SetAsUnsolved(string comment)
+        {
+            Status = Status.UNSOLVED;
+            Comment = comment;
+        }
+
+        public void SetAsSolved()
+        {
+            Status = Status.SOLVED;
+        }
     }
 }

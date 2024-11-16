@@ -174,5 +174,25 @@ namespace Explorer.Stakeholders.Core.UseCases
             var dto = _mapper.Map<TourProblemReportDto>(tourProblemReport);
             return Result.Ok(dto);
         }
+
+        public Result<TourProblemReportDto> SetProblemAsSolvedOrUnsolved(int id, bool isSolved, string comment)
+        {
+            var tourProblemReport = _repository.Get(id);
+            if (tourProblemReport == null)
+            {
+                throw new Exception("TourProblemReport not found");
+            }
+            if (tourProblemReport.Status is Domain.TourProblemReports.Status.CLOSED or Domain.TourProblemReports.Status.SOLVED or Domain.TourProblemReports.Status.UNSOLVED)
+                return Result.Fail(
+                    "Cannot change status to solved/unsolved when current status is closed or already solved/unsolved.");
+            
+            if (isSolved) tourProblemReport.SetAsSolved();
+            else tourProblemReport.SetAsUnsolved(comment);
+
+            _tourProblemReportRepository.Update(tourProblemReport);
+
+            var dto = _mapper.Map<TourProblemReportDto>(tourProblemReport);
+            return Result.Ok(dto);
+        }
     }
 }

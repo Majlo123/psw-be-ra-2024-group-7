@@ -1,21 +1,14 @@
 ﻿using Explorer.API.Controllers.User.TourProblem;
 using Explorer.API.Controllers.Tourist.TourProblem;
-using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Explorer.API.Controllers.Administrator.TourProblem;
-using FluentResults;
+using Explorer.Stakeholders.Core.Domain.TourProblemReports;
+using System.Reflection;
 
 namespace Explorer.Stakeholders.Tests.Integration.Administration
 {
@@ -35,7 +28,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             {
                 TourId = -1, 
                 Category = "Tehnički problem", 
-                Priority = ProblemPriority.HIGH, 
+                Priority = API.Dtos.ProblemPriority.HIGH, 
                 Description = "Problem sa internet konekcijom.", 
                 Time = DateTime.UtcNow.AddDays(-2),
                 Status = 0,
@@ -77,7 +70,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var touristController = CreateTouristController(scope);
             var updatedEntity = new TourProblemReportDto
             {
-                Priority = ProblemPriority.HIGH,
+                Priority = API.Dtos.ProblemPriority.HIGH,
                 Description = "Problem sa internet konekcijom.",
                 Time = DateTime.Now
             };
@@ -138,7 +131,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Id = -2, 
                 TourId = -2, 
                 Category = "Tehnički problem",
-                Priority = ProblemPriority.MEDIUM, 
+                Priority = API.Dtos.ProblemPriority.MEDIUM, 
                 Description = "Jako losa internet konekcija.",
                 Time = DateTime.UtcNow.AddDays(-5),
                 Status = 0,
@@ -185,7 +178,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Id = -1000, 
                 TourId = 1, 
                 Category = "Tehnički problem",
-                Priority = ProblemPriority.MEDIUM,
+                Priority = API.Dtos.ProblemPriority.MEDIUM,
                 Description = "Problem sa internet konekcijom.",
                 Time = DateTime.Now,
                 Status = 0,
@@ -237,10 +230,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                         Id = -3,
                         TourId = -2,
                         Category = "Oprema",
-                        Priority = ProblemPriority.LOW,
+                        Priority = API.Dtos.ProblemPriority.LOW,
                         Description = "Oprema nije u dobrom stanju",
                         Time = DateTime.UtcNow,
-                        Status = Status.UNSOLVED,
+                        Status = API.Dtos.Status.UNSOLVED,
                         TouristId = -3,
                         Comment = "aaa"
                     },
@@ -267,7 +260,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                 Id = -1000,
                 TourId = 1,
                 Category = "Tehnički problem",
-                Priority = ProblemPriority.MEDIUM,
+                Priority = API.Dtos.ProblemPriority.MEDIUM,
                 Description = "Problem sa internet konekcijom.",
                 Time = DateTime.Now,
                 Status = 0,
@@ -316,10 +309,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                         Id = -3,
                         TourId = -2,
                         Category = "Oprema",
-                        Priority = ProblemPriority.LOW,
+                        Priority = API.Dtos.ProblemPriority.LOW,
                         Description = "Oprema nije u dobrom stanju",
                         Time = DateTime.UtcNow,
-                        Status = Status.REPORTED,
+                        Status = API.Dtos.Status.REPORTED,
                         TouristId = -21,
                         Comment = "aaa",
                         SolvingDeadline = DateTime.UtcNow.AddDays(10)
@@ -329,6 +322,70 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             };
         }
 
+        public static IEnumerable<object[]> UnsolvedOrSolvedData()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    new TourProblemReportDto
+                    {
+                        Id = -3,
+                        TourId = -2,
+                        Category = "Oprema",
+                        Priority = API.Dtos.ProblemPriority.LOW,
+                        Description = "Oprema nije u dobrom stanju",
+                        Time = DateTime.UtcNow,
+                        Status = API.Dtos.Status.SOLVING,
+                        TouristId = -21,
+                        Comment = "aaa",
+                        SolvingDeadline = DateTime.UtcNow.AddDays(10)
+                    },
+                    200, false, "dodatni komentar"
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(UnsolvedOrSolvedData))]
+        public void SetAsSolvedOrUnsolved(TourProblemReportDto report, int expectedResponseCode, bool isSolved, string comment)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var touristController = CreateTouristController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+
+            var storedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == report.Id);
+            if (storedEntity != null)
+            {
+                typeof(TourProblemReport)
+                    .GetProperty("Status", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.SetValue(storedEntity, report.Status);
+
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            var result = (ObjectResult)touristController.SetProblemAsSolvedOrUnsolved(report.Id, isSolved, comment).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var updatedEntity = dbContext.TourProblemReports.FirstOrDefault(r => r.Id == report.Id);
+            updatedEntity.ShouldNotBeNull();
+            if (result.StatusCode != 200) return;
+            if (isSolved)
+            {
+                updatedEntity.Status.ShouldBe(Core.Domain.TourProblemReports.Status.SOLVED);
+            }
+            else
+            {
+                updatedEntity.Status.ShouldBe(Core.Domain.TourProblemReports.Status.UNSOLVED);
+                updatedEntity.Comment.ShouldBe(comment);
+            }
+        }
 
         private static TourProblemUserController CreateUserController(IServiceScope scope)
         {

@@ -23,10 +23,24 @@ namespace Explorer.API.Controllers.User.ProfileAdministration
             return CreateResponse(result);
         }
 
+        [HttpPut("currentUser")]
+        public ActionResult<PersonDto> UpdateCurrentUser([FromBody] PersonDto person)
+        {
+            var result = _personEditingService.Update(person);
+            return CreateResponse(result);
+        }
+
         [HttpGet("{id:int}")]
         public ActionResult<PersonDto> GetUserInfo(int id)
         {
-            var result = _personEditingService.Get(id);
+            var result = _personEditingService.GetPersonByUserId(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet]
+        public ActionResult<PersonDto> GetAllUsers([FromQuery]int page, [FromQuery]int pageSize)
+        {
+            var result = _personEditingService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
     }

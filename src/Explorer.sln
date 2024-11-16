@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Encounters.Infrast
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Encounters.Tests", "Modules\Encounters\Explorer.Encounters.Tests\Explorer.Encounters.Tests.csproj", "{82654A74-7BB0-4803-A73A-9F28555DDA4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Arhitecture.Tests", "Explorer.Arhitecture.Tests\Explorer.Arhitecture.Tests.csproj", "{257A19CF-9544-4C61-B6E7-6551127CE62A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{82654A74-7BB0-4803-A73A-9F28555DDA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82654A74-7BB0-4803-A73A-9F28555DDA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82654A74-7BB0-4803-A73A-9F28555DDA4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{257A19CF-9544-4C61-B6E7-6551127CE62A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{257A19CF-9544-4C61-B6E7-6551127CE62A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{257A19CF-9544-4C61-B6E7-6551127CE62A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{257A19CF-9544-4C61-B6E7-6551127CE62A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

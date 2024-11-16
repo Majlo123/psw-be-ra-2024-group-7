@@ -16,5 +16,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Biography { get; set; }
         public string Motto { get; set; }
         public string Email { get; set; }
+        public List<int> Followers { get; set; } = new List<int>();
+        public List<int> Following { get; set; } = new List<int>();
     }
 }

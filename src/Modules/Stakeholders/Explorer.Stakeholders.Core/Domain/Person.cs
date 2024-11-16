@@ -12,6 +12,8 @@ public class Person : Entity
     public string Biography { get; init; }
     public string Motto { get; init; }
     public string Email { get; init; }
+    public List<int> Followers { get; init; } = new List<int>();
+    public List<int> Following { get; init; } = new List<int>();
 
     public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto)
     {

@@ -104,6 +104,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.UpdateTourLength(tour.Length);
+                foreach (var kp in tour.KeyPoints)
+                {
+                    _keyPointRepository.Update(kp);
+                }
                 return MapToDto(_tourRepository.Update(tour));
             }
             catch(ArgumentException e)

@@ -31,7 +31,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Name = "Turisticki centar",
                 Description = "Saznajte infromacije.",
                 Image = "slikanmp.jpg",
-                category = 3
+                category = 3,
+                Status = TourObjectDto.ObjectStatus.PUBLIC
             };
 
             // Act
@@ -79,7 +80,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Name = "Crna dama",
                 Description = "Pesma od ajzija",
                 Image = "slikaajzijaicrnedame.jpeg",
-                category = 1
+                category = 1,
+                Status = TourObjectDto.ObjectStatus.PUBLIC
             };
 
             // Act

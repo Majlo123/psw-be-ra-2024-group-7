@@ -32,7 +32,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Description = "test description",
             Image = "testImage.jpg",
             Latitude = 10,
-            Longitude = 10
+            Longitude = 10,
+            Status = KeyPointDto.PublicStatus.PRIVATE
         };
 
         //Act
@@ -61,7 +62,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Description = "this is tescription",
             Image = "image.png",
             Latitude = 123,
-            Longitude = 321
+            Longitude = 321,
+            Status = KeyPointDto.PublicStatus.PRIVATE
         };
 
         //Act

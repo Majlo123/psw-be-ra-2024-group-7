@@ -164,7 +164,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
                     Description = t.KeyPoints.First().Description,
                     Image = t.KeyPoints.First().Image,
                     Latitude = t.KeyPoints.First().Latitude,
-                    Longitude = t.KeyPoints.First().Longitude
+                    Longitude = t.KeyPoints.First().Longitude,
+                    Status = (KeyPointDto.PublicStatus)t.KeyPoints.First().Status
                 } : null 
             }).ToList();
 
@@ -193,7 +194,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
                     Description = result.KeyPoints.First().Description,
                     Image = result.KeyPoints.First().Image,
                     Latitude = result.KeyPoints.First().Latitude,
-                    Longitude = result.KeyPoints.First().Longitude
+                    Longitude = result.KeyPoints.First().Longitude,
+                    Status = (KeyPointDto.PublicStatus)result.KeyPoints.First().Status
                 } : null
             };
 

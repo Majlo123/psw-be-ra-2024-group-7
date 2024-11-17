@@ -14,4 +14,12 @@ public class KeyPointDto
     public string Image { get; set; } = string.Empty;
     public float Latitude { get; set; }
     public float Longitude { get; set; }
+    public PublicStatus Status { get; set; }
+
+    public enum PublicStatus
+    {
+        PRIVATE,
+        REQUESTED,
+        PUBLIC
+    }
 }

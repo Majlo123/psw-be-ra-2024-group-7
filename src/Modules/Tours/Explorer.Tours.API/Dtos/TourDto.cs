@@ -13,15 +13,22 @@ namespace Explorer.Tours.API.Dtos
         Archived = 2,
         Closed = 3
     }
+    public enum TourDifficulty
+    {
+        Easy = 0,
+        Medium = 1,
+        Hard = 2,
+        Hell = 3
+    }
     public class TourDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Difficulty { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public TourDifficulty Difficulty { get; set; }
+        public string Description { get; set; } = string.Empty;
         public double Cost { get; set; }
         public TourStatus Status { get; set; }
-        public string Tags { get; set; }
+        public string Tags { get; set; } = string.Empty;
         public double Length { get; set; }
         public int AuthorId { get; set; }
         public double AverageRate { get; set; }

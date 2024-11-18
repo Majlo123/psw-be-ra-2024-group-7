@@ -239,7 +239,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 var tour = MapToDomain(tourDto);
                 foreach (var kp in tour.KeyPoints)
                 {
-                    _keyPointRepository.Update(kp);
+                     _keyPointRepository.Update(kp);
                 }
                 _tourRepository.Update(tour);
                 return MapToDto(tour);

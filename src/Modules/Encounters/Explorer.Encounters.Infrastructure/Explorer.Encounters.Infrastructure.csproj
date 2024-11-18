@@ -11,8 +11,8 @@
     <ProjectReference Include="..\Explorer.Encounters.Core\Explorer.Encounters.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\Repositories\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Images\" />
+	</ItemGroup>
 
 </Project>

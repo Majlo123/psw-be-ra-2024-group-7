@@ -18,7 +18,7 @@ namespace Explorer.Encounters.Core.Domain
     public enum EncounterType
     {
         SOCIAL,
-        LOCATION,
+        HIDDENLOCATION,
         MISC
     }
     public enum TouristEncounterStatus
@@ -36,21 +36,39 @@ namespace Explorer.Encounters.Core.Domain
 
         public int CreatorId { get; private set; }
 
-        public double longitude { get; private set; }
-        public double latitude { get; private set; }
+        public double Longitude { get; private set; }
+        public double Latitude { get; private set; }
 
-        public EncounterStatus Status { get; private set;}
+        public EncounterStatus Status { get; private set; }
 
-        public EncounterType Type { get; private set; }
+        public EncounterType EncounterType { get; private set; }
 
-        public TouristEncounterStatus  TouristStatus { get; private set; }
+        public TouristEncounterStatus? TouristRequestStatus { get; private set; }
 
-        public bool isTourRequired { get; private set; }
+        public bool? isTourRequired { get; private set; }
 
-        public int tourId { get; private set; }
+        public int? TourId { get; private set; }
 
-        // Da li 3 ili 1 VO??
+        public double ActivateRange { get; private set; }
 
+
+        public Encounter() {}
+
+        public Encounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus,bool isRequired,int tourId,double activateRange)
+        {
+            Name = name;
+            Description = description;
+            Total_xp = total_xp;
+            CreatorId = creatorId;
+            Longitude = longitude;
+            Latitude = latitude;
+            Status = status;
+            EncounterType = type;
+            TouristRequestStatus = touristEncounterStatus;
+            isTourRequired = isRequired;
+            TourId = tourId;
+            ActivateRange = activateRange;
+        }
 
 
 

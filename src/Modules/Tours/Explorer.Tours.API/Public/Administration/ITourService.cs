@@ -26,5 +26,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> UpdateTourLength(TourDto tour);
         Result<TourDto> ReactivateTour(TourDto tour);
         Result<PagedResult<TourDto>> GetByAuthorId(int id, int page, int pageSize);
+        Result<List<TourDto>> GetTourByDistance(float latitude,float longitude,float distance);
     }
 }

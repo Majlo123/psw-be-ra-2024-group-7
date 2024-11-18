@@ -4,3 +4,7 @@ INSERT INTO tours."KeyPoints"("Id", "Name", "Description", "Image", "Latitude", 
 	VALUES (-2, 'test2', 'testDescription2', 'testImage2.jpg', 20.0, 20.2, -1);
 INSERT INTO tours."KeyPoints"("Id", "Name", "Description", "Image", "Latitude", "Longitude", "TourId")
 	VALUES (-3, 'test3', 'testDescription3', 'testImage3.jpg', 30.0, 30.3, -2);
+INSERT INTO tours."KeyPoints"("Id", "Name", "Description", "Image", "Latitude", "Longitude", "TourId")
+	VALUES (-4, 'test4', 'testDescription4', 'testImage4.jpg', 20.0, 20.2, -3);
+INSERT INTO tours."KeyPoints"("Id", "Name", "Description", "Image", "Latitude", "Longitude", "TourId")
+	VALUES (-5, 'test5', 'testDescription5', 'testImage5.jpg', 20.0, 30.3, -5);

@@ -258,7 +258,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
         }
         private bool IsWithinDistance(KeyPoint keyPoint, float lat, float lon, float distance)
         {
-            var R = 6371; // Radius of the Earth in kilometers
+            var R = 6371;
             var dLat = (keyPoint.Latitude - lat) * (Math.PI / 180);
             var dLon = (keyPoint.Longitude - lon) * (Math.PI / 180);
             var a =
@@ -268,7 +268,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             var distanceInKm = R * c;
 
-            return distanceInKm <= distance; // Check if the distance is within the specified range
+            return distanceInKm <= distance; 
         }
     }
 }

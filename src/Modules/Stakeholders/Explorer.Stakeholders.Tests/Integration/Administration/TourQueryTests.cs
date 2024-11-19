@@ -2,9 +2,11 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,26 @@ public class TourQueryTests : BaseStakeholdersIntegrationTest
         result.ShouldNotBeNull();
         result.Id.ShouldBe(-5);
         result.Name.ShouldBe("Tura5");
+    }
+    [Fact]
+    public void TourSearch_ReturnsExpectedResult()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var latitude = 20.0f;
+        var longitude = 25.0f;
+        var distance = 665f;
+        // Act
+        var result = controller.GetTourByDistance(latitude,longitude,distance);
+        result.ShouldNotBeNull();
+        var okResult = result.Result as OkObjectResult;
+        okResult.ShouldNotBeNull();
+        //Assert
+        var tours = okResult.Value as List<TourDto>;
+        tours.ShouldNotBeNull();
+        tours.Count.ShouldBe(2);
     }
     private static TourController CreateController(IServiceScope scope)
     {

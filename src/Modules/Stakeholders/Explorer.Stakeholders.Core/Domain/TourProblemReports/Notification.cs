@@ -16,7 +16,8 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
     public enum NotificationType
     {
         CHAT,
-        DEADLINE
+        DEADLINE,
+        PAYMENT
     }
     public class Notification : Entity
     {

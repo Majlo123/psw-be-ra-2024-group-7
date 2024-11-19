@@ -8,7 +8,8 @@ namespace Explorer.Stakeholders.API.Dtos;
 public enum NotificationType
 {
     CHAT,
-    DEADLINE
+    DEADLINE,
+    PAYMENT
 }
 public class NotificationDto
 {

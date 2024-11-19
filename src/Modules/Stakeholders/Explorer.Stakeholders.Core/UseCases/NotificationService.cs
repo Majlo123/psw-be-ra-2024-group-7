@@ -21,7 +21,6 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             _notificationRepository = notificationRepository;
         }
-
         public Result<PagedResult<NotificationDto>> GetByLoggedUser(int id, int page, int pageSize)
         {
             var result = _notificationRepository.GetByLoggedUser(id, page, pageSize);

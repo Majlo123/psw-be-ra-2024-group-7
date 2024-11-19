@@ -9,6 +9,7 @@ public class ShoppingContext : DbContext
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
     public DbSet<Item> Items { get; set; }
+    public DbSet<TouristWallet> TouristWallets { get; set; }
     public ShoppingContext(DbContextOptions<ShoppingContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

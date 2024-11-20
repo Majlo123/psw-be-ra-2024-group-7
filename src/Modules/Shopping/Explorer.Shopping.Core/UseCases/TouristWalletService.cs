@@ -5,32 +5,26 @@ using Explorer.Shopping.API.Public;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Domain;
 using FluentResults;
-using Explorer.Stakeholders.API.Public;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Explorer.Stakeholders.API.Dtos;
+using Explorer.Shopping.Core.Domain.ShoppingCarts;
 
 namespace Explorer.Shopping.Core.UseCases
 {
     public class TouristWalletService : BaseService<TouristWalletDto, TouristWallet>, ITouristWalletService
     {
         private readonly ITouristWalletRepository _repository;
-        private readonly INotificationService _internalNotificationService;
+        private readonly INotificationHandler _notificationHandler;
 
-        public TouristWalletService(ITouristWalletRepository repository, IMapper mapper, INotificationService internalNotificationService) : base(mapper)
+        public TouristWalletService(ITouristWalletRepository repository, IMapper mapper, INotificationHandler notificationHandler)
+            : base(mapper)
         {
             _repository = repository;
-            _internalNotificationService = internalNotificationService;
+            _notificationHandler = notificationHandler;
         }
 
-        public Result<TouristWalletDto> Create(TouristWalletDto dto)
+        public Result<TouristWalletDto> CreateWallet(int touristId)
         {
-            var wallet = MapToDomain(dto);
-            _repository.Create(wallet);
-            return dto;
+            TouristWallet wallet = new TouristWallet(touristId);
+            return MapToDto(_repository.Create(wallet));
         }
 
         public Result<TouristWalletDto> GetAdventureCoins(long userId)
@@ -42,12 +36,9 @@ namespace Explorer.Shopping.Core.UseCases
         public Result<TouristWalletDto> PaymentAdventureCoins(int userId, int coins)
         {
             var wallet = _repository.PaymentAdventureCoins(userId, coins);
-            NotificationDto notification = new NotificationDto();
-            notification.ReportId = 0;
-            notification.RecipientId = userId;
-            notification.IsRead = false;
-            notification.NotificationType = NotificationType.PAYMENT;
-            _internalNotificationService.Create(notification);
+
+            _notificationHandler.Notify(userId, "PAYMENT");
+
             return MapToDto(wallet);
         }
     }

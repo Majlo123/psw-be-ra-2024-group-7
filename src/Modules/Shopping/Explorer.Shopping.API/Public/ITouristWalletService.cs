@@ -10,8 +10,8 @@ namespace Explorer.Shopping.API.Public
 {
     public interface ITouristWalletService
     {
-        public Result<TouristWalletDto> GetAdventureCoins(long userId);
-        public Result<TouristWalletDto> PaymentAdventureCoins(int userId, int coins);
-        public Result<TouristWalletDto> Create(TouristWalletDto dto);
+        Result<TouristWalletDto> GetAdventureCoins(long userId);
+        Result<TouristWalletDto> PaymentAdventureCoins(int userId, int coins);
+        Result<TouristWalletDto> CreateWallet(int touristId);
     }
 }

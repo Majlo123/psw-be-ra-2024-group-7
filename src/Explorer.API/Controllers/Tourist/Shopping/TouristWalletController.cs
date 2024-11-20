@@ -30,10 +30,10 @@ namespace Explorer.API.Controllers.Tourist.Shopping
             return CreateResponse(result);
         }
 
-        [HttpPost("create-wallet")]
-        public ActionResult<TouristWalletDto> GetAdventureCoins([FromBody] TouristWalletDto touristWalletDto)
-        {
-            var result = _service.Create(touristWalletDto);
+        [HttpPost("create-wallet/{touristId}")]
+        public ActionResult<TouristWalletDto> CreateWallet(int touristId)
+        {;
+            var result = _service.CreateWallet(touristId);
             return CreateResponse(result);
         }
     }

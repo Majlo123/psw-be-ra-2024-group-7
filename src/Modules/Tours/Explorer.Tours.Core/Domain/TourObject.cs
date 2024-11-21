@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Stakeholders.API.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace Explorer.Tours.Core.Domain
         public int Category { get; private set; }
         public float Longitude { get; private set; }
         public float Latitude { get; private set; }
-        
 
-        public TourObject(string name, string description, string image, int category, float longitude, float latitude)
+        public ObjectStatus Status { get; init; }
+
+
+        public TourObject(string name, string description, string image, int category, float longitude, float latitude, ObjectStatus status)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -26,6 +29,14 @@ namespace Explorer.Tours.Core.Domain
             Category = category;
             Longitude = longitude;
             Latitude = latitude;
+            Status = status;
+        }
+
+        public enum ObjectStatus
+        {
+            PRIVATE,
+            REQUESTED,
+            PUBLIC
         }
 
     }

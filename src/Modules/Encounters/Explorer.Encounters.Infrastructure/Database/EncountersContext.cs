@@ -11,42 +11,52 @@ namespace Explorer.Encounters.Infrastructure.Database
 {
     public class EncountersContext : DbContext
     {
-        public DbSet<HiddenLocationEncounter> HiddenLocationEncounters { get; set; }
 
-        public DbSet<SocialEncounter> SocialEncounters { get; set; }
+        public DbSet<Encounter>Encounters { get; set; }
+        //public DbSet<HiddenLocationEncounter> HiddenLocationEncounters { get; set; }
 
-        public DbSet<MiscEncounter> MiscEncounters { get; set; }
+        //public DbSet<SocialEncounter> SocialEncounters { get; set; }
+
+        //public DbSet<MiscEncounter> MiscEncounters { get; set; }
 
         public EncountersContext(DbContextOptions<EncountersContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("encounters");
+            modelBuilder.Entity<Encounter>();
 
-            // Konfigurisanje HiddenLocationEncounter tabele
-            modelBuilder.Entity<HiddenLocationEncounter>(entity =>
-            {
-                entity.ToTable("HiddenLocationEncounters");
-                entity.HasBaseType<Encounter>();
-                entity.Property(e => e.Image).IsRequired();
-                entity.Property(e => e.ImageLongitude).IsRequired();
-                entity.Property(e => e.ImageLatitude).IsRequired();
-            });
+            modelBuilder.Entity<SocialEncounter>().ToTable("socialEncounter");
+            modelBuilder.Entity<MiscEncounter>().ToTable("miscEncounter");
+            modelBuilder.Entity<HiddenLocationEncounter>().ToTable("hiddenLocationEncounter");
 
-            // Konfigurisanje SocialEncounter tabele
-            modelBuilder.Entity<SocialEncounter>(entity =>
-            {
-                entity.ToTable("SocialEncounters");
-                entity.HasBaseType<Encounter>();
-                entity.Property(e => e.PeopleNumb).IsRequired();
-            });
 
-            // Konfigurisanje MiscEncounter tabele
-            modelBuilder.Entity<MiscEncounter>(entity =>
-            {
-                entity.ToTable("MiscEncounters");
-                entity.HasBaseType<Encounter>();
-                entity.Property(e => e.Instructions).IsRequired();
-            });
+                
+            //modelBuilder.HasDefaultSchema("encounters");
+
+            //// Konfigurisanje HiddenLocationEncounter tabele
+            //modelBuilder.Entity<HiddenLocationEncounter>(entity =>
+            //{
+            //    entity.ToTable("HiddenLocationEncounters");
+            //    entity.HasBaseType<Encounter>();
+            //    entity.Property(e => e.Image).IsRequired();
+            //    entity.Property(e => e.ImageLongitude).IsRequired();
+            //    entity.Property(e => e.ImageLatitude).IsRequired();
+            //});
+
+            //// Konfigurisanje SocialEncounter tabele
+            //modelBuilder.Entity<SocialEncounter>(entity =>
+            //{
+            //    entity.ToTable("SocialEncounters");
+            //    entity.HasBaseType<Encounter>();
+            //    entity.Property(e => e.PeopleNumb).IsRequired();
+            //});
+
+            //// Konfigurisanje MiscEncounter tabele
+            //modelBuilder.Entity<MiscEncounter>(entity =>
+            //{
+            //    entity.ToTable("MiscEncounters");
+            //    entity.HasBaseType<Encounter>();
+            //    entity.Property(e => e.Instructions).IsRequired();
+            //});
 
             base.OnModelCreating(modelBuilder);
         }

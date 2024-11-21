@@ -252,5 +252,25 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var result = _tourRepository.GetByAuthorId(id, page, pageSize);
             return MapToDto(result);
         }
+        public Result<List<TourDto>> GetTourByDistance(float latitude, float longitude, float distance)
+        {
+            var tours = _tourRepository.GetPublishedToursList();
+            var filteredTours = tours.Where(t => t.KeyPoints.Any(kp => IsWithinDistance(kp, latitude, longitude, distance))).ToList();
+            return MapToDto(filteredTours);
+        }
+        private bool IsWithinDistance(KeyPoint keyPoint, float lat, float lon, float distance)
+        {
+            var R = 6371;
+            var dLat = (keyPoint.Latitude - lat) * (Math.PI / 180);
+            var dLon = (keyPoint.Longitude - lon) * (Math.PI / 180);
+            var a =
+                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(lat * (Math.PI / 180)) * Math.Cos(keyPoint.Latitude * (Math.PI / 180)) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distanceInKm = R * c;
+
+            return distanceInKm <= distance; 
+        }
     }
 }

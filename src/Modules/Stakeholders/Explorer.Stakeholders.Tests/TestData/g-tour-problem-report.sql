@@ -1,3 +1,4 @@
+
 INSERT INTO stakeholders."TourProblemReports"(
      "Id", "TourId", "Category", "Priority", "Description", "Time", "Status", "TouristId", "Comment", "SolvingDeadline", "Messages")
 VALUES (-1, -1, 'Tehnički problem', 1, 'Problem sa internet konekcijom', '2024-10-02 11:30:00.246+02', 0, -21, 'aaa', null, '[]'::jsonb);

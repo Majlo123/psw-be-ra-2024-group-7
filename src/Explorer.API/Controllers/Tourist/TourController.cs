@@ -56,5 +56,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourService.GetPublishedTourById(id);
             return CreateResponse(result);
         }
+        [HttpGet]
+        [Route("search")]
+        public ActionResult<List<TourDto>> GetTourByDistance([FromQuery] float latitude, [FromQuery] float longitude,[FromQuery] float distance)
+        {
+            var result = _tourService.GetTourByDistance(latitude, longitude,distance);
+            return CreateResponse(result);
+        }
     }
 }

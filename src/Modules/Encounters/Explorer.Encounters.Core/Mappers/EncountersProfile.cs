@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Explorer.Encounters.API.Dtos;
+using Explorer.Encounters.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,12 @@ namespace Explorer.Encounters.Core.Mappers
 {
     public class EncountersProfile : Profile
     {
-        public EncountersProfile() { }
+        public EncountersProfile() {
+
+            CreateMap<SocialEncounterDto, SocialEncounter>().ReverseMap();
+            CreateMap<HiddenLocationEncounterDto, HiddenLocationEncounter>().ReverseMap();
+            CreateMap<MiscEncounterDto, MiscEncounter>().ReverseMap();
+
+        }
     }
 }

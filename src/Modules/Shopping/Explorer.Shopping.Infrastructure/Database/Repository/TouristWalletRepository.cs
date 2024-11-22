@@ -21,7 +21,7 @@ namespace Explorer.Shopping.Infrastructure.Database.Repository
         public TouristWallet GetByUser(long userId)
         {
             var wallet = _dbContext.TouristWallets.FirstOrDefault(w => w.UserId == userId);
-            if (wallet == null) throw new KeyNotFoundException("Not found wallet with user ID: " + userId);
+            //if (wallet == null) throw new KeyNotFoundException("Not found wallet with user ID: " + userId);
             return wallet;
         }
 

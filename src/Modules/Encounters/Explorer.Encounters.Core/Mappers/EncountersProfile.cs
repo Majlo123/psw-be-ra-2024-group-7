@@ -13,10 +13,16 @@ namespace Explorer.Encounters.Core.Mappers
     {
         public EncountersProfile() {
 
-            CreateMap<EncounterDto, Encounter>().IncludeAllDerived();
-            CreateMap<SocialEncounterDto, SocialEncounter>().ReverseMap();
-            CreateMap<HiddenLocationEncounterDto, HiddenLocationEncounter>().ReverseMap();
-            CreateMap<MiscEncounterDto, MiscEncounter>().ReverseMap();
+            // Mapiranje između DTO i osnovnih entiteta
+            CreateMap<Encounter, EncounterDto>().Include<SocialEncounter, EncounterDto>()
+                                             .Include<HiddenLocationEncounter, EncounterDto>()
+                                             .Include<MiscEncounter, EncounterDto>()
+                                             .ReverseMap();
+
+            // Mapiranje za specifične entitete
+            CreateMap<SocialEncounter, EncounterDto>().ReverseMap();
+            CreateMap<HiddenLocationEncounter, EncounterDto>().ReverseMap();
+            CreateMap<MiscEncounter, EncounterDto>().ReverseMap();
 
         }
     }

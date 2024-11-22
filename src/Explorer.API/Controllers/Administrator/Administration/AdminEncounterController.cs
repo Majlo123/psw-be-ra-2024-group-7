@@ -20,30 +20,30 @@ namespace Explorer.API.Controllers.Administrator.Administration
             _encounterService = encounterService;
         }
 
-        [HttpGet("encounter")]
+        [HttpGet]
         public ActionResult<List<EncounterDto>> GetAllEncounters()
         {
             var result = _encounterService.GetAll();
             return CreateResponse(result);
-
         }
 
-        [HttpPost("encounter")]
-        public ActionResult<EncounterDto> CreateHiddenLocationEncounter( EncounterDto encounter)
+        [HttpPost]
+        public ActionResult<EncounterDto> CreateEncounter([FromBody] EncounterDto encounter)
         {
             var result = _encounterService.CreateEncounter(encounter);
             return CreateResponse(result);
         }
 
-        [HttpPut("encounter/{id:int}")]
-        public ActionResult<EncounterDto> UpdateHiddenLocationEncounter([FromBody] EncounterDto encounter)
+        [HttpPut("{id:int}")]
+        public ActionResult<EncounterDto> UpdateEncounter([FromBody] EncounterDto encounter, int id)
         {
+            encounter.Id = id; // Ensure the ID is set on the DTO
             var result = _encounterService.Update(encounter);
             return CreateResponse(result);
         }
 
-        [HttpGet("encounter/{id:int}")]
-        public ActionResult<EncounterDto> GetHiddenLocationEncounterById(long id)
+        [HttpGet("{id:int}")]
+        public ActionResult<EncounterDto> GetEncounterById(int id)
         {
             var result = _encounterService.GetById(id);
             return CreateResponse(result);

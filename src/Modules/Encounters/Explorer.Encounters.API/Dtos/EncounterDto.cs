@@ -27,10 +27,7 @@ namespace Explorer.Encounters.API.Dtos
         AWAITS,
         CANCELLED
     }
-    [JsonDerivedType(typeof(EncounterDto), typeDiscriminator: "base")]
-    [JsonDerivedType(typeof(SocialEncounterDto), typeDiscriminator: "socialEncounter")]
-    [JsonDerivedType(typeof(HiddenLocationEncounterDto), typeDiscriminator: "hiddenLocationEncounter")]
-    [JsonDerivedType(typeof(MiscEncounterDto), typeDiscriminator: "miscEncounter")]
+  
     public class EncounterDto
     {
         public long Id { get; set; }
@@ -46,6 +43,11 @@ namespace Explorer.Encounters.API.Dtos
         public bool? IsRequired { get; set; }
         public int? TourId { get; set; }
         public double ActivateRange { get; set; }
+        public string Image { get; set; }
+        public double ImageLongitude { get; set; }
+        public double ImageLatitude { get; set; }
+        public string Instructions { get; set; }
+        public int PeopleNumb { get; set; }
 
     }
 }

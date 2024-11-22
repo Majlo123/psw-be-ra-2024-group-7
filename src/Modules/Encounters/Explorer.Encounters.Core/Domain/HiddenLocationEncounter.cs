@@ -15,37 +15,15 @@ namespace Explorer.Encounters.Core.Domain
         public double ImageLatitude { get; private set;}
 
 
-        //private HiddenLocationEncounter() : base() { }
-        //public HiddenLocationEncounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange,string image, double imageLongitude, double imageLatitude)
-        //    : base(name,description,total_xp,creatorId,longitude,latitude,status,type,touristEncounterStatus,isRequired,tourId,activateRange)
-        //{
-        //    Image = image;
-        //    ImageLongitude = imageLongitude;
-        //    ImageLatitude = imageLatitude;
-        //}
-
-        public override Encounter Clone()
+        private HiddenLocationEncounter() : base() { }
+        public HiddenLocationEncounter(string name, string description, int totalXp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, string image, double imageLongitude, double imageLatitude)
+            : base(name, description, totalXp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
         {
-            return new HiddenLocationEncounter
-            {
-                Image = Image,
-                ImageLongitude = ImageLongitude,
-                ImageLatitude = ImageLatitude,
-                Name = Name,
-                Description = Description,
-                Total_xp = Total_xp,
-                CreatorId = CreatorId,
-                Longitude = Longitude,
-                Latitude = Latitude,
-                Status = Status,
-                EncounterType = EncounterType,
-                TouristRequestStatus = TouristRequestStatus,
-                isTourRequired = isTourRequired,
-                TourId = TourId,
-                ActivateRange = ActivateRange,
-
-
-        };
+            Image = image;
+            ImageLongitude = imageLongitude;
+            ImageLatitude = imageLatitude;
         }
+
+
     }
 }

@@ -10,32 +10,12 @@ namespace Explorer.Encounters.Core.Domain
     {
         public int PeopleNumb { get; private set; }
 
-        public override Encounter Clone()
+        public SocialEncounter() : base() { }
+        public SocialEncounter(string name, string description, int totalXp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, int peopleNumb)
+        : base(name, description, totalXp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
         {
-            return new SocialEncounter
-            {
-                PeopleNumb = PeopleNumb,
-                Name = Name,
-                Description = Description,
-                Total_xp = Total_xp,
-                CreatorId = CreatorId,
-                Longitude = Longitude,
-                Latitude = Latitude,
-                Status = Status,
-                EncounterType = EncounterType,
-                TouristRequestStatus = TouristRequestStatus,
-                isTourRequired = isTourRequired,
-                TourId = TourId,
-                ActivateRange = ActivateRange,
-            };
+            PeopleNumb = peopleNumb;
         }
-
-        //private SocialEncounter() : base() { }
-        //public SocialEncounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, int peopleNumb)
-        //: base(name, description, total_xp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
-        //{
-        //    PeopleNumb = peopleNumb;
-        //}
 
     }
 }

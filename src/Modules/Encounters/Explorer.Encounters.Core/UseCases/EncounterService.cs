@@ -25,7 +25,8 @@ namespace Explorer.Encounters.Core.UseCases
 
         public Result<EncounterDto> CreateEncounter(EncounterDto encounter)
         {
-            return Create(encounter);
+            var result = _encounterRepository.Create(encounter);
+            return (result);
         }
 
         public Result<List<EncounterDto>> GetAll()
@@ -44,8 +45,8 @@ namespace Explorer.Encounters.Core.UseCases
         {
             try
             {
-                var result = _encounterRepository.Update(MapToDomain(encounter));
-                return MapToDto(result);
+                var result = _encounterRepository.Update((encounter));
+                return (result);
             }
             catch (KeyNotFoundException e)
             {

@@ -9,6 +9,7 @@ public enum NotificationType
 {
     CHAT,
     DEADLINE,
+    PAYMENT,
     PROFILE_CHAT
 }
 public class NotificationDto

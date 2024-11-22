@@ -17,6 +17,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
     {
         CHAT,
         DEADLINE,
+        PAYMENT,
         PROFILE_CHAT
     }
     public class Notification : Entity

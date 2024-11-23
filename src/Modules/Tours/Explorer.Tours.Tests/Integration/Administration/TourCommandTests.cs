@@ -312,6 +312,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -321,6 +323,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -358,6 +362,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -367,6 +373,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>(),
@@ -401,6 +409,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -410,6 +420,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -482,6 +494,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -491,6 +505,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -535,6 +551,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -544,6 +562,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>

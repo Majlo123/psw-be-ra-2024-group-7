@@ -15,8 +15,9 @@ public class KeyPoint : Entity
     public float Latitude { get; init; }
     public float Longitude { get; init; }
     public PublicStatus Status { get; init; }
+    public string Comment { get; init; }
 
-    public KeyPoint(string name, string description, string image, float latitude, float longitude, PublicStatus status)
+    public KeyPoint(string name, string description, string image, float latitude, float longitude, PublicStatus status, string comment)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Invalid name");
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentNullException("Invalid description");
@@ -27,6 +28,7 @@ public class KeyPoint : Entity
         Latitude = latitude;
         Longitude = longitude;
         Status = status;
+        Comment = comment;
     }
     public KeyPoint(KeyPoint keyPoint)
     {
@@ -36,6 +38,7 @@ public class KeyPoint : Entity
         Latitude = keyPoint.Latitude;
         Longitude = keyPoint.Longitude;
         Status = keyPoint.Status;
+        Comment = keyPoint.Comment;
     }
 
     public bool Valid()

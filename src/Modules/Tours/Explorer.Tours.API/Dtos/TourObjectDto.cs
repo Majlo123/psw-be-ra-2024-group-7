@@ -17,6 +17,7 @@ namespace Explorer.Tours.API.Dtos
         public float Longitude { get; set; }
         public float Latitude { get; set; }
         public ObjectStatus Status { get; set; }
+        public string Comment { get; set; }
 
         public enum ObjectStatus
         {

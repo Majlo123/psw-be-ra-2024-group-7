@@ -1,6 +1,8 @@
-﻿using Explorer.BuildingBlocks.Infrastructure.Database;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Payments.Core.UseCases;
 using Explorer.Shopping.API.Public;
+using Explorer.Shopping.Core.Domain;
 using Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 using Explorer.Shopping.Core.Mappers;
 using Explorer.Shopping.Core.UseCases;
@@ -25,6 +27,7 @@ namespace Explorer.Shopping.Infrastructure
         {
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+            services.AddScoped<ICouponService, CouponService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
@@ -32,6 +35,8 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<ITourPurchaseTokenRepository, TourPurchaseTokenDatabaseRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<ICrudRepository<Coupon>, CrudDatabaseRepository<Coupon, ShoppingContext>>(); 
             services.AddDbContext<ShoppingContext>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("shopping"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "shopping")));

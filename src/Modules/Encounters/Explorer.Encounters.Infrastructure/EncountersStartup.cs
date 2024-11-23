@@ -29,19 +29,13 @@ namespace Explorer.Encounters.Infrastructure
 
         private static void SetupCore(IServiceCollection services)
         {
-            services.AddScoped<IHiddenEncounterService, HiddenEncounterService>();
-            services.AddScoped<IMiscEncounterService, MiscEncounterService>();
-            services.AddScoped<ISocialEncounterService, SocialEncounterService>();
-
-           
+            services.AddScoped<IEncounterService, EncounterService>(); 
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
-        {
-            services.AddScoped(typeof(IHiddenEncounterRepository), typeof(HiddenEncounterRepository));
-            services.AddScoped(typeof(ISocialEncounterRepository), typeof(SocialEncounterRepository));
-            services.AddScoped(typeof(IMiscEncounterRepository), typeof(MiscEncounterRepository));
-           
+        {   
+            services.AddScoped(typeof(IEncounterRepository), typeof(EncounterRepository));
+
             services.AddDbContext<EncountersContext>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("encounters"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "encounters")));

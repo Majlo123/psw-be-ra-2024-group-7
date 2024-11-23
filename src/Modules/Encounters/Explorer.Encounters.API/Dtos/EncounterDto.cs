@@ -43,11 +43,11 @@ namespace Explorer.Encounters.API.Dtos
         public bool? IsRequired { get; set; }
         public int? TourId { get; set; }
         public double ActivateRange { get; set; }
-        public string Image { get; set; }
-        public double ImageLongitude { get; set; }
-        public double ImageLatitude { get; set; }
-        public string Instructions { get; set; }
-        public int PeopleNumb { get; set; }
+        public string? Image { get; set; }
+        public double? ImageLongitude { get; set; }
+        public double? ImageLatitude { get; set; }
+        public string? Instructions { get; set; }
+        public int? PeopleNumb { get; set; }
 
     }
 }

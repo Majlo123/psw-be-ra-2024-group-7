@@ -9,7 +9,11 @@ public enum NotificationType
 {
     CHAT,
     DEADLINE,
-    PROFILE_CHAT
+    PROFILE_CHAT,
+    ACCEPT_KP,
+    REFUSE_KP,
+    ACCEPT_OBJ,
+    REFUSE_OBJ,
 }
 public class NotificationDto
 {

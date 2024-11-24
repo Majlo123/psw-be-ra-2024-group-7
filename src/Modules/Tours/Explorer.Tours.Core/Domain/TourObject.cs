@@ -20,9 +20,10 @@ namespace Explorer.Tours.Core.Domain
         public ObjectStatus Status { get; init; }
 
         public string Comment { get; init; }
+        public int AuthorId { get; init; }
 
 
-        public TourObject(string name, string description, string image, int category, float longitude, float latitude, ObjectStatus status,string comment)
+        public TourObject(string name, string description, string image, int category, float longitude, float latitude, ObjectStatus status,string comment,int authorId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -33,6 +34,7 @@ namespace Explorer.Tours.Core.Domain
             Latitude = latitude;
             Status = status;
             Comment = comment;
+            AuthorId = authorId;
         }
 
         public enum ObjectStatus

@@ -33,7 +33,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Image = "slikanmp.jpg",
                 category = 3,
                 Status = TourObjectDto.ObjectStatus.PUBLIC,
-                Comment = "Comment1"
+                Comment = "Comment1",
+                AuthorId=-12
             };
 
             // Act
@@ -83,7 +84,8 @@ namespace Explorer.Tours.Tests.Integration.Administration
                 Image = "slikaajzijaicrnedame.jpeg",
                 category = 1,
                 Status = TourObjectDto.ObjectStatus.PUBLIC,
-                Comment = "Comment1"
+                Comment = "Comment1",
+                AuthorId = -12
             };
 
             // Act

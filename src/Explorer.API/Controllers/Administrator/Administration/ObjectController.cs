@@ -29,7 +29,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         [HttpPut("{id:int}")]
         public ActionResult<TourObjectDto> UpdateObjectStatus([FromBody] TourObjectDto tourObject)
         {
-            var result = _objectService.Update(tourObject);
+            var result = _objectService.UpdateStatus(tourObject);
             return CreateResponse(result);
         }
 

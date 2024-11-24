@@ -1,5 +1,6 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.API.Internal;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
@@ -40,6 +41,7 @@ public static class StakeholdersStartup
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
         // Dodajemo servis za ApplicationGrade
         services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
+        services.AddScoped<INotificationInternalService, NotificationService >();
 
     }
 

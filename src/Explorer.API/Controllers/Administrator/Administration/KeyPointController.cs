@@ -27,7 +27,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         [HttpPut("{id:int}")]
         public ActionResult<KeyPointDto> UpdateKeyPointStatus([FromBody] KeyPointDto keyPoint)
         {
-            var result = _keyPointService.Update(keyPoint);
+            var result = _keyPointService.UpdateStatus(keyPoint);
             return CreateResponse(result);
         }
     }

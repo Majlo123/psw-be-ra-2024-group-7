@@ -24,6 +24,9 @@ namespace Explorer.Encounters.Core.Mappers
             CreateMap<HiddenLocationEncounter, EncounterDto>().ReverseMap();
             CreateMap<MiscEncounter, EncounterDto>().ReverseMap();
 
+
+            CreateMap<EncounterExecutionDto, EncounterExecution>().ReverseMap();
+
         }
     }
 }

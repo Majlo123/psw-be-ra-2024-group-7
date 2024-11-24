@@ -6,6 +6,7 @@ using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,16 @@ namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class TourObjectService : CrudService<TourObjectDto, TourObject>, ITourObjectService
     {
+        private readonly ITourObjectRepository _tourObjectRepository;
+        public TourObjectService(ICrudRepository<TourObject> repository, IMapper mapper,ITourObjectRepository tourObjectRepository) : base(repository, mapper)
+        {
+            _tourObjectRepository = tourObjectRepository;
+        }
+        public Result<PagedResult<TourObjectDto>> GetPublicObjects(int page, int pageSize)
+        {
+            var result = _tourObjectRepository.GetPublicObjects(page, pageSize);
+            return MapToDto(result);
+        }
 
         private readonly INotificationInternalService _notificationInternalService;
 

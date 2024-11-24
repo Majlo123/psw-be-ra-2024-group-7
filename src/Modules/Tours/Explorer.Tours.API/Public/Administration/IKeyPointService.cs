@@ -17,4 +17,5 @@ public interface IKeyPointService
 
     Result<KeyPointDto> UpdateStatus(KeyPointDto keyPoint);
     
+    Result<PagedResult<KeyPointDto>> GetPublicKeyPoints(int page, int pageSize);
 }

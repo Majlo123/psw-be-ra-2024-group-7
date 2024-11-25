@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Explorer.Encounters.API.Dtos
@@ -26,9 +27,10 @@ namespace Explorer.Encounters.API.Dtos
         AWAITS,
         CANCELLED
     }
-    public class HiddenLocationEncounterDto
+  
+    public class EncounterDto
     {
-        public long  Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int TotalXp { get; set; }
@@ -41,8 +43,11 @@ namespace Explorer.Encounters.API.Dtos
         public bool? IsRequired { get; set; }
         public int? TourId { get; set; }
         public double ActivateRange { get; set; }
-        public string Image { get; set; }
-        public double ImageLongitude { get; set; }
-        public double ImageLatitude { get; set; }
+        public string? Image { get; set; }
+        public double? ImageLongitude { get; set; }
+        public double? ImageLatitude { get; set; }
+        public string? Instructions { get; set; }
+        public int? PeopleNumb { get; set; }
+
     }
 }

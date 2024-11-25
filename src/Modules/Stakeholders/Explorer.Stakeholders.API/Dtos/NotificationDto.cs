@@ -14,6 +14,7 @@ public enum NotificationType
     REFUSE_KP,
     ACCEPT_OBJ,
     REFUSE_OBJ,
+    PAYMENT
 }
 public class NotificationDto
 {

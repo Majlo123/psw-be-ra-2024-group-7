@@ -22,6 +22,7 @@ namespace Explorer.Stakeholders.Core.Domain.TourProblemReports
         REFUSE_KP,
         ACCEPT_OBJ,
         REFUSE_OBJ,
+        PAYMENT
     }
     public class Notification : Entity
     {

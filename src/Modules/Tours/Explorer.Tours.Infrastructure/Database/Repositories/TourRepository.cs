@@ -116,5 +116,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == Core.Domain.TourStatus.Published).ToList();
         }
+
+        public List<Tour> GetAll()
+        {
+            return _context.Tours.Include(t => t.KeyPoints).AsNoTracking().ToList();
+        }
     }
 }

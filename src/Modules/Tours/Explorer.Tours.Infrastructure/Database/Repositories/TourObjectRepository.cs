@@ -1,4 +1,8 @@
-﻿using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +24,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public List<TourObject> GetAll() 
         {
             return _context.TourObjects.ToList();
+        }
+        public PagedResult<TourObject> GetPublicObjects(int page, int pageSize)
+        {
+            var entity = _context.TourObjects.Where(t => t.Status == TourObject.ObjectStatus.PUBLIC).GetPagedById(page, pageSize);
+            return entity.Result;
         }
     }
 }

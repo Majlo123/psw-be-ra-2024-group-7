@@ -109,5 +109,12 @@ namespace Explorer.API.Controllers.Author.Administration
             var result = _tourService.GetByAuthorId(this.User.PersonId(), page, pageSize);
             return CreateResponse(result);
         }
+        [HttpGet]
+        [Route("public/{id:int}")]
+        public ActionResult<List<KeyPointDto>> GetPublic(int id)
+        {
+            var result = _tourService.GetAvailableKeyPoints(id);
+            return CreateResponse(result);
+        }
     }
 }

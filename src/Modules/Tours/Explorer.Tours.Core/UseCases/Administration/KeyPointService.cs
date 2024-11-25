@@ -124,4 +124,9 @@ public class KeyPointService : BaseService<KeyPointDto, KeyPoint>, IKeyPointServ
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
     }
+    public Result<PagedResult<KeyPointDto>> GetPublicKeyPoints(int page, int pageSize)
+    {
+        var result = _keyPointRepository.GetPublicKeyPoints(page, pageSize);
+        return MapToDto(result);
+    }
 }

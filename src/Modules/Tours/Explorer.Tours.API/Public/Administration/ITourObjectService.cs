@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourObjectDto> Update(TourObjectDto objectt);
         Result<TourObjectDto> UpdateStatus(TourObjectDto tourObject);
         Result Delete(int id);
+        Result<PagedResult<TourObjectDto>> GetPublicObjects(int page, int pageSize);
     }
 }

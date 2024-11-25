@@ -41,6 +41,8 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
         try
         {
             var bundle = _bundleRepository.Get(id);
+            if(bundle == null)
+                throw new Exception("Bundle with this id does not exist.");
             var productIds = bundle.Products.Select(p => p.Id).ToList();
             foreach (var productId in productIds)
             {
@@ -69,21 +71,29 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
 
     public Result<BundleDto> Update(BundleDto bundleDto)
     {
-        var bundle = MapToDomain(bundleDto);
-        foreach (var product in bundle.Products)
+        try
         {
-            if (product.Id == null || product.Id == 0)
-                _productRepository.Create(product);
+            var bundle = MapToDomain(bundleDto);
+            foreach (var product in bundle.Products)
+            {
+                if (product.Id == null || product.Id == 0)
+                    _productRepository.Create(product);
+            }
+            var result = _bundleRepository.Update(bundle);
+            var dto = MapToDto(bundle);
+            var bund = _bundleRepository.Get(bundleDto.Id);
+            var productsForDelete = bund.Products.Select(p => p.Id).ToList().Except(dto.Products.Select(p => p.Id).ToList());
+            foreach (var id in productsForDelete)
+            {
+                _productRepository.Delete(id);
+            }
+            return MapToDto(result);
         }
-        var result = _bundleRepository.Update(bundle);
-        var dto = MapToDto(bundle);
-        var bund = _bundleRepository.Get(bundleDto.Id);
-        var productsForDelete = bund.Products.Select(p => p.Id).ToList().Except(dto.Products.Select(p => p.Id).ToList());
-        foreach (var id in productsForDelete)
+        catch (Exception e)
         {
-            _productRepository.Delete(id);
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
-        return MapToDto(result);
+       
     }
 
     public Result<PagedResult<BundleDto>> GetPagedByCreatorId(long creatorId, int page, int pageSize)

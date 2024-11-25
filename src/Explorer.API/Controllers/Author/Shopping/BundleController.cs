@@ -36,7 +36,10 @@ public class BundleController : BaseApiController
     [HttpDelete("{id:long}")]
     public ActionResult Delete(long id)
     {
-        if (_bundleService.Get(id).Value.CreatorId != this.User.PersonId())
+        var bundle = _bundleService.Get(id);
+        if(bundle.Value == null)
+            return NotFound();
+        if (bundle.Value.CreatorId != this.User.PersonId())
             return Unauthorized("This is not your bundle!");
         var result = _bundleService.Delete(id);
         return CreateResponse(result);

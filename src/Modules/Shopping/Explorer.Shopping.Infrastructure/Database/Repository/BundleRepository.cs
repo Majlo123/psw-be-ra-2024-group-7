@@ -32,6 +32,8 @@ public class BundleRepository : IBundleRepository
     public void Delete(long id)
     {
         var entity = _dbSet.FirstOrDefault(b => b.Id == id);
+        if (entity == null) 
+            throw new Exception("Bundle with this id does not exist.");
         _dbSet.Remove(entity);
         _shoppingContext.SaveChanges();
     }
@@ -50,6 +52,9 @@ public class BundleRepository : IBundleRepository
 
     public Bundle Update(Bundle bundle)
     {
+        if(_dbSet.FirstOrDefault(b => b.Id == bundle.Id) == null)
+            throw new Exception();
+
         _shoppingContext.Update(bundle);
         _shoppingContext.SaveChanges();
         return bundle;

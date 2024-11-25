@@ -35,6 +35,7 @@ public static class StakeholdersStartup
         services.AddScoped<INotificationService, NotificationService>();
        
         services.AddScoped<IProfileMessageService, ProfileMessageService>();
+        services.AddScoped<IClubMessageService, ClubMessageService>();
 
         services.AddScoped<IToursitClubService, TouristClubService>();
 
@@ -58,6 +59,9 @@ public static class StakeholdersStartup
         //services.AddScoped(typeof(ICrudRepository<ProfileMessage>), typeof(CrudDatabaseRepository<ProfileMessage, StakeholdersContext>));
         services.AddScoped<ICrudRepository<ProfileMessage>, CrudDatabaseRepository<ProfileMessage, StakeholdersContext>>();
         services.AddScoped<IProfileMessageRepository, ProfileMessageRepository>();
+       
+        services.AddScoped<ICrudRepository<ClubMessage>, CrudDatabaseRepository<ClubMessage, StakeholdersContext>>();
+        services.AddScoped<IClubMessageRepository, ClubMessageRepository>();
 
         services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
         services.AddScoped<ITourProblemReportRepository, TourProblemReportRepository>();

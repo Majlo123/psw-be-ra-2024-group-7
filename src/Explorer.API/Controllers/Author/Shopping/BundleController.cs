@@ -37,10 +37,12 @@ public class BundleController : BaseApiController
     public ActionResult Delete(long id)
     {
         var bundle = _bundleService.Get(id);
-        if(bundle.Value == null)
-            return NotFound();
+        if (bundle.Value == null)
+            return NotFound("Does not exist bundle with this id!"); //new ObjectResult("Does not exist bundle with this id!") { StatusCode = 401 };
+        
         if (bundle.Value.CreatorId != this.User.PersonId())
-            return Unauthorized("This is not your bundle!");
+            return Unauthorized("This is not your bundle!"); //new ObjectResult("This is not your bundle!") { StatusCode = 401 };//
+        
         var result = _bundleService.Delete(id);
         return CreateResponse(result);
     }

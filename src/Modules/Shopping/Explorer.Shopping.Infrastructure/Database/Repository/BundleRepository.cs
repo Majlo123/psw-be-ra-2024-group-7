@@ -50,15 +50,54 @@ public class BundleRepository : IBundleRepository
         return task.Result;
     }
 
+    //public Bundle Update(Bundle bundle)
+    //{
+    //    var existingBundle = _dbSet
+    //   .Include(b => b.Products) // Uključi kolekciju proizvoda
+    //   .FirstOrDefault(b => b.Id == bundle.Id);
+    //    if (existingBundle == null)
+    //        throw new Exception();
+
+    //    _shoppingContext.Entry(existingBundle).CurrentValues.SetValues(bundle);
+    //    //_shoppingContext.Update(bundle);
+    //    _shoppingContext.SaveChanges();
+    //    return existingBundle;
+    //}
+
     public Bundle Update(Bundle bundle)
     {
-        if(_dbSet.FirstOrDefault(b => b.Id == bundle.Id) == null)
-            throw new Exception();
+        var existingBundle = _dbSet
+            .Include(b => b.Products)
+            .FirstOrDefault(b => b.Id == bundle.Id);
 
-        _shoppingContext.Update(bundle);
+        if (existingBundle == null)
+            throw new Exception("Bundle not found.");
+
+        _shoppingContext.Entry(existingBundle).CurrentValues.SetValues(bundle);
+
+        foreach (var product in bundle.Products)
+        {
+            var existingProduct = existingBundle.Products.FirstOrDefault(p => p.Id == product.Id);
+            if (existingProduct == null)
+                existingBundle.Products.Add(product);
+
+        }
+
+        var productsToRemove = existingBundle.Products
+            .Where(p => !bundle.Products.Any(bp => bp.Id == p.Id))
+            .ToList();
+
+        foreach (var product in productsToRemove)
+        {
+            existingBundle.Products.Remove(product);
+            _shoppingContext.Products.Remove(product);
+            _shoppingContext.SaveChanges();
+        }
         _shoppingContext.SaveChanges();
-        return bundle;
+
+        return existingBundle;
     }
+
 
     public PagedResult<Bundle> GetPagedByCreatorId(long creatorId, int page, int pageSize)
     {

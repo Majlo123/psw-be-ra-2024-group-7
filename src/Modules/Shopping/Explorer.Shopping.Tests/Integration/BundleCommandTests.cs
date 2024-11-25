@@ -79,14 +79,14 @@ public class BundleCommandTests : BaseShoppingIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ShoppingContext>();
 
         //Act
-        var result = (ObjectResult)contoller.Delete(-1);
+        var result = (ObjectResult)contoller.Delete(-2);
 
         //Assert - response
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(401);
 
         //Assert - database
-        var entity = dbContext.Bundles.FirstOrDefault(b => b.Id == -1);
+        var entity = dbContext.Bundles.FirstOrDefault(b => b.Id == -2);
         entity.ShouldNotBeNull();
 
     }
@@ -99,7 +99,7 @@ public class BundleCommandTests : BaseShoppingIntegrationTest
         var controller = CreateController(scope, "-11");
 
         // Act
-        var result = (NotFoundResult)controller.Delete(-1000);
+        var result = (ObjectResult)controller.Delete(-1000);
 
         // Assert
         result.ShouldNotBeNull();

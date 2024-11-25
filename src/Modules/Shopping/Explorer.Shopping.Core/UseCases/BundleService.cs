@@ -73,20 +73,7 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
     {
         try
         {
-            var bundle = MapToDomain(bundleDto);
-            foreach (var product in bundle.Products)
-            {
-                if (product.Id == null || product.Id == 0)
-                    _productRepository.Create(product);
-            }
-            var result = _bundleRepository.Update(bundle);
-            var dto = MapToDto(bundle);
-            var bund = _bundleRepository.Get(bundleDto.Id);
-            var productsForDelete = bund.Products.Select(p => p.Id).ToList().Except(dto.Products.Select(p => p.Id).ToList());
-            foreach (var id in productsForDelete)
-            {
-                _productRepository.Delete(id);
-            }
+            var result = _bundleRepository.Update(MapToDomain(bundleDto));
             return MapToDto(result);
         }
         catch (Exception e)

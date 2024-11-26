@@ -60,5 +60,16 @@ namespace Explorer.API.Controllers.Tourist
             var result = _encounterExecutionService.LeaveEncounter(encounterExecution);
             return Ok(result);
         }
+
+
+        /** IVA **/
+        [HttpPut("completedEncounter")]
+        public ActionResult<EncounterExecutionDto> CompletedEncounter([FromBody] EncounterExecutionDto encounterExecution)
+        {
+            encounterExecution.Status = EncounterExecutionStatus.COMPLETED;
+            var result = _encounterExecutionService.Update(encounterExecution);
+            return Ok(result);
+        }
+        /*********/
     }
 }

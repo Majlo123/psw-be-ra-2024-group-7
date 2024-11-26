@@ -38,7 +38,7 @@ namespace Explorer.Encounters.API.Dtos
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public EncounterStatus Status { get; set; }
-        public EncounterType Type { get; set; }
+        public EncounterType EncounterType { get; set; }
         public TouristEncounterStatus? TouristEncounterStatus { get; set; }
         public bool? IsRequired { get; set; }
         public int? TourId { get; set; }

@@ -43,17 +43,17 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                 // Koristi AutoMapper za mapiranje DTO-a na odgovarajući entitet
                 Encounter encounter;
 
-                if (encounterDto.Type == API.Dtos.EncounterType.SOCIAL)
+                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
                 {
                     encounter = _mapper.Map<SocialEncounter>(encounterDto);
                     _dbContext.SocialEncounters.Add((SocialEncounter)encounter);
                 }
-                else if (encounterDto.Type == API.Dtos.EncounterType.HIDDENLOCATION)
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
                 {
                     encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
                     _dbContext.HiddenLocationEncounters.Add((HiddenLocationEncounter)encounter);
                 }
-                else if (encounterDto.Type == API.Dtos.EncounterType.MISC)
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
                 {
                     encounter = _mapper.Map<MiscEncounter>(encounterDto);
                     _dbContext.MiscEncounters.Add((MiscEncounter)encounter);
@@ -84,17 +84,17 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                 // Koristi AutoMapper za mapiranje DTO-a na odgovarajući entitet
                 Encounter encounter;
 
-                if (encounterDto.Type == API.Dtos.EncounterType.SOCIAL)
+                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
                 {
                     encounter = _mapper.Map<SocialEncounter>(encounterDto);
                     _dbContext.SocialEncounters.Update((SocialEncounter)encounter);
                 }
-                else if (encounterDto.Type == API.Dtos.EncounterType.HIDDENLOCATION)
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
                 {
                     encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
                     _dbContext.HiddenLocationEncounters.Update((HiddenLocationEncounter)encounter);
                 }
-                else if (encounterDto.Type == API.Dtos.EncounterType.MISC)
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
                 {
                     encounter = _mapper.Map<MiscEncounter>(encounterDto);
                     _dbContext.MiscEncounters.Update((MiscEncounter)encounter);

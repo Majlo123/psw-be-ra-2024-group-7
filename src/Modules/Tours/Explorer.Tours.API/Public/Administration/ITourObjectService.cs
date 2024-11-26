@@ -14,6 +14,8 @@ namespace Explorer.Tours.API.Public.Administration
         Result<PagedResult<TourObjectDto>> GetPaged(int page, int pageSize);
         Result<TourObjectDto> Create(TourObjectDto objectt);
         Result<TourObjectDto> Update(TourObjectDto objectt);
+        Result<TourObjectDto> UpdateStatus(TourObjectDto tourObject);
         Result Delete(int id);
+        Result<PagedResult<TourObjectDto>> GetPublicObjects(int page, int pageSize);
     }
 }

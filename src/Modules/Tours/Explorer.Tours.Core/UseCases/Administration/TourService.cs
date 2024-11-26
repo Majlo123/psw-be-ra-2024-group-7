@@ -20,11 +20,13 @@ namespace Explorer.Tours.Core.UseCases.Administration
     {
         private readonly ITourRepository _tourRepository;
         private readonly IKeyPointRepository _keyPointRepository;
+        private readonly IMapper _mapper;
 
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository, IKeyPointRepository keyPointRepository) : base (repository, mapper)
         {
             _tourRepository = tourRepository;
             _keyPointRepository = keyPointRepository;
+            _mapper = mapper;
         }
         public Result<TourDto> Create(TourDto dto)
         {
@@ -275,6 +277,27 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var distanceInKm = R * c;
 
             return distanceInKm <= distance; 
+        }
+        public Result<List<KeyPointDto>> GetAvailableKeyPoints(int id)
+        {
+            var allPublicKeyPoints = _keyPointRepository.GetPublicKeyPoints(0,0).Results;
+            var tour = _tourRepository.Get(id);
+            var result = new List<KeyPointDto>();
+            if (tour == null)
+            {
+                return result;
+            }
+            foreach(var keyPoint in allPublicKeyPoints)
+            {
+                bool isKeyPointAlreadyInTour = tour.KeyPoints.Any(k => k.Latitude == keyPoint.Latitude && k.Longitude == keyPoint.Longitude);
+                if (!isKeyPointAlreadyInTour)
+                {
+                    var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
+                    result.Add(keyPointDto);
+                }
+               
+            }
+            return result;
         }
     }
 }

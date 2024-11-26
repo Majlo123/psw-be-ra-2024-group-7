@@ -55,6 +55,22 @@ namespace Explorer.Tours.Tests.Integration.Administration
             result.Id.ShouldBe(-1);
             result.Name.ShouldBe("Tura1");
         }
+        [Fact]
+        public void Retrieves_available_key_points()
+        {
+
+            //Arragne
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+
+            //Act
+            var result = ((ObjectResult)controller.GetPublic(-1).Result)?.Value as List<KeyPointDto>;
+
+
+            //Assert
+            result.ShouldNotBeNull();
+            result.Count.ShouldBe(2);
+        }
 
         private static TourController CreateController(IServiceScope scope)
         {

@@ -15,6 +15,7 @@ public class KeyPointDto
     public float Latitude { get; set; }
     public float Longitude { get; set; }
     public PublicStatus Status { get; set; }
+    public string Comment { get; set; }
 
     public enum PublicStatus
     {

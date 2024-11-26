@@ -139,6 +139,7 @@ namespace Explorer.Encounters.Core.UseCases
             updateLocation.UpdateLongitudeLatitude(updatedExecution.TouristLongitude, updatedExecution.TouristLatitude);
             _encounterExecutionRepository.Update(updateLocation);
 
+            
                 var activeTourists = CountActiveExecutions(updatedExecution.EncounterId, GetPaged(0, 0).Value.Results);
 
                 var isCompleted = CheckIfCompleted(updatedExecution, numberOfPeople, activeTourists);
@@ -151,7 +152,7 @@ namespace Explorer.Encounters.Core.UseCases
                     foreach (var domainExecution in activeExecutions.Select(execution => _encounterExecutionRepository.Get(execution.Id)))
                     {
                         domainExecution.CompleteEncounter(activeTourists);
-                        _encounterExecutionRepository.Update(domainExecution); 
+                        _encounterExecutionRepository.Update(domainExecution);
                     }
                 }
                 else
@@ -161,6 +162,7 @@ namespace Explorer.Encounters.Core.UseCases
                     _encounterExecutionRepository.Update(domainExecution);
                     updatedExecution.NumberOfActiveTourists = activeTourists;
                 }
+            
             
             return updatedExecution;
         }

@@ -10,9 +10,11 @@ namespace Explorer.Encounters.Core.Domain
     {
         public string Instructions { get; private set; }
 
+
+
         private MiscEncounter() : base() { }
-        public MiscEncounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, string instructions)
-        : base(name, description, total_xp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
+        public MiscEncounter(string name, string description, int totalXp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, string instructions)
+        : base(name, description, totalXp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
         {
             Instructions = instructions;
         }

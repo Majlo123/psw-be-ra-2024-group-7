@@ -11,10 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentResults;
+using Explorer.Stakeholders.API.Internal;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class NotificationService : CrudService<NotificationDto, Notification>, INotificationService
+    public class NotificationService : CrudService<NotificationDto, Notification>, INotificationService, INotificationInternalService
     {
         private readonly INotificationRepository _notificationRepository;
         public NotificationService(ICrudRepository<Notification> repository, INotificationRepository notificationRepository, IMapper mapper) : base(repository, mapper)

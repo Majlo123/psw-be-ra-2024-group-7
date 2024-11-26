@@ -28,6 +28,7 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
             services.AddScoped<ITouristWalletService, TouristWalletService>();
             services.AddScoped<INotificationHandler, NotificationHandler>();
+            services.AddScoped<IBundleService, BundleService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
@@ -36,6 +37,8 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ITouristWalletRepository, TouristWalletRepository>();
+            services.AddScoped<IBundleRepository, BundleRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddDbContext<ShoppingContext>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("shopping"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "shopping")));

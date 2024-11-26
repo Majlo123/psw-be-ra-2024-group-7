@@ -19,10 +19,17 @@ namespace Explorer.Tours.Core.Domain
         Closed = 3
     }
 
+    public enum TourDifficulty
+    {
+        Easy = 0,
+        Medium = 1,
+        Hard = 2,
+        Hell = 3
+    }
     public class Tour : Entity
     {
         public string Name { get; private set; }
-        public string Difficulty { get; private set; }
+        public TourDifficulty Difficulty { get; private set; }
         public string Description { get; private set; }
         public double Cost { get; private set; }
         public TourStatus Status { get; private set; }
@@ -37,7 +44,7 @@ namespace Explorer.Tours.Core.Domain
         public DateTime? ArchiveTime { get; private set; } = null;
         public string Image { get; private set; }
 
-        public Tour(string name, string difficulty, string description, double cost, TourStatus status, string tags, double length,int authorId,string image)
+        public Tour(string name, TourDifficulty difficulty, string description, double cost, TourStatus status, string tags, double length,int authorId,string image)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;

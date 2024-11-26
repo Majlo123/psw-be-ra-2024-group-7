@@ -32,7 +32,7 @@ public class TourCommandTests : BaseToursIntegrationTest
         var newEntity = new TourDto
         {
             Name = "Tura4",
-            Difficulty = "Laka",
+            Difficulty = API.Dtos.TourDifficulty.Easy,
             Description = "Planinski hajk",
             Cost = 200,
             Status = 0,
@@ -68,7 +68,7 @@ public class TourCommandTests : BaseToursIntegrationTest
         var updatedEntity = new TourDto
         {
             Name = "",
-            Difficulty = "Laka",
+            Difficulty = API.Dtos.TourDifficulty.Easy,
             Description = "Planinski hajk",
             Cost = 0,
             Status = 0,
@@ -134,7 +134,7 @@ public class TourCommandTests : BaseToursIntegrationTest
         {
             Id = -1,
             Name = "Tura1",
-            Difficulty = "Teze",
+            Difficulty = API.Dtos.TourDifficulty.Hard,
             Description = "Planinski hajk",
             Cost = 200,
             Status = 0,
@@ -158,10 +158,10 @@ public class TourCommandTests : BaseToursIntegrationTest
         result.Tags.ShouldBe(updatedEntity.Tags);
 
         // Assert - Database
-        var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Difficulty == "Teze");
+        var storedEntity = dbContext.Tours.FirstOrDefault(i => i.Difficulty == Core.Domain.TourDifficulty.Hard);
         storedEntity.ShouldNotBeNull();
-        storedEntity.Difficulty.ShouldBe(updatedEntity.Difficulty);
-        var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Id==-1 && i.Difficulty == "Laka");
+        storedEntity.Difficulty.ShouldBe((Core.Domain.TourDifficulty)updatedEntity.Difficulty);
+        var oldEntity = dbContext.Tours.FirstOrDefault(i => i.Id==-1 && i.Difficulty == Core.Domain.TourDifficulty.Easy);
         oldEntity.ShouldBeNull();
     }
 
@@ -270,7 +270,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -1,
                     Name = "Tura1",
-                    Difficulty = "Laka",
+                    Difficulty = API.Dtos.TourDifficulty.Easy,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = 0,
@@ -296,7 +296,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -1,
                     Name = "Tura1",
-                    Difficulty = "Laka",
+                    Difficulty = API.Dtos.TourDifficulty.Easy,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = 0,
@@ -312,6 +312,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -321,6 +323,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -342,7 +346,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -2,
                     Name = null,
-                    Difficulty = null,
+                    Difficulty = 0,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = 0,
@@ -358,6 +362,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -367,6 +373,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>(),
@@ -385,7 +393,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -4,
                     Name = null,
-                    Difficulty = null,
+                    Difficulty = 0,
                     Description = "Plivanje",
                     Cost = 50,
                     Status = 0,
@@ -401,6 +409,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -410,6 +420,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -440,7 +452,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -1,
                     Name = "Tura1",
-                    Difficulty = "Laka",
+                    Difficulty = API.Dtos.TourDifficulty.Easy,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Draft,
@@ -466,7 +478,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -1,
                     Name = "Tura1",
-                    Difficulty = "Laka",
+                    Difficulty = API.Dtos.TourDifficulty.Easy,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Published,
@@ -482,6 +494,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -491,6 +505,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>
@@ -519,7 +535,7 @@ public class TourCommandTests : BaseToursIntegrationTest
                 {
                     Id = -1,
                     Name = "Tura1",
-                    Difficulty = "Laka",
+                    Difficulty = API.Dtos.TourDifficulty.Easy,
                     Description = "Planinski hajk",
                     Cost = 200,
                     Status = (API.Dtos.TourStatus)TourStatus.Archived,
@@ -535,6 +551,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage1.jpg",
                             Latitude = 10,
                             Longitude = 101,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                             new KeyPointDto
                             {
@@ -544,6 +562,8 @@ public class TourCommandTests : BaseToursIntegrationTest
                             Image = "testImage2.jpg",
                             Latitude = 20,
                             Longitude = 22,
+                            Status = KeyPointDto.PublicStatus.PRIVATE,
+                            Comment = "Comment1"
                             },
                     },
                     TourDurations = new List<TourDurationDto>

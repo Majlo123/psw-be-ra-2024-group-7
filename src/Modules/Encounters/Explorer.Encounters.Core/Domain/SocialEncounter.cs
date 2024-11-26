@@ -10,9 +10,9 @@ namespace Explorer.Encounters.Core.Domain
     {
         public int PeopleNumb { get; private set; }
 
-        private SocialEncounter() : base() { }
-        public SocialEncounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, int peopleNumb)
-        : base(name, description, total_xp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
+        public SocialEncounter() : base() { }
+        public SocialEncounter(string name, string description, int totalXp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange, int peopleNumb)
+        : base(name, description, totalXp, creatorId, longitude, latitude, status, type, touristEncounterStatus, isRequired, tourId, activateRange)
         {
             PeopleNumb = peopleNumb;
         }

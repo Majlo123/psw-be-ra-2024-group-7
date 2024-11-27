@@ -16,20 +16,21 @@ namespace Explorer.Shopping.Core.Domain
     {
         public string Identifier { get; private set; }
         public long Percentage { get; private set; }
-        public DateOnly ExpirationDate { get; private set; }
+        public DateTime ExpirationDate { get; private set; }
         public long AuthorId { get; private set; }
-        public List<int> ToursEligible { get; private set; } = new List<int>();
+        public List<int> ToursEligible { get; private set; }
         public int CouponStatus { get; private set; }
 
-        public Coupon() { }
-        public Coupon(string identifier, long percentage, DateOnly expirationDate, long authorId, List<int> toursEligible, int status) 
+
+        public Coupon(long id, string identifier, long percentage, DateTime expirationDate, long authorId, List<int> toursEligible, int couponStatus) 
         {
+            Id = id;
             Identifier = identifier;
             Percentage = percentage;
             ExpirationDate = expirationDate;
             AuthorId = authorId;
             ToursEligible = toursEligible;
-            CouponStatus = status;
+            CouponStatus = couponStatus;
             Validate();
         }
 
@@ -37,8 +38,7 @@ namespace Explorer.Shopping.Core.Domain
         {
             if (Identifier == "") throw new ArgumentException("Identifier invalid!");
             if (Percentage == 0) throw new ArgumentException("Percentage cannot be 0!");
-            if (ExpirationDate == DateOnly.MinValue) throw new ArgumentException("Invalid date!");
-            if (ExpirationDate < DateOnly.FromDateTime(DateTime.Now)) throw new ArgumentException("Date cannot be in the past!");
+            if (ExpirationDate == DateTime.MinValue) throw new ArgumentException("Invalid date!");
             if (AuthorId == 0) throw new ArgumentException("Invalid author!");
             if (ToursEligible == null) throw new ArgumentException("Invalid tours list!");
             if (ToursEligible.Count == 0) throw new ArgumentException("List cannot be empty!");

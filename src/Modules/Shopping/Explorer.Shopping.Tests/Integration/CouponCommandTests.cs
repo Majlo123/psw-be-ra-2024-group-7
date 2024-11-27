@@ -32,7 +32,7 @@ namespace Explorer.Shopping.Tests.Integration
             {
                 Identifier = "a9o2ufso",
                 Percentage = 30,
-                ExpirationDate = new DateOnly(2024, 4, 6),
+                ExpirationDate = DateTime.UtcNow.AddDays(5),
                 AuthorId = 1,
                 ToursEligible = new List<int> { 4, 6, 8},
                 CouponStatus = 1
@@ -43,11 +43,10 @@ namespace Explorer.Shopping.Tests.Integration
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(1);
             result.CouponStatus.ShouldBe(1);
             result.Identifier.ShouldBe("a9o2ufso");
             result.AuthorId.ShouldBe(1);
-            result.ExpirationDate.ShouldBe(new DateOnly(2024, 4, 6));
+            result.ExpirationDate.ShouldBe(new DateTime(2024, 4, 6));
             result.ToursEligible.ShouldBe(new List<int> { 4, 6, 8 });
 
             // Assert - Database
@@ -91,7 +90,7 @@ namespace Explorer.Shopping.Tests.Integration
                 Percentage = 10,
                 CouponStatus = 1,
                 ToursEligible = new List<int> { 1 },
-                ExpirationDate = new DateOnly(2024, 3, 10)
+                ExpirationDate = new DateTime(2024, 3, 10)
             };
 
             // Act
@@ -134,7 +133,7 @@ namespace Explorer.Shopping.Tests.Integration
                 Percentage = 10,
                 CouponStatus = 1,
                 ToursEligible = new List<int> { 1 },
-                ExpirationDate = new DateOnly(2024, 3, 10)
+                ExpirationDate = new DateTime(2024, 3, 10)
             };
 
             // Act

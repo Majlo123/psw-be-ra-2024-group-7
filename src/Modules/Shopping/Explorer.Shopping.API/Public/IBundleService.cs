@@ -19,5 +19,6 @@ public interface IBundleService
     Result<PagedResult<BundleDto>> GetPagedByCreatorId(long creatorId, int page, int pageSize);
     Result<BundleDto> Publish(BundleDto bundleDto);
     Result<BundleDto> Archive(BundleDto bundleDto);
+    Result<PagedResult<BundleDto>> GetPublished(int page, int pageSize);
 }
 

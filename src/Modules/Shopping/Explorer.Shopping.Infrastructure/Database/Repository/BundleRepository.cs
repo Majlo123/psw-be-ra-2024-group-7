@@ -93,4 +93,16 @@ public class BundleRepository : IBundleRepository
         task.Wait();
         return task.Result;
     }
+
+    public PagedResult<Bundle> GetPublished(int page, int pageSize)
+    {
+        var task = _dbSet.Include(b => b.Products).Where(b => b.Status == BundleStatus.Published).GetPagedById(page, pageSize);
+        task.Wait();
+        return task.Result;
+    }
+
+    public Bundle GetById(long id)
+    {
+        return _dbSet.Include(b => b.Products).FirstOrDefault(b => b.Id == id);
+    }
 }

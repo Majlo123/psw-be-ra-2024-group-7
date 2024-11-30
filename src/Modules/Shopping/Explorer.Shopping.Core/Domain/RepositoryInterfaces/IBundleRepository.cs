@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
+using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,4 +16,6 @@ public interface IBundleRepository
     Bundle Update(Bundle bundle);
     Bundle Get(long id);
     PagedResult<Bundle> GetPagedByCreatorId(long creatorId, int page, int pageSize);
+    PagedResult<Bundle> GetPublished(int page, int pageSize);
+    Bundle GetById(long id);
 }

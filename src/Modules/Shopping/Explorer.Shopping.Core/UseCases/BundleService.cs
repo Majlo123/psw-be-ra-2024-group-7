@@ -113,4 +113,10 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
         var numberOfPublishedTours = tours.Value.Where(t => t.Status == Tours.API.Dtos.TourStatus.Published).Count();
         return numberOfPublishedTours >= 2;
     }
+
+    public Result<PagedResult<BundleDto>> GetPublished(int page, int pageSize)
+    {
+        var result = _bundleRepository.GetPublished(page, pageSize);
+        return MapToDto(result);
+    }
 }

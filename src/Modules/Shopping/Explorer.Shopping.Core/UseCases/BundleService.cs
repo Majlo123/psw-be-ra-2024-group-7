@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Tours.API.Internal;
 
 namespace Explorer.Shopping.Core.UseCases;
 
@@ -19,10 +20,12 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
 {
     private readonly IBundleRepository _bundleRepository;
     private readonly IProductRepository _productRepository;
-    public BundleService(IMapper mapper, IBundleRepository bundleRepository, IProductRepository productRepository) : base(mapper)
+    private readonly IInternalTourService _internalTourService;
+    public BundleService(IMapper mapper, IBundleRepository bundleRepository, IProductRepository productRepository, IInternalTourService internalTourService) : base(mapper)
     {
         _bundleRepository = bundleRepository;
         _productRepository = productRepository;
+        _internalTourService = internalTourService;
     }
 
     public Result<BundleDto> Create(BundleDto bundle)
@@ -87,5 +90,27 @@ public class BundleService : BaseService<BundleDto, Bundle>, IBundleService
     {
         var result = _bundleRepository.GetPagedByCreatorId(creatorId, page, pageSize);
         return MapToDto(result);
+    }
+
+    public Result<BundleDto> Publish(BundleDto bundleDto)
+    {
+        if(!CanPublish(bundleDto))
+            return Result.Fail(FailureCode.InvalidArgument).WithError("If you want to publish bundle, number of published tours in bundle have to be 2 or more.");
+        bundleDto.Status = API.Dtos.BundleStatus.Published;
+        return Update(bundleDto);
+    }
+
+    public Result<BundleDto> Archive(BundleDto bundleDto)
+    {
+        bundleDto.Status = API.Dtos.BundleStatus.Archived;
+        return Update(bundleDto);
+    }
+
+    private bool CanPublish(BundleDto bundle)
+    {
+        var tourIds = bundle.Products.Select(p => p.TourId).ToList();
+        var tours = _internalTourService.GetMany(tourIds);
+        var numberOfPublishedTours = tours.Value.Where(t => t.Status == Tours.API.Dtos.TourStatus.Published).Count();
+        return numberOfPublishedTours >= 2;
     }
 }

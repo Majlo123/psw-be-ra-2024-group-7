@@ -49,13 +49,13 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
             var updatedItem = new OrderItem(item.ItemId, item.Name, item.Price);
             Items[index] = updatedItem;
         }
-        public void Checkout()
-        {
-            foreach (var item in Items)
-            {
-                TourPurchaseTokens.Add(new TourPurchaseToken(UserId, item.ItemId));
-            }
-        }
+        //public void Checkout()
+        //{
+        //    foreach (var item in Items)
+        //    {
+        //        TourPurchaseTokens.Add(new TourPurchaseToken(UserId, item.ItemId));
+        //    }
+        //}
     }
 
 }

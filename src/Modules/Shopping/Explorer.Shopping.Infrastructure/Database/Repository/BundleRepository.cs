@@ -34,6 +34,8 @@ public class BundleRepository : IBundleRepository
         var entity = _dbSet.FirstOrDefault(b => b.Id == id);
         if (entity == null) 
             throw new Exception("Bundle with this id does not exist.");
+        if(entity.Status == BundleStatus.Published)
+            throw new Exception("Bundle has been published, you cannot delete it. You can archive it.");
         _dbSet.Remove(entity);
         _shoppingContext.SaveChanges();
     }
@@ -49,20 +51,6 @@ public class BundleRepository : IBundleRepository
         task.Wait();
         return task.Result;
     }
-
-    //public Bundle Update(Bundle bundle)
-    //{
-    //    var existingBundle = _dbSet
-    //   .Include(b => b.Products) // Uključi kolekciju proizvoda
-    //   .FirstOrDefault(b => b.Id == bundle.Id);
-    //    if (existingBundle == null)
-    //        throw new Exception();
-
-    //    _shoppingContext.Entry(existingBundle).CurrentValues.SetValues(bundle);
-    //    //_shoppingContext.Update(bundle);
-    //    _shoppingContext.SaveChanges();
-    //    return existingBundle;
-    //}
 
     public Bundle Update(Bundle bundle)
     {
@@ -104,5 +92,17 @@ public class BundleRepository : IBundleRepository
         var task = _dbSet.Include(b => b.Products).Where(b => b.CreatorId == creatorId).GetPagedById(page, pageSize);
         task.Wait();
         return task.Result;
+    }
+
+    public PagedResult<Bundle> GetPublished(int page, int pageSize)
+    {
+        var task = _dbSet.Include(b => b.Products).Where(b => b.Status == BundleStatus.Published).GetPagedById(page, pageSize);
+        task.Wait();
+        return task.Result;
+    }
+
+    public Bundle GetById(long id)
+    {
+        return _dbSet.Include(b => b.Products).FirstOrDefault(b => b.Id == id);
     }
 }

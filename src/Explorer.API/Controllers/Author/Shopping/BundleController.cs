@@ -52,4 +52,23 @@ public class BundleController : BaseApiController
         var result = _bundleService.GetPagedByCreatorId(this.User.PersonId(), page, pageSize); 
         return CreateResponse(result);
     }
+    [HttpPut]
+    [Route("publish/{id:int}")]
+    public ActionResult<BundleDto> Publish(BundleDto bundleDto)
+    {
+        if(bundleDto.CreatorId != this.User.PersonId())
+            return Unauthorized("This is not your bundle!");
+        var result = _bundleService.Publish(bundleDto);
+        return CreateResponse(result);
+    }
+    [HttpPut]
+    [Route("archive/{id:int}")]
+    public ActionResult<BundleDto> Archive(BundleDto bundleDto)
+    {
+        if (bundleDto.CreatorId != this.User.PersonId())
+            return Unauthorized("This is not your bundle!");
+        var result = _bundleService.Archive(bundleDto);
+        return CreateResponse(result);
+    }
+
 }

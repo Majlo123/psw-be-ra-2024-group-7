@@ -39,6 +39,7 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<ITouristWalletRepository, TouristWalletRepository>();
             services.AddScoped<IBundleRepository, BundleRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPaymentRecordRepository, PaymentRecordRepository>();
             services.AddDbContext<ShoppingContext>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("shopping"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "shopping")));

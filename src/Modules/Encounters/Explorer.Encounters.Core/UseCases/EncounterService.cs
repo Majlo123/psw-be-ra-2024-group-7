@@ -41,6 +41,12 @@ namespace Explorer.Encounters.Core.UseCases
             return MapToDto(result);
         }
 
+        public Result<List<EncounterDto>> GetByTourId(int tourId)
+        {
+            var result = _encounterRepository.GetAllByTourId(tourId);
+            return MapToDto(result);
+        }
+
         public Result<EncounterDto> Update(EncounterDto encounter)
         {
             try

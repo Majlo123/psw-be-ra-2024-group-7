@@ -35,7 +35,15 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
              .FirstOrDefault();
 
         }
-        
+
+        public List<Encounter> GetAllByTourId(int tourId)
+        {
+            return _dbContext.Encounters
+             .Where(enc => enc.TourId == tourId)
+             .ToList();
+
+        }
+
         public EncounterDto Create(EncounterDto encounterDto)
         {
             try

@@ -68,6 +68,8 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                 .ToList();
 
         }
+
+
         public bool HasAlreadyActivatedEncounter(int touristId)
         {
             var encExec = _dbContext.EncounterExecution

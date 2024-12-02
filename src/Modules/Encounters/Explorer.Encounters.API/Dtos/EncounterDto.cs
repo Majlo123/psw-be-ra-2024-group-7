@@ -40,7 +40,7 @@ namespace Explorer.Encounters.API.Dtos
         public EncounterStatus Status { get; set; }
         public EncounterType EncounterType { get; set; }
         public TouristEncounterStatus? TouristEncounterStatus { get; set; }
-        public bool? IsRequired { get; set; }
+        public bool? isTourRequired { get; set; }
         public int? TourId { get; set; }
         public double ActivateRange { get; set; }
         public string? Image { get; set; }

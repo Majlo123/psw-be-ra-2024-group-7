@@ -27,6 +27,13 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+        [HttpGet("requestedEncounters")]
+        public ActionResult<List<EncounterDto>> GetAllTouristEncounters()
+        {
+            var result = _encounterService.GetTouristRequestEncounters();
+            return CreateResponse(result);
+        }
+
         [HttpPost]
         public ActionResult<EncounterDto> CreateEncounter([FromBody] EncounterDto encounter)
         {

@@ -25,7 +25,8 @@ namespace Explorer.Encounters.API.Dtos
     {
         ACCEPTED,
         AWAITS,
-        CANCELLED
+        CANCELLED,
+        NOTTOURISTENCOUNTER
     }
   
     public class EncounterDto
@@ -39,7 +40,7 @@ namespace Explorer.Encounters.API.Dtos
         public double Latitude { get; set; }
         public EncounterStatus Status { get; set; }
         public EncounterType EncounterType { get; set; }
-        public TouristEncounterStatus? TouristEncounterStatus { get; set; }
+        public TouristEncounterStatus? TouristRequestStatus { get; set; }
         public bool? isTourRequired { get; set; }
         public int? TourId { get; set; }
         public double ActivateRange { get; set; }

@@ -28,10 +28,16 @@ namespace Explorer.Encounters.Core.UseCases
             var result = _encounterRepository.Create(encounter);
             return (result);
         }
-
+        
         public Result<List<EncounterDto>> GetAll()
         {
             var result = _encounterRepository.GetAll();
+            return MapToDto(result);
+        }
+
+        public Result<List<EncounterDto>> GetTouristRequestEncounters()
+        {
+            var result = _encounterRepository.GetTouristRequestEncounters();
             return MapToDto(result);
         }
 

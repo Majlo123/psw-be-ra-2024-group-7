@@ -18,7 +18,9 @@ namespace Explorer.Encounters.Core.Domain.RepositoryInterfaces
 
         Encounter GetById(long id);
 
-        List<Encounter> GetAll();
+        List<Encounter> GetAll(); 
+
+        List<Encounter> GetTouristRequestEncounters();
         List<Encounter> GetAllByTourId(int tourId);
     }
 }

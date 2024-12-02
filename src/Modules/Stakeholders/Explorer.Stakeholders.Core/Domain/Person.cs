@@ -12,10 +12,12 @@ public class Person : Entity
     public string Biography { get; init; }
     public string Motto { get; init; }
     public string Email { get; init; }
+    public int TouristLevel { get; init; }
+    public int TouristXp { get; init; }
     public List<int> Followers { get; init; } = new List<int>();
     public List<int> Following { get; init; } = new List<int>();
 
-    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto)
+    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto,int touristLevel, int touristXp)
     {
         UserId = userId;
         Name = name;
@@ -24,6 +26,8 @@ public class Person : Entity
         ProfilePictureUrl = profilePictureUrl;
         Biography = biography;
         Motto = motto;
+        TouristLevel = touristLevel;
+        TouristXp = touristXp;
         Validate();
     }
 

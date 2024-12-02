@@ -25,7 +25,8 @@ namespace Explorer.Encounters.Core.Domain
     {
         ACCEPTED,
         AWAITS,
-        CANCELLED
+        CANCELLED,
+        NOTTOURISTENCOUNTER
     }
     public class Encounter : Entity
     {

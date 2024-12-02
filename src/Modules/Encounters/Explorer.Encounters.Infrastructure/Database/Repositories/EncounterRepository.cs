@@ -25,7 +25,27 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
 
         public List<Encounter> GetAll()
         {
-            return _dbContext.Encounters.ToList();
+
+            List<Encounter> encounters = _dbContext.Encounters.ToList();
+            List<Encounter> ValidEncounters = new List<Encounter>();
+            foreach (var encounter in encounters)
+            {
+                if(encounter.TouristRequestStatus.Value == Core.Domain.TouristEncounterStatus.ACCEPTED || encounter.TouristRequestStatus.Value == Core.Domain.TouristEncounterStatus.NOTTOURISTENCOUNTER)
+                    ValidEncounters.Add(encounter);
+            }
+            return ValidEncounters; 
+        }
+
+        public List<Encounter> GetTouristRequestEncounters()
+        {
+            List<Encounter> encounters = _dbContext.Encounters.ToList();
+            List<Encounter> ValidEncounters = new List<Encounter>();
+            foreach (var encounter in encounters)
+            {
+                if (encounter.TouristRequestStatus.Value != Core.Domain.TouristEncounterStatus.NOTTOURISTENCOUNTER)
+                    ValidEncounters.Add(encounter);
+            }
+            return ValidEncounters;
         }
 
         public Encounter GetById(long id)
@@ -50,7 +70,7 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
             {
                 // Koristi AutoMapper za mapiranje DTO-a na odgovarajući entitet
                 Encounter encounter;
-
+     
                 if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
                 {
                     encounter = _mapper.Map<SocialEncounter>(encounterDto);

@@ -17,6 +17,7 @@ namespace Explorer.Encounters.API.Public
         Result<EncounterDto> Update(EncounterDto encounter);
 
         Result<EncounterDto> GetById(long id);
+        Result<List<EncounterDto>> GetByTourId(int tourId);
 
         Result<List<EncounterDto>> GetAll();
     }

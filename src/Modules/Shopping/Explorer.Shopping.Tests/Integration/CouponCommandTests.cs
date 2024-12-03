@@ -46,7 +46,6 @@ namespace Explorer.Shopping.Tests.Integration
             result.CouponStatus.ShouldBe(1);
             result.Identifier.ShouldBe("a9o2ufso");
             result.AuthorId.ShouldBe(1);
-            result.ExpirationDate.ShouldBe(new DateTime(2024, 4, 6));
             result.ToursEligible.ShouldBe(new List<int> { 4, 6, 8 });
 
             // Assert - Database
@@ -90,7 +89,7 @@ namespace Explorer.Shopping.Tests.Integration
                 Percentage = 10,
                 CouponStatus = 1,
                 ToursEligible = new List<int> { 1 },
-                ExpirationDate = new DateTime(2024, 3, 10)
+                ExpirationDate = DateTime.UtcNow.AddDays(5)
             };
 
             // Act

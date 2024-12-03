@@ -20,11 +20,13 @@ namespace Explorer.Tours.Core.UseCases.Administration
     {
         private readonly ITourRepository _tourRepository;
         private readonly IKeyPointRepository _keyPointRepository;
+        private readonly IMapper _mapper;
 
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository, IKeyPointRepository keyPointRepository) : base (repository, mapper)
         {
             _tourRepository = tourRepository;
             _keyPointRepository = keyPointRepository;
+            _mapper = mapper;
         }
         public Result<TourDto> Create(TourDto dto)
         {
@@ -104,6 +106,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 Tour tour = MapToDomain(tourDto);
                 tour = tour.UpdateTourLength(tour.Length);
+                foreach (var kp in tour.KeyPoints)
+                {
+                    _keyPointRepository.Update(kp);
+                }
                 return MapToDto(_tourRepository.Update(tour));
             }
             catch(ArgumentException e)
@@ -164,7 +170,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
                     Description = t.KeyPoints.First().Description,
                     Image = t.KeyPoints.First().Image,
                     Latitude = t.KeyPoints.First().Latitude,
-                    Longitude = t.KeyPoints.First().Longitude
+                    Longitude = t.KeyPoints.First().Longitude,
+                    Status = (KeyPointDto.PublicStatus)t.KeyPoints.First().Status
                 } : null 
             }).ToList();
 
@@ -193,7 +200,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
                     Description = result.KeyPoints.First().Description,
                     Image = result.KeyPoints.First().Image,
                     Latitude = result.KeyPoints.First().Latitude,
-                    Longitude = result.KeyPoints.First().Longitude
+                    Longitude = result.KeyPoints.First().Longitude,
+                    Status = (KeyPointDto.PublicStatus)result.KeyPoints.First().Status
                 } : null
             };
 
@@ -235,7 +243,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 var tour = MapToDomain(tourDto);
                 foreach (var kp in tour.KeyPoints)
                 {
-                    _keyPointRepository.Update(kp);
+                     _keyPointRepository.Update(kp);
                 }
                 _tourRepository.Update(tour);
                 return MapToDto(tour);
@@ -269,6 +277,27 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var distanceInKm = R * c;
 
             return distanceInKm <= distance; 
+        }
+        public Result<List<KeyPointDto>> GetAvailableKeyPoints(int id)
+        {
+            var allPublicKeyPoints = _keyPointRepository.GetPublicKeyPoints(0,0).Results;
+            var tour = _tourRepository.Get(id);
+            var result = new List<KeyPointDto>();
+            if (tour == null)
+            {
+                return result;
+            }
+            foreach(var keyPoint in allPublicKeyPoints)
+            {
+                bool isKeyPointAlreadyInTour = tour.KeyPoints.Any(k => k.Latitude == keyPoint.Latitude && k.Longitude == keyPoint.Longitude);
+                if (!isKeyPointAlreadyInTour)
+                {
+                    var keyPointDto = _mapper.Map<KeyPointDto>(keyPoint);
+                    result.Add(keyPointDto);
+                }
+               
+            }
+            return result;
         }
     }
 }

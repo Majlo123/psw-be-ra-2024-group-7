@@ -1,4 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
@@ -67,5 +69,10 @@ public class KeyPointRepository : IKeyPointRepository
         var entity = _dbSet.FirstOrDefault(k => k.Longitude == longitude && k.Latitude == latitude);
         if (entity == null) return false;
         return true;
+    }
+    public PagedResult<KeyPoint> GetPublicKeyPoints(int page, int pageSize)
+    {
+        var entity = _dbContext.KeyPoints.Where(k => k.Status == KeyPoint.PublicStatus.PUBLIC).GetPagedById(page, pageSize);
+        return entity.Result;
     }
 }

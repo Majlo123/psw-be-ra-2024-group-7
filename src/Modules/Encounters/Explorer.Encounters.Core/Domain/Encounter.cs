@@ -25,14 +25,15 @@ namespace Explorer.Encounters.Core.Domain
     {
         ACCEPTED,
         AWAITS,
-        CANCELLED
+        CANCELLED,
+        NOTTOURISTENCOUNTER
     }
     public class Encounter : Entity
     {
         public string Name { get; private set; }
 
         public string Description { get; private set; }
-        public int Total_xp { get; private set; }
+        public int TotalXp { get; private set; }
 
         public int CreatorId { get; private set; }
 
@@ -54,11 +55,11 @@ namespace Explorer.Encounters.Core.Domain
 
         public Encounter() {}
 
-        public Encounter(string name, string description, int total_xp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus,bool isRequired,int tourId,double activateRange)
+        public Encounter(string name, string description, int totalXp, int creatorId, double longitude, double latitude, EncounterStatus status, EncounterType type, TouristEncounterStatus touristEncounterStatus, bool isRequired, int tourId, double activateRange)
         {
             Name = name;
             Description = description;
-            Total_xp = total_xp;
+            TotalXp = totalXp;
             CreatorId = creatorId;
             Longitude = longitude;
             Latitude = latitude;
@@ -70,6 +71,7 @@ namespace Explorer.Encounters.Core.Domain
             ActivateRange = activateRange;
         }
 
+      
 
 
     }

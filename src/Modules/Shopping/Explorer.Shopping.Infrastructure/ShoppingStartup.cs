@@ -8,6 +8,7 @@ using Explorer.Shopping.Core.Mappers;
 using Explorer.Shopping.Core.UseCases;
 using Explorer.Shopping.Infrastructure.Database;
 using Explorer.Shopping.Infrastructure.Database.Repository;
+using Explorer.Shopping.Infrastructure.Notification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,6 +29,9 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
             services.AddScoped<ICouponService, CouponService>();
+            services.AddScoped<ITouristWalletService, TouristWalletService>();
+            services.AddScoped<INotificationHandler, NotificationHandler>();
+            services.AddScoped<IBundleService, BundleService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
@@ -37,6 +41,10 @@ namespace Explorer.Shopping.Infrastructure
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICouponRepository, CouponRepository>();
             services.AddScoped<ICrudRepository<Coupon>, CrudDatabaseRepository<Coupon, ShoppingContext>>(); 
+            services.AddScoped<ITouristWalletRepository, TouristWalletRepository>();
+            services.AddScoped<IBundleRepository, BundleRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPaymentRecordRepository, PaymentRecordRepository>();
             services.AddDbContext<ShoppingContext>(opt =>
                 opt.UseNpgsql(DbConnectionStringBuilder.Build("shopping"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "shopping")));

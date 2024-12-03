@@ -1,5 +1,6 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.API.Internal;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
@@ -32,13 +33,16 @@ public static class StakeholdersStartup
         services.AddScoped<ITokenGenerator, JwtGenerator>();
         services.AddScoped<ITourProblemReportService, TourProblemReportService>();
         services.AddScoped<INotificationService, NotificationService>();
-
+       
+        services.AddScoped<IProfileMessageService, ProfileMessageService>();
+        services.AddScoped<IClubMessageService, ClubMessageService>();
 
         services.AddScoped<IToursitClubService, TouristClubService>();
 
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
         // Dodajemo servis za ApplicationGrade
         services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
+        services.AddScoped<INotificationInternalService, NotificationService >();
 
     }
 
@@ -52,6 +56,12 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Notification>), typeof(CrudDatabaseRepository<Notification, StakeholdersContext>));
         services.AddScoped<INotificationRepository, NotificationRepository>();
 
+        //services.AddScoped(typeof(ICrudRepository<ProfileMessage>), typeof(CrudDatabaseRepository<ProfileMessage, StakeholdersContext>));
+        services.AddScoped<ICrudRepository<ProfileMessage>, CrudDatabaseRepository<ProfileMessage, StakeholdersContext>>();
+        services.AddScoped<IProfileMessageRepository, ProfileMessageRepository>();
+       
+        services.AddScoped<ICrudRepository<ClubMessage>, CrudDatabaseRepository<ClubMessage, StakeholdersContext>>();
+        services.AddScoped<IClubMessageRepository, ClubMessageRepository>();
 
         services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
         services.AddScoped<ITourProblemReportRepository, TourProblemReportRepository>();

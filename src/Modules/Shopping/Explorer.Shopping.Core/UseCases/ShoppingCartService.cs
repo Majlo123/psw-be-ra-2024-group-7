@@ -16,14 +16,19 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
     private readonly IShoppingCartRepository _shoppingCartRepository;
     private readonly IItemRepository _itemRepository;
     private readonly ITourPurchaseTokenRepository _purchaseTokenRepository;
+    private readonly IBundleRepository _bundleRepository;
+    private readonly IPaymentRecordRepository _paymentRecordRepository;
 
-    public ShoppingCartService(IShoppingCartRepository repository, IItemRepository itemRepository,ITourPurchaseTokenRepository purchaseTokenRepository,
-       IMapper mapper) : base(mapper)
+    public ShoppingCartService(IShoppingCartRepository repository, IItemRepository itemRepository, 
+        ITourPurchaseTokenRepository purchaseTokenRepository, IBundleRepository bundleRepository, 
+        IPaymentRecordRepository paymentRecordRepository, IMapper mapper) : base(mapper)
     {
         _mapper = mapper;
         _shoppingCartRepository = repository;
         _itemRepository = itemRepository;
         _purchaseTokenRepository = purchaseTokenRepository;
+        _bundleRepository = bundleRepository;
+        _paymentRecordRepository = paymentRecordRepository;
     }
 
     public Result<ShoppingCartDto> GetByUser(long userId)
@@ -105,9 +110,26 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
             UpdateShoppingCart(shoppingCart, true);
 
             var purchasedItems = GetPurchasedItems(shoppingCart);
-            //CreatePurchaseTokens(userId, purchasedItems);
 
-            shoppingCart.Checkout();
+            foreach(var item in purchasedItems)
+            {
+                if(item.Type == 0)
+                {
+                    _purchaseTokenRepository.Create(new TourPurchaseToken(userId, item.ItemId));
+                }
+                else
+                {
+                    var tours = GetPurchasedTours(userId);
+                    Bundle bundle = _bundleRepository.GetById(item.ItemId);
+                    foreach(var tour in bundle.Products)
+                    {
+                        if (tours.Value.Where(t => t.ItemId == tour.TourId).Count() != 0)
+                            continue;
+                        _purchaseTokenRepository.Create(new TourPurchaseToken(userId, tour.TourId));
+                    }
+                }
+                _paymentRecordRepository.Create(new PaymentRecord(userId, item.ItemId, item.Price, DateTime.UtcNow));
+            }
             var result = _shoppingCartRepository.Update(shoppingCart);
 
             return MapToDto(result);

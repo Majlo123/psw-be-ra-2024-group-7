@@ -1,5 +1,4 @@
-﻿using Explorer.API.Controllers.Administrator.Administration;
-using Explorer.API.Controllers.Author.Administration;
+﻿using Explorer.API.Controllers.Author.Administration;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Infrastructure.Database;
@@ -32,7 +31,9 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Description = "test description",
             Image = "testImage.jpg",
             Latitude = 10,
-            Longitude = 10
+            Longitude = 10,
+            Status = KeyPointDto.PublicStatus.PRIVATE,
+            Comment = "Comment1"
         };
 
         //Act
@@ -61,7 +62,9 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Description = "this is tescription",
             Image = "image.png",
             Latitude = 123,
-            Longitude = 321
+            Longitude = 321,
+            Status = KeyPointDto.PublicStatus.PRIVATE,
+            Comment = "Comment1"
         };
 
         //Act

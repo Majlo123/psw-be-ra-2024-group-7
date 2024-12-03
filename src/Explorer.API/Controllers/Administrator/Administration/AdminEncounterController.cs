@@ -12,114 +12,51 @@ namespace Explorer.API.Controllers.Administrator.Administration
     [Route("api/administration/encounters")]
     public class AdminEncounterController : BaseApiController
     {
-        private readonly IHiddenEncounterService _hiddenEncounterService;
-        private readonly ISocialEncounterService _socialEncounterService;
-        private readonly IMiscEncounterService _miscEncounterService;
 
-        public AdminEncounterController(IHiddenEncounterService hiddenService,ISocialEncounterService socialService, IMiscEncounterService miscService)
+        private readonly IEncounterService _encounterService;
+
+        public AdminEncounterController(IEncounterService encounterService)
         {
-            _hiddenEncounterService = hiddenService;
-            _socialEncounterService = socialService;
-            _miscEncounterService = miscService;
+            _encounterService = encounterService;
         }
 
-
-        //Kontroler sa logikom za dobijanje HiddenLocation Encounter-a
-
-        [HttpGet("hiddenLocationEncounters")]
-        public ActionResult<PagedResult<HiddenLocationEncounterDto>> GetAllHiddenLocationEncounters([FromQuery] int page, [FromQuery] int pageSize)
+        [HttpGet]
+        public ActionResult<List<EncounterDto>> GetAllEncounters()
         {
-            var result = _hiddenEncounterService.GetPaged(page,pageSize);
-            return CreateResponse(result);
-        
-        }
-
-        [HttpPost("hiddenLocationEncounters")]
-        public ActionResult<HiddenLocationEncounterDto>CreateHiddenLocationEncounter([FromBody] HiddenLocationEncounterDto encounter)
-        {
-            var result = _hiddenEncounterService.Create(encounter);
+            var result = _encounterService.GetAll();
             return CreateResponse(result);
         }
 
-        [HttpPut("hiddenLocationEncounters/{id:int}")]
-        public ActionResult<HiddenLocationEncounterDto> UpdateHiddenLocationEncounter([FromBody] HiddenLocationEncounterDto encounter)
+        [HttpGet("requestedEncounters")]
+        public ActionResult<List<EncounterDto>> GetAllTouristEncounters()
         {
-            var result = _hiddenEncounterService.Update(encounter);
+            var result = _encounterService.GetTouristRequestEncounters();
             return CreateResponse(result);
         }
 
-        [HttpGet("hiddenLocationEncounters/{id:int}")]
-        public ActionResult<HiddenLocationEncounterDto> GetHiddenLocationEncounterById(long id)
+        [HttpPost]
+        public ActionResult<EncounterDto> CreateEncounter([FromBody] EncounterDto encounter)
         {
-            var result = _hiddenEncounterService.GetById(id);
+            var result = _encounterService.CreateEncounter(encounter);
             return CreateResponse(result);
         }
 
-
-
-
-        //Kontroler sa logikom za dobijanje Social Encounter-a
-        [HttpGet("socialEncounters")]
-        public ActionResult<PagedResult<SocialEncounterDto>> GetAllSocialEncounters([FromQuery] int page, [FromQuery] int pageSize)
+        [HttpPut("{id:int}")]
+        public ActionResult<EncounterDto> UpdateEncounter([FromBody] EncounterDto encounter, int id)
         {
-            var result = _socialEncounterService.GetPaged(page, pageSize);
-            return CreateResponse(result);
-
-        }
-
-        [HttpPost("socialEncounters")]
-        public ActionResult<SocialEncounterDto> CreateSocialEncounter ([FromBody] SocialEncounterDto encounter)
-        {
-            var result = _socialEncounterService.Create(encounter);
+            encounter.Id = id; // Ensure the ID is set on the DTO
+            var result = _encounterService.Update(encounter);
             return CreateResponse(result);
         }
 
-        [HttpPut("socialEncounters/{id:int}")]
-        public ActionResult<SocialEncounterDto> UpdateSocialEncounter([FromBody] SocialEncounterDto encounter)
+        [HttpGet("{id:int}")]
+        public ActionResult<EncounterDto> GetEncounterById(int id)
         {
-            var result = _socialEncounterService.Update(encounter);
+            var result = _encounterService.GetById(id);
             return CreateResponse(result);
         }
 
-        [HttpGet("socialEncounters/{id:int}")]
-        public ActionResult<SocialEncounterDto> GetSocialEncounerById(long id)
-        {
-            var result = _socialEncounterService.GetById(id);
-            return CreateResponse(result);
-        }
-
-
-
-
-        //Kontroler sa logikom za dobijanje Misc Encounter-a
-        [HttpGet("miscEncounters")]
-        public ActionResult<PagedResult<MiscEncounterDto>> GetAllMiscEncounters([FromQuery] int page, [FromQuery] int pageSize)
-        {
-            var result = _miscEncounterService.GetPaged(page, pageSize);
-            return CreateResponse(result);
-
-        }
-
-        [HttpPost("miscEncounters")]
-        public ActionResult<MiscEncounterDto> CreateMiscEncounter([FromBody] MiscEncounterDto encounter)
-        {
-            var result = _miscEncounterService.Create(encounter);
-            return CreateResponse(result);
-        }
-
-        [HttpPut("miscEncounters/{id:int}")]
-        public ActionResult<MiscEncounterDto> UpdateMiscEncounter([FromBody] MiscEncounterDto encounter)
-        {
-            var result = _miscEncounterService.Update(encounter);
-            return CreateResponse(result);
-        }
-
-        [HttpGet("miscEncounters/{id:int}")]
-        public ActionResult<MiscEncounterDto> GetMiscEncounterById(long id)
-        {
-            var result = _miscEncounterService.GetById(id);
-            return CreateResponse(result);
-        }
+      
 
 
     }

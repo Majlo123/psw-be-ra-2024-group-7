@@ -10,6 +10,10 @@ public class ShoppingContext : DbContext
     public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<Coupon> Coupons { get; set; }
+    public DbSet<TouristWallet> TouristWallets { get; set; }
+    public DbSet<Bundle> Bundles { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<PaymentRecord> PaymentRecords { get; set; }
     public ShoppingContext(DbContextOptions<ShoppingContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +23,10 @@ public class ShoppingContext : DbContext
            .Property(cart => cart.Items)
            .HasColumnType("jsonb");
         ConfigureShoppingCart(modelBuilder);
+
+        modelBuilder.Entity<Bundle>()
+            .HasMany(b => b.Products)
+            .WithOne();
     }
     
     private static void ConfigureShoppingCart(ModelBuilder modelBuilder)

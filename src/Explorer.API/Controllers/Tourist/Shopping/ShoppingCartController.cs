@@ -59,6 +59,7 @@ public class ShoppingCartController : BaseApiController
             item.ItemId = tour.Id;
             item.Price = tour.Cost;
             item.Name = tour.Name;
+            item.Type = ItemType.Tour;
             return CreateResponse(_shoppingCartService.CreateItem(item));
         }
     }
@@ -74,5 +75,27 @@ public class ShoppingCartController : BaseApiController
     {
         var result = _shoppingCartService.CheckOut(touristId);
         return CreateResponse(result);
+    }
+
+    [HttpPost("create/item/bundle")]
+    public ActionResult<ItemDto> CreateBundleItem([FromBody] BundleDto bundle)
+    {
+
+        if (_shoppingCartService.GetById((int)bundle.Id) != null)
+        {
+            return CreateResponse(_shoppingCartService.UpdateItemByTourId((int)bundle.Id, (int)bundle.Price));
+        }
+        else
+        {
+            ItemDto item = new ItemDto 
+            { 
+                SellerId = bundle.CreatorId,
+                Name = bundle.Name,
+                Price = bundle.Price,
+                ItemId = bundle.Id,
+                Type = ItemType.Bundle
+            };
+            return CreateResponse(_shoppingCartService.CreateItem(item));
+        }
     }
 }

@@ -19,6 +19,9 @@ namespace Explorer.Shopping.Core.Mappers
             CreateMap<ItemDto, OrderItem>().ReverseMap();
             CreateMap<ItemDto, Item>().ReverseMap();
             CreateMap<CouponDto, Coupon>().ReverseMap();
+            CreateMap<TouristWalletDto, TouristWallet>().ReverseMap();
+            CreateMap<BundleDto, Bundle>().ReverseMap();
+            CreateMap<ProductDto, Product>().ReverseMap();
         }
     }
 }

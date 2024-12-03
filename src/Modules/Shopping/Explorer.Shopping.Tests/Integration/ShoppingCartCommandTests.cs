@@ -28,7 +28,8 @@ namespace Explorer.Payments.Tests.Integration
                 SellerId = -12,
                 ItemId = -3,
                 Name = "Zimovanje na Tari",
-                Price = 200
+                Price = 200,
+                Type = 0
             };
 
             // Act

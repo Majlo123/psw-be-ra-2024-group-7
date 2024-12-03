@@ -39,7 +39,7 @@ namespace Explorer.Tours.Tests.Integration.Administration
             {
                 Id = 10,
                 Name = "Tura10",
-                Difficulty = "Teska",
+                Difficulty = API.Dtos.TourDifficulty.Hard,
                 Description = "Planinski hajk",
                 Cost = 220,
                 Status = 0,

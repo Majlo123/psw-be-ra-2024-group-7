@@ -21,6 +21,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var userId = -21;
+            var level = 3;
+            var xp = 125;
             var updateProfileDto = new PersonDto
             {
                 Id = userId,
@@ -30,6 +32,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 Email = "updated.email@example.com",
                 Biography = "Updated biography",
                 Motto = "Updated motto",
+                TouristLevel = level,
+                TouristXp   = xp,
                 ProfilePictureUrl = "https://example.com/newprofile.png",
                 Following = new List<int>(),
                 Followers = new List<int>()
@@ -67,6 +71,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var userId = -9999; // Korisnik koji ne postoji
+            var xp = 0;
+            var level = 0;
             var updateProfileDto = new PersonDto
             {
                 Id = userId, // Dodaj ID korisnika
@@ -74,6 +80,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 Name = "UpdatedName",
                 Surname = "UpdatedSurname",
                 Email = "updated.email@example.com",
+                TouristXp = xp,
+                TouristLevel= level,
                 Following = new List<int>(),
                 Followers = new List<int>()
             };

@@ -130,7 +130,9 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
                 }
                 _paymentRecordRepository.Create(new PaymentRecord(userId, item.ItemId, item.Price, DateTime.UtcNow));
             }
+            shoppingCart.Items.Clear();
             var result = _shoppingCartRepository.Update(shoppingCart);
+            
 
             return MapToDto(result);
         }

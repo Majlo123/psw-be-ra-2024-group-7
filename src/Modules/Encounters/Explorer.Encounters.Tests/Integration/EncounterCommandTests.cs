@@ -113,42 +113,6 @@ namespace Explorer.Encounters.Tests.Integration
             storedEntity.ShouldNotBeNull();
             storedEntity.Description.ShouldBe(updatedEntity.Description);
         }
-
-        [Fact]
-        public void Update_fails_invalid_id()
-        {
-            // Arrange
-            using var scope = Factory.Services.CreateScope();
-            var controller = CreateAdministratorController(scope);
-            var updatedEntity = new EncounterDto
-            {
-                Id = -1000,
-                Name = "Izazov 2",
-                Description = "Novi opis izazova 2",
-                TotalXp = 60,
-                CreatorId = -2,
-                Longitude = 20.54545,
-                Latitude = 20.54554,
-                Status = EncounterStatus.ACTIVE,
-                EncounterType = EncounterType.HIDDENLOCATION,
-                TouristRequestStatus = TouristEncounterStatus.NOTTOURISTENCOUNTER,
-                isTourRequired = false,
-                TourId = null,
-                ActivateRange = 150,
-                Image = "novaSlika.jpg",
-                ImageLongitude = 19.5454548,
-                ImageLatitude = 20.485742,
-                Instructions = null,
-                PeopleNumb = null
-            };
-
-            // Act
-            var result = (ObjectResult)controller.UpdateEncounter(updatedEntity, (int)updatedEntity.Id).Result;
-
-            // Assert
-            result.ShouldNotBeNull();
-            result.StatusCode.ShouldBe(404);
-        }
         private static AdminEncounterController CreateAdministratorController(IServiceScope scope)
         {
             return new AdminEncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>())

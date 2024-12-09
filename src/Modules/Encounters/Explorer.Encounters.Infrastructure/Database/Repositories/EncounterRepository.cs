@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Explorer.Encounters.API.Dtos;
 using System.Xml.Linq;
 using AutoMapper;
 
@@ -64,24 +63,24 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
 
         }
 
-        public EncounterDto Create(EncounterDto encounterDto)
+        public Encounter Create(Encounter encounterDto)
         {
             try
             {
-                // Koristi AutoMapper za mapiranje DTO-a na odgovarajući entitet
+                
                 Encounter encounter;
-     
-                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
+
+                if (encounterDto.EncounterType == EncounterType.SOCIAL)
                 {
                     encounter = _mapper.Map<SocialEncounter>(encounterDto);
                     _dbContext.SocialEncounters.Add((SocialEncounter)encounter);
                 }
-                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
+                else if (encounterDto.EncounterType == EncounterType.HIDDENLOCATION)
                 {
                     encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
                     _dbContext.HiddenLocationEncounters.Add((HiddenLocationEncounter)encounter);
                 }
-                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
+                else if (encounterDto.EncounterType == EncounterType.MISC)
                 {
                     encounter = _mapper.Map<MiscEncounter>(encounterDto);
                     _dbContext.MiscEncounters.Add((MiscEncounter)encounter);
@@ -95,7 +94,7 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                 _dbContext.SaveChanges();
 
                 // Vratimo mapirani DTO
-                return _mapper.Map<EncounterDto>(encounter);
+                return _mapper.Map<Encounter>(encounter);
             }
             catch (Exception ex)
             {
@@ -105,24 +104,23 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
 
 
 
-        public EncounterDto Update(EncounterDto encounterDto) {
-
+        public Encounter Update(Encounter encounterDto)
+        {
             try
             {
-                // Koristi AutoMapper za mapiranje DTO-a na odgovarajući entitet
                 Encounter encounter;
 
-                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
+                if (encounterDto.EncounterType == EncounterType.SOCIAL)
                 {
                     encounter = _mapper.Map<SocialEncounter>(encounterDto);
                     _dbContext.SocialEncounters.Update((SocialEncounter)encounter);
                 }
-                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
+                else if (encounterDto.EncounterType == EncounterType.HIDDENLOCATION)
                 {
                     encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
                     _dbContext.HiddenLocationEncounters.Update((HiddenLocationEncounter)encounter);
                 }
-                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
+                else if (encounterDto.EncounterType == EncounterType.MISC)
                 {
                     encounter = _mapper.Map<MiscEncounter>(encounterDto);
                     _dbContext.MiscEncounters.Update((MiscEncounter)encounter);
@@ -136,7 +134,7 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                 _dbContext.SaveChanges();
 
                 // Vratimo mapirani DTO
-                return _mapper.Map<EncounterDto>(encounter);
+                return _mapper.Map<Encounter>(encounter);
             }
             catch (Exception ex)
             {
@@ -145,7 +143,7 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
         }
 
 
-       
+
 
     }
 }

@@ -23,12 +23,34 @@ namespace Explorer.Encounters.Core.UseCases
             _encounterRepository = repository;
         }
 
-        public Result<EncounterDto> CreateEncounter(EncounterDto encounter)
+        public Result<EncounterDto> CreateEncounter(EncounterDto encounterDto)
         {
-            var result = _encounterRepository.Create(encounter);
-            return (result);
+           
+                Encounter encounter;
+
+                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
+                {
+                    encounter = _mapper.Map<SocialEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
+                {
+                    encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
+                {
+                    encounter = _mapper.Map<MiscEncounter>(encounterDto);
+                }
+                else
+                {
+                     throw new Exception("Error creating encounter,encounter must have a type");
+                }
+
+            encounter = _encounterRepository.Create(encounter);
+            return _mapper.Map<EncounterDto>(encounter);
+
+
         }
-        
+
         public Result<List<EncounterDto>> GetAll()
         {
             var result = _encounterRepository.GetAll();
@@ -53,21 +75,31 @@ namespace Explorer.Encounters.Core.UseCases
             return MapToDto(result);
         }
 
-        public Result<EncounterDto> Update(EncounterDto encounter)
+        public Result<EncounterDto> Update(EncounterDto encounterDto)
         {
-            try
+
+            Encounter encounterUp;
+
+            if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
             {
-                var result = _encounterRepository.Update((encounter));
-                return (result);
+                encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
             }
-            catch (KeyNotFoundException e)
+            else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
             {
-                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+                encounterUp = _mapper.Map<HiddenLocationEncounter>(encounterDto);
             }
-            catch (ArgumentException e)
+            else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
             {
-                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+                encounterUp = _mapper.Map<MiscEncounter>(encounterDto);
             }
+            else
+            {
+                throw new Exception("Error updating encounter");
+            }
+
+            encounterUp = _encounterRepository.Update(encounterUp);
+            return _mapper.Map<EncounterDto>(encounterUp);
+
         }
     }
 }

@@ -317,7 +317,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
                         Comment = "aaa",
                         SolvingDeadline = DateTime.UtcNow.AddDays(10)
                     },
-                    500
+                    400
                 }
             };
         }

@@ -98,6 +98,8 @@ namespace Explorer.Encounters.Core.UseCases
             }
 
             encounterUp = _encounterRepository.Update(encounterUp);
+            if(encounterUp == null)
+                return Result.Fail(FailureCode.NotFound).WithError("Encounter not found");
             return _mapper.Map<EncounterDto>(encounterUp);
 
         }

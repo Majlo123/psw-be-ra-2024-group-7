@@ -15,19 +15,16 @@ namespace Explorer.Encounters.Tests.Integration
         [Fact]
         public void Retrieves_all()
         {
-
             //Arragne
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetAllEncounters().Result)?.Value as BuildingBlocks.Core.UseCases.PagedResult<EncounterDto>;
-
+            var result = ((ObjectResult)controller.GetAllEncounters().Result)?.Value as List<EncounterDto>;
 
             //Assert
             result.ShouldNotBeNull();
-            result.Results.Count.ShouldBe(3);
-            result.TotalCount.ShouldBe(3);
+            result.Count.ShouldBe(3);
         }
 
         private static AdminEncounterController CreateController(IServiceScope scope)

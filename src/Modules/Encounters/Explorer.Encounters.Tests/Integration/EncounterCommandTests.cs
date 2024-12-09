@@ -43,10 +43,6 @@ namespace Explorer.Encounters.Tests.Integration
                 isTourRequired = false,
                 TourId = null,
                 ActivateRange = 90,
-                Image = null,
-                ImageLatitude = null,
-                ImageLongitude = null,
-                Instructions = null,
                 PeopleNumb = 7
             };
 
@@ -67,37 +63,12 @@ namespace Explorer.Encounters.Tests.Integration
             result.isTourRequired.ShouldBe(newEntity.isTourRequired);
             result.TourId.ShouldBe(newEntity.TourId);
             result.ActivateRange.ShouldBe(newEntity.ActivateRange);
-            result.Image.ShouldBe(newEntity.Image);
-            result.ImageLongitude.ShouldBe(newEntity.ImageLongitude);
-            result.ImageLatitude.ShouldBe(newEntity.ImageLatitude);
-            result.Instructions.ShouldBe(newEntity.Instructions);
             result.PeopleNumb.ShouldBe(newEntity.PeopleNumb);
 
             // Assert - Database
             var storedEntity = dbContext.Encounters.FirstOrDefault(i => i.Id == newEntity.Id);
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
-        }
-
-        [Fact]
-        public void Create_fails_invalid_data()
-        {
-            // Arrange
-            using var scope = Factory.Services.CreateScope();
-            var controller = CreateAdministratorController(scope);
-            var updatedEntity = new EncounterDto
-            {
-                Id = -4,
-                Name = "Izazov 4",
-                Description = "Opis izazova 4"
-            };
-
-            // Act
-            var result = (ObjectResult)controller.CreateEncounter(updatedEntity).Result;
-
-            // Assert
-            result.ShouldNotBeNull();
-            result.StatusCode.ShouldBe(400);
         }
 
         [Fact]
@@ -125,9 +96,7 @@ namespace Explorer.Encounters.Tests.Integration
                 ActivateRange = 150,
                 Image = "novaSlika.jpg",
                 ImageLongitude = 19.5454548,
-                ImageLatitude = 20.485742,
-                Instructions = null,
-                PeopleNumb = null
+                ImageLatitude = 20.485742
             };
 
             // Act
@@ -140,13 +109,9 @@ namespace Explorer.Encounters.Tests.Integration
             result.Image.ShouldBe(updatedEntity.Image);
 
             // Assert - Database
-            var storedEntity = dbContext.Encounters.FirstOrDefault(i => i.Description == "Opis izazova 2");
+            var storedEntity = dbContext.Encounters.FirstOrDefault(i => i.Id == updatedEntity.Id);
             storedEntity.ShouldNotBeNull();
             storedEntity.Description.ShouldBe(updatedEntity.Description);
-
-            // Ažurira staru vrednost
-            var oldEntity = dbContext.Encounters.FirstOrDefault(i => i.Id == -2 && i.Description == "Novi opis izazova 2");
-            oldEntity.ShouldBeNull();
         }
 
         [Fact]

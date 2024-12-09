@@ -79,26 +79,36 @@ namespace Explorer.Encounters.Core.UseCases
         {
 
             Encounter encounterUp;
+            try
+            {
+                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
+                {
+                    encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
+                {
+                    encounterUp = _mapper.Map<HiddenLocationEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
+                {
+                    encounterUp = _mapper.Map<MiscEncounter>(encounterDto);
+                }
+                else
+                {
+                    throw new Exception("Error updating encounter");
+                }
 
-            if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
-            {
-                encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
+                encounterUp = _encounterRepository.Update(encounterUp);
+                return _mapper.Map<EncounterDto>(encounterUp);
             }
-            else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
-            {
-                encounterUp = _mapper.Map<HiddenLocationEncounter>(encounterDto);
-            }
-            else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
-            {
-                encounterUp = _mapper.Map<MiscEncounter>(encounterDto);
-            }
-            else
-            {
-                throw new Exception("Error updating encounter");
-            }
+            catch (KeyNotFoundException e) {
 
-            encounterUp = _encounterRepository.Update(encounterUp);
-            return _mapper.Map<EncounterDto>(encounterUp);
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch(ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
 
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Encounters.API.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +11,9 @@ namespace Explorer.Encounters.Core.Domain.RepositoryInterfaces
     {
 
 
-        EncounterDto Create(EncounterDto encounter);
+        Encounter Create(Encounter encounter);
 
-        EncounterDto Update(EncounterDto encounter);
+        Encounter Update(Encounter encounter);
 
         Encounter GetById(long id);
 

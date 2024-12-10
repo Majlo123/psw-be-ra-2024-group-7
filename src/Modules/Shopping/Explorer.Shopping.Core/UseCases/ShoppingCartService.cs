@@ -150,6 +150,20 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
     }
+    public Result<List<PaymentRecordDto>> GetPaymentRecordsByUser(int touristId)
+    {
+        try
+        {
+            var paymentRecords = _paymentRecordRepository.GetByUser(touristId);
+            var paymentRecordDtos = paymentRecords.Select(pr => _mapper.Map<PaymentRecordDto>(pr)).ToList();
+            return Result.Ok(paymentRecordDtos);
+        }
+        catch (Exception ex)
+        {
+            return Result.Fail(new Error("Failed to fetch payment records").CausedBy(ex));
+        }
+    }
+
     public Result<List<ItemDto>> GetPurchasedTours(long userId)
     {
         var purchasedTourIds = _purchaseTokenRepository.GetByUser(userId)
@@ -158,6 +172,26 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
 
         var items = _itemRepository.GetItemsByTourIds(purchasedTourIds);
         return Result.Ok(items.Select(item => _mapper.Map<ItemDto>(item)).ToList());
+    }
+    public Result ClearPaymentRecordsByUser(int touristId)
+    {
+        try
+        {
+            var records = _paymentRecordRepository.GetByUser(touristId);
+            if (records != null && records.Any())
+            {
+                _paymentRecordRepository.DeleteRange(records);
+                return Result.Ok();
+            }
+            else
+            {
+                return Result.Fail("No payment records found for the given user.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result.Fail(new Error("An error occurred while clearing payment records").CausedBy(ex));
+        }
     }
 
     private List<Item> GetPurchasedItems(ShoppingCart shoppingCart)

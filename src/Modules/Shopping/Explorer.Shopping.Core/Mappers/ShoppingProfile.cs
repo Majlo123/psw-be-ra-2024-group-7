@@ -22,6 +22,7 @@ namespace Explorer.Shopping.Core.Mappers
             CreateMap<TouristWalletDto, TouristWallet>().ReverseMap();
             CreateMap<BundleDto, Bundle>().ReverseMap();
             CreateMap<ProductDto, Product>().ReverseMap();
+            CreateMap<PaymentRecord, PaymentRecordDto>().ReverseMap();
         }
     }
 }

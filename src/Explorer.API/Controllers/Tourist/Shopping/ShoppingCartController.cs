@@ -44,6 +44,13 @@ public class ShoppingCartController : BaseApiController
         var result = _shoppingCartService.CreateCart(touristId);
         return CreateResponse(result);
     }
+    [HttpDelete("payment-records/{touristId:int}")]
+    public IActionResult ClearPaymentRecords(int touristId)
+    {
+        var result = _shoppingCartService.ClearPaymentRecordsByUser(touristId);
+        return CreateResponse(result);
+    }
+
     [HttpPost("create/item")]
     public ActionResult<ItemDto> CreateItem([FromBody] TourDto tour)
     {
@@ -74,6 +81,12 @@ public class ShoppingCartController : BaseApiController
     public ActionResult<ShoppingCartDto> Checkout(int touristId)
     {
         var result = _shoppingCartService.CheckOut(touristId);
+        return CreateResponse(result);
+    }
+    [HttpGet("payment-records/{touristId:int}")]
+    public ActionResult<List<PaymentRecordDto>> GetPaymentRecords(int touristId)
+    {
+        var result = _shoppingCartService.GetPaymentRecordsByUser(touristId);
         return CreateResponse(result);
     }
 

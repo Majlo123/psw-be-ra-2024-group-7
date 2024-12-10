@@ -9,4 +9,8 @@ namespace Explorer.Shopping.Core.Domain.RepositoryInterfaces;
 public interface IPaymentRecordRepository
 {
     PaymentRecord Create(PaymentRecord paymentRecord);
+    List<PaymentRecord> GetByUser(int userId);
+
+    void DeleteRange(IEnumerable<PaymentRecord> records);
+
 }

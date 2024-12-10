@@ -36,11 +36,17 @@ namespace Explorer.API.Controllers.User.ProfileAdministration
             var result = _personEditingService.GetPersonByUserId(id);
             return CreateResponse(result);
         }
-
         [HttpGet]
         public ActionResult<PersonDto> GetAllUsers([FromQuery]int page, [FromQuery]int pageSize)
         {
             var result = _personEditingService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
+        [HttpPut]
+        [Route("clubMember")]
+        public ActionResult<PersonDto> AddClubInMember([FromBody] PersonDto person)
+        {
+            var result = _personEditingService.Update(person);
             return CreateResponse(result);
         }
     }

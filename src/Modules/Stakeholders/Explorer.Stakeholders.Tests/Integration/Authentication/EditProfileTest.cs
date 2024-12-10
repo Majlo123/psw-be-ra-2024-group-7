@@ -36,7 +36,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 TouristXp   = xp,
                 ProfilePictureUrl = "https://example.com/newprofile.png",
                 Following = new List<int>(),
-                Followers = new List<int>()
+                Followers = new List<int>(),
+                ClubMember = new List<int>()
             };
 
             // Act
@@ -83,7 +84,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 TouristXp = xp,
                 TouristLevel= level,
                 Following = new List<int>(),
-                Followers = new List<int>()
+                Followers = new List<int>(),
+                ClubMember = new List<int>()
             };
 
             // Act

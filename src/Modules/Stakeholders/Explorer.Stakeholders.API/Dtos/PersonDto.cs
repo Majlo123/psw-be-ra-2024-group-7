@@ -20,5 +20,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public int? TouristXp { get; set; }
         public List<int> Followers { get; set; } = new List<int>();
         public List<int> Following { get; set; } = new List<int>();
+        public List<int> ClubMember { get; set; } = new List<int>();
     }
 }

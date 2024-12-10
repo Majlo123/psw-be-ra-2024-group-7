@@ -15,18 +15,20 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
     private readonly IMapper _mapper;
     private readonly IShoppingCartRepository _shoppingCartRepository;
     private readonly IItemRepository _itemRepository;
+    private readonly ITouristWalletRepository _tourWalletRepository;
     private readonly ITourPurchaseTokenRepository _purchaseTokenRepository;
     private readonly IBundleRepository _bundleRepository;
     private readonly IPaymentRecordRepository _paymentRecordRepository;
 
     public ShoppingCartService(IShoppingCartRepository repository, IItemRepository itemRepository, 
-        ITourPurchaseTokenRepository purchaseTokenRepository, IBundleRepository bundleRepository, 
+        ITourPurchaseTokenRepository purchaseTokenRepository,ITouristWalletRepository touristWaletRepository,IBundleRepository bundleRepository,
         IPaymentRecordRepository paymentRecordRepository, IMapper mapper) : base(mapper)
     {
         _mapper = mapper;
         _shoppingCartRepository = repository;
         _itemRepository = itemRepository;
         _purchaseTokenRepository = purchaseTokenRepository;
+        _tourWalletRepository = touristWaletRepository;
         _bundleRepository = bundleRepository;
         _paymentRecordRepository = paymentRecordRepository;
     }
@@ -52,7 +54,6 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
         try
         {
             var cart = _shoppingCartRepository.GetByUser(userId);
-
             var orderItem = _mapper.Map<ItemDto, OrderItem>(orderItemDto);
 
             var hasPurchased = _purchaseTokenRepository.HasPurchasedTour(orderItem.ItemId, userId);
@@ -104,8 +105,9 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
         try
         {
             var shoppingCart = _shoppingCartRepository.GetByUser(userId);
+            var wallet=_tourWalletRepository.GetByUser(userId);
             if (shoppingCart.IsEmpty()) throw new ArgumentException("Can't proceed, shopping cart is empty!");
-
+            int totalPrice = 0;
 
             UpdateShoppingCart(shoppingCart, true);
 
@@ -129,8 +131,13 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
                     }
                 }
                 _paymentRecordRepository.Create(new PaymentRecord(userId, item.ItemId, item.Price, DateTime.UtcNow));
+                totalPrice += item.Price;
             }
+            wallet.AdventureCoins = wallet.AdventureCoins - totalPrice;
+            shoppingCart.Items.Clear();
+            _tourWalletRepository.Update(wallet);
             var result = _shoppingCartRepository.Update(shoppingCart);
+            
 
             return MapToDto(result);
         }
@@ -143,6 +150,20 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
         }
     }
+    public Result<List<PaymentRecordDto>> GetPaymentRecordsByUser(int touristId)
+    {
+        try
+        {
+            var paymentRecords = _paymentRecordRepository.GetByUser(touristId);
+            var paymentRecordDtos = paymentRecords.Select(pr => _mapper.Map<PaymentRecordDto>(pr)).ToList();
+            return Result.Ok(paymentRecordDtos);
+        }
+        catch (Exception ex)
+        {
+            return Result.Fail(new Error("Failed to fetch payment records").CausedBy(ex));
+        }
+    }
+
     public Result<List<ItemDto>> GetPurchasedTours(long userId)
     {
         var purchasedTourIds = _purchaseTokenRepository.GetByUser(userId)
@@ -151,6 +172,26 @@ public class ShoppingCartService : BaseService<ShoppingCartDto, ShoppingCart>, I
 
         var items = _itemRepository.GetItemsByTourIds(purchasedTourIds);
         return Result.Ok(items.Select(item => _mapper.Map<ItemDto>(item)).ToList());
+    }
+    public Result ClearPaymentRecordsByUser(int touristId)
+    {
+        try
+        {
+            var records = _paymentRecordRepository.GetByUser(touristId);
+            if (records != null && records.Any())
+            {
+                _paymentRecordRepository.DeleteRange(records);
+                return Result.Ok();
+            }
+            else
+            {
+                return Result.Fail("No payment records found for the given user.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result.Fail(new Error("An error occurred while clearing payment records").CausedBy(ex));
+        }
     }
 
     private List<Item> GetPurchasedItems(ShoppingCart shoppingCart)

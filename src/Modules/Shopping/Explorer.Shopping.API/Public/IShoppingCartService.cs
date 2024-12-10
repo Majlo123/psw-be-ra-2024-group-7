@@ -19,5 +19,8 @@ namespace Explorer.Shopping.API.Public
         Result<ItemDto> CreateItem(ItemDto item);
         Result<ItemDto> GetById(int id);
         Result<ItemDto> UpdateItemByTourId(int tourId,int price);
+        Result<List<PaymentRecordDto>> GetPaymentRecordsByUser(int touristId);
+        Result ClearPaymentRecordsByUser(int touristId);
+
     }
 }

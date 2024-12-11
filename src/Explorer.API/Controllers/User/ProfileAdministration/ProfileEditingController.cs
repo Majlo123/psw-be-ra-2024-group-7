@@ -49,5 +49,13 @@ namespace Explorer.API.Controllers.User.ProfileAdministration
             var result = _personEditingService.Update(person);
             return CreateResponse(result);
         }
+
+        [HttpPut]
+        [Route("changeStatus")]
+        public ActionResult<PersonDto> ChangeTouristStatus([FromBody] PersonDto person)
+        {
+            var result = _personEditingService.Update(person);
+            return CreateResponse(result);
+        }
     }
 }

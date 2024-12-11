@@ -19,5 +19,7 @@ namespace Explorer.Encounters.API.Public
         Result<EncounterExecutionDto> GetActivatedTouristEncounter(int touristId);
         EncounterExecutionDto UpdateTouristLocation(EncounterExecutionDto updatedExecution, int numberOfPeople);
         EncounterExecutionDto LeaveEncounter(EncounterExecutionDto updatedExecution);
+        Result<bool> TouristCompletedEncounterForTour(int touristId, int encounterId);
+
     }
 }

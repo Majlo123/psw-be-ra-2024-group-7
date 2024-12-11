@@ -18,5 +18,7 @@ namespace Explorer.Encounters.Core.Domain.RepositoryInterfaces
         List<EncounterExecution> GetAllByUserId(int touristId);
         public EncounterExecution GetUserActiveEncounter(int touristId);
         bool HasAlreadyActivatedEncounter(int touristId);
+
+        bool TouristCompletedEncounterForTour(int touristId, int encounterId);
     }
 }

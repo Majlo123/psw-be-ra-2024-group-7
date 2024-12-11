@@ -70,6 +70,16 @@ namespace Explorer.API.Controllers.Tourist
             var result = _encounterExecutionService.Update(encounterExecution);
             return Ok(result);
         }
+
+
+
+        [HttpGet("tourist/{touristId}/encounter/{encounterId}")]
+        public IActionResult HasTouristCompletedEncounter(int touristId, int encounterId)
+        {
+            var result = _encounterExecutionService.TouristCompletedEncounterForTour(touristId, encounterId);
+            return Ok(result.Value);
+        }
+
         /*********/
     }
 }

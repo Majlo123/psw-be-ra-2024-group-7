@@ -182,5 +182,14 @@ namespace Explorer.Encounters.Core.UseCases
 
             return activeTourists >= peopleNumb;
         }
+
+        public Result<bool> TouristCompletedEncounterForTour(int touristId, int encounterId)
+        {
+           
+             bool completed = _encounterExecutionRepository.TouristCompletedEncounterForTour(touristId, encounterId);
+             return completed;
+            
+            
+        }
     }
 }

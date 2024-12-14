@@ -30,7 +30,8 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Name = "TestClub",
                 Description = "Test description",
                 Picture = "linktoTestPicture",
-                OwnerId = -21
+                OwnerId = -21,
+                Members = new List<int>()
             };
 
             //Act
@@ -80,7 +81,8 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Name = "TestUpdateClub",
                 Description = "Test update description",
                 Picture = "linktoTestUpdatePicture",
-                OwnerId = -23
+                OwnerId = -23,
+                Members = new List<int>()
             };
 
             // Act
@@ -113,7 +115,8 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Name = "TestUpdateClubFAIL",
                 Description = "Test update description FAIL",
                 Picture = "linktoTestUpdatePicture FAIL ",
-                OwnerId = -13
+                OwnerId = -13,
+                Members = new List<int>()
             };
 
             // Act

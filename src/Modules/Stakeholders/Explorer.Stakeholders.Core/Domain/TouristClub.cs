@@ -18,7 +18,7 @@ namespace Explorer.Stakeholders.Core.Domain
 
         public long OwnerId { get; private set; }
 
-        public List<User> Members { get; private set; }
+        public List<int> Members { get; private set; } = new List<int>();
 
         public TouristClub(string name, string description, string? picture, long ownerId)
         {
@@ -28,7 +28,7 @@ namespace Explorer.Stakeholders.Core.Domain
             Description = description;
             Picture = picture;
             OwnerId = ownerId;
-            Members = new List<User>();
+            Members = new List<int>();
         }
     }
 }

@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.API.Dtos
 {
+    public enum TouristStatus
+    {
+        GOLDEN,
+        SILVER,
+        BRONZE,
+        BASIC
+    }
+
     public class PersonDto
     {
         public int Id { get; set; }
@@ -20,5 +28,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public int? TouristXp { get; set; }
         public List<int> Followers { get; set; } = new List<int>();
         public List<int> Following { get; set; } = new List<int>();
+        public List<int> ClubMember { get; set; } = new List<int>();
+        public TouristStatus TouristStatus { get; set; }
     }
 }

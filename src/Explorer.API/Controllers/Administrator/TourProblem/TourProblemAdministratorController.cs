@@ -42,7 +42,11 @@ namespace Explorer.API.Controllers.Administrator.TourProblem
         public ActionResult<TourProblemReportDto> PenalizeAuthorAndCloseProblem(int id, [FromBody] TourProblemReportDto tourProblemReport)
         {
             var result = _tourProblemReportService.PenalizeAuthorAndCloseProblem(id);
-            return CreateResponse(result);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Errors); 
+            }
+            return Ok(result.Value);
         }
 
         [HttpPut("addMessage/{userId:int}/{reportId:int}")]

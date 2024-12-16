@@ -1,12 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Encounters.Core.Domain.RepositoryInterfaces;
 using Explorer.Encounters.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using AutoMapper;
 
 namespace Explorer.Encounters.Infrastructure.Database.Repositories
@@ -106,40 +100,33 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
 
         public Encounter Update(Encounter encounterDto)
         {
-            try
+            Encounter encounter;
+
+            if (encounterDto.EncounterType == EncounterType.SOCIAL)
             {
-                Encounter encounter;
-
-                if (encounterDto.EncounterType == EncounterType.SOCIAL)
-                {
-                    encounter = _mapper.Map<SocialEncounter>(encounterDto);
-                    _dbContext.SocialEncounters.Update((SocialEncounter)encounter);
-                }
-                else if (encounterDto.EncounterType == EncounterType.HIDDENLOCATION)
-                {
-                    encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
-                    _dbContext.HiddenLocationEncounters.Update((HiddenLocationEncounter)encounter);
-                }
-                else if (encounterDto.EncounterType == EncounterType.MISC)
-                {
-                    encounter = _mapper.Map<MiscEncounter>(encounterDto);
-                    _dbContext.MiscEncounters.Update((MiscEncounter)encounter);
-                }
-                else
-                {
-                    encounter = _mapper.Map<Encounter>(encounterDto);
-                    _dbContext.Encounters.Update(encounter);
-                }
-
-                _dbContext.SaveChanges();
-
-                // Vratimo mapirani DTO
-                return _mapper.Map<Encounter>(encounter);
+                encounter = _mapper.Map<SocialEncounter>(encounterDto);
+                _dbContext.SocialEncounters.Update((SocialEncounter)encounter);
             }
-            catch (Exception ex)
+            else if (encounterDto.EncounterType == EncounterType.HIDDENLOCATION)
             {
-                throw new Exception("Error updating encounter", ex);
+                encounter = _mapper.Map<HiddenLocationEncounter>(encounterDto);
+                _dbContext.HiddenLocationEncounters.Update((HiddenLocationEncounter)encounter);
             }
+            else if (encounterDto.EncounterType == EncounterType.MISC)
+            {
+                encounter = _mapper.Map<MiscEncounter>(encounterDto);
+                _dbContext.MiscEncounters.Update((MiscEncounter)encounter);
+            }
+            else
+            { 
+                encounter = _mapper.Map<Encounter>(encounterDto); 
+                _dbContext.Encounters.Update(encounter);
+            }
+
+            _dbContext.SaveChanges();
+
+            // Vratimo mapirani DTO
+            return _mapper.Map<Encounter>(encounter);
         }
 
 

@@ -79,8 +79,7 @@ namespace Explorer.Encounters.Core.UseCases
         {
 
             Encounter encounterUp;
-            try
-            {
+            
                 if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
                 {
                     encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
@@ -97,18 +96,14 @@ namespace Explorer.Encounters.Core.UseCases
                 {
                     throw new Exception("Error updating encounter");
                 }
+           
+           encounterUp = _encounterRepository.Update(encounterUp);
+            
+           if(encounterUp == null)
+              return Result.Fail(FailureCode.NotFound).WithError("Encounter not found");
 
-                encounterUp = _encounterRepository.Update(encounterUp);
-                return _mapper.Map<EncounterDto>(encounterUp);
-            }
-            catch (KeyNotFoundException e) {
 
-                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
-            }
-            catch(ArgumentException e)
-            {
-                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
-            }
+           return _mapper.Map<EncounterDto>(encounterUp);
 
         }
     }

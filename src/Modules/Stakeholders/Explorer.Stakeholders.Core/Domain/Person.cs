@@ -3,6 +3,14 @@ using System.Net.Mail;
 
 namespace Explorer.Stakeholders.Core.Domain;
 
+public enum TouristStatus
+{
+    GOLDEN,
+    SILVER,
+    BRONZE,
+    BASIC
+}
+
 public class Person : Entity
 {
     public long UserId { get; init; }
@@ -16,8 +24,10 @@ public class Person : Entity
     public int TouristXp { get; init; }
     public List<int> Followers { get; init; } = new List<int>();
     public List<int> Following { get; init; } = new List<int>();
+    public List<int> ClubMember { get; init; } = new List<int>();
+    public TouristStatus TouristStatus { get; init; }
 
-    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto,int touristLevel, int touristXp)
+    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto,int touristLevel, int touristXp, TouristStatus touristStatus)
     {
         UserId = userId;
         Name = name;
@@ -28,6 +38,7 @@ public class Person : Entity
         Motto = motto;
         TouristLevel = touristLevel;
         TouristXp = touristXp;
+        TouristStatus = touristStatus;
         Validate();
     }
 

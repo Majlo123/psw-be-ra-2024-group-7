@@ -16,7 +16,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public string? Picture { get; set; }
 
         public long OwnerId { get; set; }
-
-
+        public List<int> Members { get; set; } = new List<int>();
     }
 }

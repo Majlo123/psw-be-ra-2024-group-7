@@ -84,5 +84,16 @@ namespace Explorer.Encounters.Infrastructure.Database.Repositories
                     .FirstOrDefault(ee => ee.TouristId == touristId
                                  && ee.Status == EncounterExecutionStatus.ACTIVATED);
         }
+
+
+
+        /****************** IVA ******************/
+        public bool TouristCompletedEncounterForTour(int touristId, int encounterId)
+        {
+            var encExec = _dbContext.EncounterExecution
+                .Where(te => te.TouristId == touristId && te.EncounterId==encounterId && te.Status == EncounterExecutionStatus.COMPLETED)
+                .FirstOrDefault();
+            return encExec != null;
+        }
     }
 }

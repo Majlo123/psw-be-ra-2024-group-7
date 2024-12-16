@@ -19,6 +19,15 @@ public class PaymentRecordRepository : IPaymentRecordRepository
         _shoppingContext = shoppingContext;
         _dbSet = _shoppingContext.Set<PaymentRecord>();
     }
+    public void DeleteRange(IEnumerable<PaymentRecord> records)
+    {
+        _dbSet.RemoveRange(records);
+        _shoppingContext.SaveChanges();
+    }
+    public List<PaymentRecord> GetByUser(int userId)
+    {
+        return _dbSet.Where(pr => pr.TouristId == userId).ToList();
+    }
 
     public PaymentRecord Create(PaymentRecord paymentRecord)
     {

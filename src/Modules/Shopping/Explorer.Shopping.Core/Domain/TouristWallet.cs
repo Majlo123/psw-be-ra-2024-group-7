@@ -9,7 +9,7 @@ namespace Explorer.Shopping.Core.Domain
 {
     public class TouristWallet : Entity
     {
-        public int AdventureCoins { get; private set; }
+        public int AdventureCoins { get; set; }
         public long UserId { get; init; }
 
         public TouristWallet(long userId)

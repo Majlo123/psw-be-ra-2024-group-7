@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.API.Dtos
 {
-    internal class RewardDto
+    public class RewardDto
     {
+        public string ?Type { get; set; }
+        public int Amount { get; set; }
     }
 }

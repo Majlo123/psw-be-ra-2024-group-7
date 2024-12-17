@@ -39,6 +39,7 @@ public static class ToursStartup
         services.AddScoped<ITourExecutionService, TourExecutionService>();
         services.AddScoped<IInternalTourService, TourService>();
         services.AddScoped<ITouristLocationService, TouristLocationService>();
+        services.AddScoped<IQuizService, QuizService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -54,6 +55,8 @@ public static class ToursStartup
         services.AddScoped(typeof(ITourObjectRepository), typeof(TourObjectRepository));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(ICrudRepository<TouristLocation>), typeof(CrudDatabaseRepository<TouristLocation, ToursContext>));
+        services.AddScoped(typeof(IQuizRepository), typeof(QuizRepository));
+        services.AddScoped(typeof(ICrudRepository<Quiz>),typeof(CrudDatabaseRepository<Quiz, ToursContext>));
         services.AddScoped(typeof(ITouristLocationRepository), typeof(TouristLocationRepository));
 
         services.AddDbContext<ToursContext>(opt =>

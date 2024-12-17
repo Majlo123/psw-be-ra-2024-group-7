@@ -8,15 +8,23 @@ namespace Explorer.Tours.Core.Domain
 {
     public class QuizResponse
     {
-        public long QuizId { get; set; }
-        public string Message { get; set; }
-        public Reward Reward { get; set; }
+        public int QuizId { get; private set; }
+        public string Message { get; private set; }
+        public Reward Reward { get; private set; }
 
-        public QuizResponse(long quizId, string message, Reward reward)
+        public QuizResponse(int quizId, string message, Reward reward)
         {
+            if (quizId <= 0) throw new ArgumentException("Invalid Quiz ID.");
+            if (string.IsNullOrWhiteSpace(message)) throw new ArgumentException("Message cannot be empty.");
+            Reward = reward ?? throw new ArgumentNullException(nameof(reward));
+
             QuizId = quizId;
             Message = message;
-            Reward = reward;
+        }
+
+        public override string ToString()
+        {
+            return $"{Message} (Quiz ID: {QuizId}, Reward: {Reward})";
         }
     }
 }

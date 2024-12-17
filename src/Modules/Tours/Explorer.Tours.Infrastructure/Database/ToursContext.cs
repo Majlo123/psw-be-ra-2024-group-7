@@ -15,7 +15,9 @@ public class ToursContext : DbContext
     public DbSet<TourObject> TourObjects { get; set; }
     public DbSet<TourExecution>  TourExecutions { get; set; }
     public DbSet<TouristLocation> TouristLocation { get; set; }
-
+    public DbSet<Quiz> Quizzes { get; set; }
+    public DbSet<QuizQuestion> QuizQuestions { get; set; }
+    public DbSet<QuizAnswer> QuizAnswers { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,6 +34,33 @@ public class ToursContext : DbContext
         modelBuilder.Entity<Tour>().Property(item => item.TourDurations).HasColumnType("jsonb");
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeyPoints).HasColumnType("jsonb");
 
+        modelBuilder.Entity<Quiz>(entity =>
+        {
+            entity.HasKey(q => q.Id);
+            entity.Property(q => q.Title).IsRequired();
+            entity.Property(q => q.TourId).IsRequired();
+
+            entity.HasMany(q => q.Questions)
+                  .WithOne()
+                  .HasForeignKey(qq => qq.QuizId)
+                  .IsRequired();
+        });
+
+
+        modelBuilder.Entity<QuizQuestion>(entity =>
+        {
+            entity.HasKey(qq => qq.Id);
+
+            entity.OwnsMany(qq => qq.Answers, a =>
+            {
+                a.WithOwner().HasForeignKey("QuizQuestionId"); 
+                a.HasKey("QuizQuestionId", "Id"); 
+                a.Property(a => a.AnswerText).IsRequired();
+            });
+
+            entity.Property(qq => qq.CorrectAnswerId).IsRequired();
+        });
+    
     }
 
    

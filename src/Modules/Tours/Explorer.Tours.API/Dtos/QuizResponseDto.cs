@@ -8,8 +8,8 @@ namespace Explorer.Tours.API.Dtos
 {
     public class QuizResponseDto
     {
-        public long QuizId { get; set; }
-        public string Message { get; set; }
-        public RewardDto Reward { get; set; }
+        public int QuizId { get; set; }
+        public string ?Message { get; set; }
+        public RewardDto ?Reward { get; set; }
     }
 }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.API.Dtos
 {
-    internal class QuizDto
+    public class QuizDto
     {
+        public int Id { get; set; } 
+        public int TourId { get; set; }
+        public string ?Title { get; set; }
+        public List<QuizQuestionDto> ?Questions { get; set; }
     }
 }

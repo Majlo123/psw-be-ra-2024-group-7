@@ -44,7 +44,7 @@ public class AuthenticationService : IAuthenticationService
         try
         {
             var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true));
-            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email,account.ProfilePictureUrl,account.Biography,account.Motto,0,0,Domain.TouristStatus.BASIC));
+            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email,account.ProfilePictureUrl,account.Biography,account.Motto,0,0, DateTime.UtcNow.AddDays(-2),Domain.TouristStatus.BASIC));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);
         }

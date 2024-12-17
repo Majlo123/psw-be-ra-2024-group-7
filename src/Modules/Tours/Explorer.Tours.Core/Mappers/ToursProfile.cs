@@ -37,34 +37,31 @@ public class ToursProfile : Profile
                 .Select(duration=>new TourDuration(duration.Duration,(Domain.TransportType)duration.TransportType,(Domain.TimeUnit)duration.TimeUnit))
                 .ToList()
                 :new List<TourDuration>())).ReverseMap();
-        // Mapiranje za Quiz
         CreateMap<QuizDto, Quiz>()
-            .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions))
-            .ReverseMap();
+      .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions))
+      .ForMember(dest => dest.Reward, opt => opt.MapFrom(src => src.Reward))
+      .ReverseMap()
+      .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions))
+      .ForMember(dest => dest.Reward, opt => opt.MapFrom(src => src.Reward));
 
         CreateMap<QuizQuestionDto, QuizQuestion>()
             .ForMember(dest => dest.Answers,
                 opt => opt.MapFrom(src => src.Answers.Select(a => new QuizAnswer(a.AnswerText))))
-            .ForMember(dest => dest.CorrectAnswerId,
-                opt => opt.MapFrom(src => src.CorrectAnswerIndex)) 
+            .ReverseMap()
             .ForMember(dest => dest.Answers,
                 opt => opt.MapFrom(src => src.Answers.Select(a => new QuizAnswerDto { AnswerText = a.AnswerText })))
-            .ForMember(dest => dest.CorrectAnswerId,
-                opt => opt.MapFrom(src => src.CorrectAnswerIndex));
+            .ForMember(dest => dest.CorrectAnswerIndex,
+                opt => opt.MapFrom(src => src.CorrectAnswerId));
 
-
-        // Mapiranje za QuizAnswer
         CreateMap<QuizAnswerDto, QuizAnswer>()
             .ConstructUsing(dto => new QuizAnswer(dto.AnswerText))
             .ReverseMap()
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.AnswerText));
 
-        // Reward mapiranje
         CreateMap<Reward, RewardDto>()
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
-            .ReverseMap();
+            .ReverseMap()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse<RewardType>(src.Type)));
 
-        // QuizResponse mapiranje
-        CreateMap<QuizResponseDto, Quiz>().ReverseMap();
     }
 }

@@ -12,7 +12,6 @@ public class ToursTestFactory : BaseTestFactory<ToursContext>
         var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ToursContext>));
         services.Remove(descriptor!);
         services.AddDbContext<ToursContext>(SetupTestContext());
-
         return services;
     }
 }

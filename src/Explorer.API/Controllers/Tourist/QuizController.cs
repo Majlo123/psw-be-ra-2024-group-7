@@ -16,16 +16,12 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPost]
-        public IActionResult CreateQuiz([FromBody] QuizDto dto)
+        public ActionResult<QuizDto> Create([FromBody] QuizDto quizDto)
         {
-            var result = _quizService.CreateQuiz(dto);
-
-            if (result.IsSuccess)
-                return Ok(result.Value);
-
-            return BadRequest(result.Errors);
+            var result = _quizService.CreateQuiz(quizDto);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
         }
 
-      
+
     }
 }

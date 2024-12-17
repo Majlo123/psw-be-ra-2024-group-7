@@ -37,15 +37,22 @@ public class ToursContext : DbContext
         modelBuilder.Entity<Quiz>(entity =>
         {
             entity.HasKey(q => q.Id);
-            entity.Property(q => q.Title).IsRequired();
-            entity.Property(q => q.TourId).IsRequired();
 
+            // Reward kao owned type
+            entity.OwnsOne(q => q.Reward, reward =>
+            {
+                reward.Property(r => r.Type)
+                      .HasConversion<string>(); // Konvertuje RewardType enum u string
+
+                reward.Property(r => r.Amount)
+                      .IsRequired();
+            });
+
+            // Quiz Questions
             entity.HasMany(q => q.Questions)
                   .WithOne()
-                  .HasForeignKey(qq => qq.QuizId)
-                  .IsRequired();
+                  .HasForeignKey("QuizId");
         });
-
 
         modelBuilder.Entity<QuizQuestion>(entity =>
         {
@@ -53,14 +60,12 @@ public class ToursContext : DbContext
 
             entity.OwnsMany(qq => qq.Answers, a =>
             {
-                a.WithOwner().HasForeignKey("QuizQuestionId"); 
-                a.HasKey("QuizQuestionId", "Id"); 
+                a.WithOwner().HasForeignKey("QuizQuestionId");
+                a.HasKey("QuizQuestionId", "Id");
                 a.Property(a => a.AnswerText).IsRequired();
             });
-
-            entity.Property(qq => qq.CorrectAnswerId).IsRequired();
         });
-    
+
     }
 
    

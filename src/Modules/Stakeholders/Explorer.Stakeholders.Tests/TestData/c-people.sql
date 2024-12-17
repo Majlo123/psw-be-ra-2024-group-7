@@ -1,4 +1,4 @@
-﻿INSERT INTO stakeholders."People"(
+INSERT INTO stakeholders."People"(
     "Id", "UserId", "Name", "Surname", "Email", "ProfilePictureUrl", "Biography", "Motto","TouristLevel","TouristXp", "Followers", "Following", "ClubMember","TouristStatus","TouristRank")
 VALUES (-11, -11, 'Ana', 'Anić', 'autor1@gmail.com', 'https://example.com/profile1.png', 'Biografija 1', 'Motto 1',0,0,ARRAY[]::INTEGER[],ARRAY[]::INTEGER[],ARRAY[]::INTEGER[],0,0);
 

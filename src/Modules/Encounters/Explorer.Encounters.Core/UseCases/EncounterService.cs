@@ -79,28 +79,31 @@ namespace Explorer.Encounters.Core.UseCases
         {
 
             Encounter encounterUp;
+            
+                if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
+                {
+                    encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
+                {
+                    encounterUp = _mapper.Map<HiddenLocationEncounter>(encounterDto);
+                }
+                else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
+                {
+                    encounterUp = _mapper.Map<MiscEncounter>(encounterDto);
+                }
+                else
+                {
+                    throw new Exception("Error updating encounter");
+                }
+           
+           encounterUp = _encounterRepository.Update(encounterUp);
+            
+           if(encounterUp == null)
+              return Result.Fail(FailureCode.NotFound).WithError("Encounter not found");
 
-            if (encounterDto.EncounterType == API.Dtos.EncounterType.SOCIAL)
-            {
-                encounterUp = _mapper.Map<SocialEncounter>(encounterDto);
-            }
-            else if (encounterDto.EncounterType == API.Dtos.EncounterType.HIDDENLOCATION)
-            {
-                encounterUp = _mapper.Map<HiddenLocationEncounter>(encounterDto);
-            }
-            else if (encounterDto.EncounterType == API.Dtos.EncounterType.MISC)
-            {
-                encounterUp = _mapper.Map<MiscEncounter>(encounterDto);
-            }
-            else
-            {
-                throw new Exception("Error updating encounter");
-            }
 
-            encounterUp = _encounterRepository.Update(encounterUp);
-            if(encounterUp == null)
-                return Result.Fail(FailureCode.NotFound).WithError("Encounter not found");
-            return _mapper.Map<EncounterDto>(encounterUp);
+           return _mapper.Map<EncounterDto>(encounterUp);
 
         }
     }

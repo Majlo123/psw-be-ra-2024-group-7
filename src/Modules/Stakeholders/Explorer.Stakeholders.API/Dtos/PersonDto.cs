@@ -13,7 +13,14 @@ namespace Explorer.Stakeholders.API.Dtos
         BRONZE,
         BASIC
     }
-
+    public enum TouristRank
+    {
+        EXPLORER,
+        SURVIVOR,
+        TRAVELLER,
+        CAPTAIN,
+        ULTIMATE
+    }
     public class PersonDto
     {
         public int Id { get; set; }
@@ -26,9 +33,12 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Email { get; set; }
         public int? TouristLevel { get; set; }
         public int? TouristXp { get; set; }
+
+        public DateTime? LastWheelSpinTime { get; set; }
         public List<int> Followers { get; set; } = new List<int>();
         public List<int> Following { get; set; } = new List<int>();
         public List<int> ClubMember { get; set; } = new List<int>();
         public TouristStatus TouristStatus { get; set; }
+        public TouristRank? TouristRank { get; set; }
     }
 }

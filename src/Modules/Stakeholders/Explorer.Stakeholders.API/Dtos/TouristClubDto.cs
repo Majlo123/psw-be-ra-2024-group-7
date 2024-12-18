@@ -17,5 +17,8 @@ namespace Explorer.Stakeholders.API.Dtos
 
         public long OwnerId { get; set; }
         public List<int> Members { get; set; } = new List<int>();
+        public List<int> Rates { get; set; } = new List<int>();
+        public double AverageRate { get; set; }
+        public List<int> RatedMembers { get; set; } = new List<int>();
     }
 }

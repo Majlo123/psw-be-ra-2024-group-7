@@ -29,8 +29,6 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPost]
         public ActionResult<TouristClubDto> Create([FromBody] TouristClubDto club) 
         {
-            //if (club.OwnerId >= 0)
-            //club.OwnerId = User.PersonId() + 1; 
             var result = _toursitClubService.Create(club);
             return CreateResponse(result);
         }
@@ -38,10 +36,6 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPut("{id:int}")]
         public ActionResult<TouristClubDto> Update([FromBody] TouristClubDto club)
         {
-            //if (club.OwnerId > 0) { 
-            //if (club.OwnerId != User.PersonId() + 1)
-            //    return BadRequest("OwnerId is not valid.");
-            //}
             var result = _toursitClubService.Update(club);
             return CreateResponse(result);
         }
@@ -50,10 +44,14 @@ namespace Explorer.API.Controllers.Tourist
         [Route("addMember/{id:int}")]
         public ActionResult<TouristClubDto> AddMember([FromBody] TouristClubDto club)
         {
-            //if (club.OwnerId > 0) { 
-            //if (club.OwnerId != User.PersonId() + 1)
-            //    return BadRequest("OwnerId is not valid.");
-            //}
+            var result = _toursitClubService.Update(club);
+            return CreateResponse(result);
+        }
+
+        [HttpPut]
+        [Route("rates/{id:int}")]
+        public ActionResult<TouristClubDto> Rate([FromBody] TouristClubDto club)
+        {
             var result = _toursitClubService.Update(club);
             return CreateResponse(result);
         }

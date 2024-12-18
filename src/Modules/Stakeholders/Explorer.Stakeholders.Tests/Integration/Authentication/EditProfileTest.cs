@@ -23,6 +23,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
             var userId = -21;
             var level = 3;
             var xp = 125;
+            var lastWheelSpin = DateTime.UtcNow;
             var updateProfileDto = new PersonDto
             {
                 Id = userId,
@@ -34,6 +35,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 Motto = "Updated motto",
                 TouristLevel = level,
                 TouristXp   = xp,
+                LastWheelSpinTime = lastWheelSpin,
                 ProfilePictureUrl = "https://example.com/newprofile.png",
                 Following = new List<int>(),
                 Followers = new List<int>(),
@@ -75,6 +77,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
             var userId = -9999; // Korisnik koji ne postoji
             var xp = 0;
             var level = 0;
+            var lastWheelSpin = DateTime.UtcNow;
             var updateProfileDto = new PersonDto
             {
                 Id = userId, // Dodaj ID korisnika
@@ -84,6 +87,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Profile
                 Email = "updated.email@example.com",
                 TouristXp = xp,
                 TouristLevel= level,
+                LastWheelSpinTime= lastWheelSpin,
                 Following = new List<int>(),
                 Followers = new List<int>(),
                 ClubMember = new List<int>(),

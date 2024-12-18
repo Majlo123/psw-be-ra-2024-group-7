@@ -11,6 +11,14 @@ public enum TouristStatus
     BASIC
 }
 
+public enum TouristRank
+{
+    EXPLORER,
+    SURVIVOR,
+    TRAVELLER,
+    CAPTAIN,
+    ULTIMATE
+}
 public class Person : Entity
 {
     public long UserId { get; init; }
@@ -22,12 +30,15 @@ public class Person : Entity
     public string Email { get; init; }
     public int TouristLevel { get; init; }
     public int TouristXp { get; init; }
+
+    public DateTime LastWheelSpinTime { get; init; }
     public List<int> Followers { get; init; } = new List<int>();
     public List<int> Following { get; init; } = new List<int>();
     public List<int> ClubMember { get; init; } = new List<int>();
     public TouristStatus TouristStatus { get; init; }
+    public TouristRank? TouristRank { get; set; }
 
-    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto,int touristLevel, int touristXp, TouristStatus touristStatus)
+    public Person(long userId, string name, string surname, string email, string profilePictureUrl, string biography, string motto,int touristLevel, int touristXp,DateTime lastWheelSpinTime, TouristStatus touristStatus)
     {
         UserId = userId;
         Name = name;
@@ -38,8 +49,32 @@ public class Person : Entity
         Motto = motto;
         TouristLevel = touristLevel;
         TouristXp = touristXp;
+        LastWheelSpinTime = lastWheelSpinTime;
         TouristStatus = touristStatus;
+        SetRank();
         Validate();
+    }
+
+    private void SetRank()
+    {
+        switch (TouristLevel)
+        {
+            case < 2:
+                TouristRank = Domain.TouristRank.EXPLORER;
+                break;
+            case < 4:
+                TouristRank = Domain.TouristRank.SURVIVOR;
+                break;
+            case < 6:
+                TouristRank = Domain.TouristRank.TRAVELLER;
+                break;
+            case < 8:
+                TouristRank = Domain.TouristRank.CAPTAIN;
+                break;
+            default:
+                TouristRank = Domain.TouristRank.ULTIMATE;
+                break;
+        }
     }
 
     private void Validate()

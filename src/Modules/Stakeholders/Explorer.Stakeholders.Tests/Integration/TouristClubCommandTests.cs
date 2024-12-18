@@ -31,7 +31,10 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Description = "Test description",
                 Picture = "linktoTestPicture",
                 OwnerId = -21,
-                Members = new List<int>()
+                Members = new List<int>(),
+                AverageRate = 0,
+                Rates = new List<int>(),
+                RatedMembers = new List<int>()
             };
 
             //Act
@@ -82,7 +85,10 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Description = "Test update description",
                 Picture = "linktoTestUpdatePicture",
                 OwnerId = -23,
-                Members = new List<int>()
+                Members = new List<int>(),
+                AverageRate = 0,
+                Rates = new List<int>(),
+                RatedMembers = new List<int>()
             };
 
             // Act
@@ -116,7 +122,10 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Description = "Test update description FAIL",
                 Picture = "linktoTestUpdatePicture FAIL ",
                 OwnerId = -13,
-                Members = new List<int>()
+                Members = new List<int>(),
+                AverageRate = 0,
+                Rates = new List<int>(),
+                RatedMembers = new List<int>()
             };
 
             // Act
@@ -126,7 +135,6 @@ namespace Explorer.Stakeholders.Tests.Integration
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(404);
         }
-
 
         private static TouristClubController CreateController(IServiceScope scope)
         {

@@ -45,13 +45,14 @@ public class ToursProfile : Profile
       .ForMember(dest => dest.Reward, opt => opt.MapFrom(src => src.Reward));
 
         CreateMap<QuizQuestionDto, QuizQuestion>()
-            .ForMember(dest => dest.Answers,
-                opt => opt.MapFrom(src => src.Answers.Select(a => new QuizAnswer(a.AnswerText))))
-            .ReverseMap()
-            .ForMember(dest => dest.Answers,
-                opt => opt.MapFrom(src => src.Answers.Select(a => new QuizAnswerDto { AnswerText = a.AnswerText })))
-            .ForMember(dest => dest.CorrectAnswerIndex,
-                opt => opt.MapFrom(src => src.CorrectAnswerId));
+    .ForMember(dest => dest.Answers,
+        opt => opt.MapFrom(src => src.Answers.Select(a => new QuizAnswer(a.AnswerText))))
+    .ForMember(dest => dest.CorrectAnswerId,
+        opt => opt.MapFrom(src => src.CorrectAnswerIndex)) // Popravljeno mapiranje
+    .ReverseMap()
+    .ForMember(dest => dest.CorrectAnswerIndex,
+        opt => opt.MapFrom(src => src.CorrectAnswerId)); // Obrnuto mapiranje
+
 
         CreateMap<QuizAnswerDto, QuizAnswer>()
             .ConstructUsing(dto => new QuizAnswer(dto.AnswerText))

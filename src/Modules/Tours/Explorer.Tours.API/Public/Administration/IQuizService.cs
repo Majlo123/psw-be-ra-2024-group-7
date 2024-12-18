@@ -12,6 +12,6 @@ namespace Explorer.Tours.API.Public.Administration
     public interface IQuizService
     {
         Result<QuizResponseDto> CreateQuiz(QuizDto dto);
-       
+        PagedResult<QuizDto> GetAllQuizzes(int page, int pageSize);
     }
 }

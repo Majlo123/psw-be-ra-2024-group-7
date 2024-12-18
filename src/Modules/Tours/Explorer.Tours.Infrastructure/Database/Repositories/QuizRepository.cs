@@ -33,5 +33,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ThenInclude(q => q.Answers)
                          .FirstOrDefault(q => q.Id== id);
         }
+        public IEnumerable<Quiz> GetAll()
+        {
+            return _dbContext.Quizzes.ToList();
+        }
     }
 }

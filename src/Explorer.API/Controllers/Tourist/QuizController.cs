@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,11 @@ namespace Explorer.API.Controllers.Tourist
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
         }
 
-
+        [HttpGet]
+        public ActionResult<PagedResult<QuizDto>> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = _quizService.GetAllQuizzes(page, pageSize);
+            return Ok(result);
+        }
     }
 }

@@ -24,7 +24,29 @@ namespace Explorer.Tours.Core.UseCases.Administration
             _quizRepository = quizRepository;
             _mapper = mapper;
         }
+        public PagedResult<QuizDto> GetAllQuizzes(int page, int pageSize)
+        {
+            try
+            {
+                // Dobavljanje kvizova iz baze
+                var quizzes = _quizRepository.GetAll()
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
 
+                // Mapiranje domen -> DTO
+                var quizDtos = _mapper.Map<List<QuizDto>>(quizzes);
+
+                // Ukupan broj kvizova
+                var totalCount = _quizRepository.GetAll().Count();
+
+                return new PagedResult<QuizDto>(quizDtos, totalCount);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to retrieve quizzes.", ex);
+            }
+        }
         public Result<QuizResponseDto> CreateQuiz(QuizDto dto)
         {
             try

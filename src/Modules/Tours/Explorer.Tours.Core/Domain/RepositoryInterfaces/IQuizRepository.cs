@@ -10,5 +10,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         Quiz Create(Quiz quiz);
         Quiz Get(long id);
+        IEnumerable<Quiz> GetAll();
     }
 }

@@ -6,3 +6,6 @@ DELETE FROM tours."TouristLocation";
 DELETE FROM tours."Tours";
 DELETE FROM tours."TourReview";
 DELETE FROM tours."TourExecutions";
+DELETE FROM tours."QuizAnswers";
+DELETE FROM tours."QuizQuestions";
+DELETE FROM tours."Quizzes";

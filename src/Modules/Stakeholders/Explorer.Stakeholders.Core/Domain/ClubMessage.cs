@@ -14,6 +14,7 @@ namespace Explorer.Stakeholders.Core.Domain
         public long TouristClubId { get; set; }
         public DateTime SentDate { get; set; }
         public string Content { get; set; }
+        public List<int> PersonsLiked { get; set; } = new List<int>();
 
         public ClubMessage(long senderId, long touristClubId, DateTime sentDate, string content)
         {
@@ -21,6 +22,7 @@ namespace Explorer.Stakeholders.Core.Domain
             TouristClubId = touristClubId;
             SentDate = sentDate;
             Content = content;
+            PersonsLiked = new List<int>();
         }
 
         private void Validate()

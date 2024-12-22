@@ -49,13 +49,49 @@ namespace Explorer.Stakeholders.Core.UseCases
                         SenderSurname = person.Surname,
                         SentDate = message.SentDate,
                         Content = message.Content,
-                        TouristClubId = message.TouristClubId
+                        TouristClubId = message.TouristClubId,
+                        LikesCount = message.PersonsLiked?.Count() ?? 0,
+                        LikedByLoggedUser = false
                     };
                     messageDtos.Add(messageDto);
                 }
             }
             return new PagedResult<ClubMessageDto>(messageDtos, messageDtos.Count);
         }
+
+        public Result<PagedResult<ClubMessageDto>> GetAllForLoggedUser(long touristClubId, long loggedUserId)
+        {
+            var messages = _clubMessageRepository.GetAll();
+            var messageDtos = new List<ClubMessageDto>();
+            bool liked;
+
+            foreach (var message in messages)
+            {
+                if (message.TouristClubId == touristClubId)
+                {
+                    FluentResults.Result<PersonDto> result = _personEditingService.GetPersonByUserId((int)message.SenderId);
+                    PersonDto person = result.Value;
+
+                    liked = message.PersonsLiked.Any(id => id == (int)loggedUserId);
+
+                    var messageDto = new ClubMessageDto
+                    {
+                        Id = message.Id,
+                        SenderId = message.SenderId,
+                        SenderName = person.Name,
+                        SenderSurname = person.Surname,
+                        SentDate = message.SentDate,
+                        Content = message.Content,
+                        TouristClubId = message.TouristClubId,
+                        LikesCount = message.PersonsLiked?.Count() ?? 0,
+                        LikedByLoggedUser = liked
+                    };
+                    messageDtos.Add(messageDto);
+                }
+            }
+            return new PagedResult<ClubMessageDto>(messageDtos, messageDtos.Count);
+        }
+
 
         public Result<ClubMessageDto> CreateMessage(ClubMessageDto message)
         {
@@ -88,6 +124,47 @@ namespace Explorer.Stakeholders.Core.UseCases
             var dto = _mapper.Map<ClubMessageDto>(message);
             return Result.Ok(dto);
         }
+        public Result<ClubMessageDto> IncrementLikes(long clubMessageId, long userId)
+        {
+            var existingMessages = _clubMessageRepository.GetAll();
+            var existingMessage = existingMessages.FirstOrDefault(x => x.Id == clubMessageId);
+
+
+            if (existingMessage == null)
+            {
+                return Result.Fail<ClubMessageDto>("Poruka nije pronađena.");
+            }
+
+            if (!existingMessage.PersonsLiked.Any(id => id == (int)userId))
+                existingMessage.PersonsLiked.Add((int)userId);
+
+            _clubMessageRepository.Update(existingMessage);
+
+            var dto = _mapper.Map<ClubMessageDto>(existingMessage);
+            return Result.Ok(dto);
+        }
+
+        public Result<ClubMessageDto> DecrementLikes(long clubMessageId, long userId)
+        {
+            var existingMessages = _clubMessageRepository.GetAll();
+            var existingMessage = existingMessages.FirstOrDefault(x => x.Id == clubMessageId);
+
+
+            if (existingMessage == null)
+            {
+                return Result.Fail<ClubMessageDto>("Poruka nije pronađena.");
+            }
+
+            if (existingMessage.PersonsLiked.Any(id => id == (int)userId))
+                existingMessage.PersonsLiked.Remove((int)userId);
+
+            _clubMessageRepository.Update(existingMessage);
+
+            var dto = _mapper.Map<ClubMessageDto>(existingMessage);
+            return Result.Ok(dto);
+        }
+
+
     }
 
 }

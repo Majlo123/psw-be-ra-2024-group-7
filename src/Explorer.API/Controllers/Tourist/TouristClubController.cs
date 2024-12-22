@@ -26,6 +26,13 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult<BuildingBlocks.Core.UseCases.PagedResult<TouristClubDto>> GetById(int id)
+        {
+            var result = _toursitClubService.Get(id);
+            return CreateResponse(result);
+        }
+
         [HttpPost]
         public ActionResult<TouristClubDto> Create([FromBody] TouristClubDto club) 
         {

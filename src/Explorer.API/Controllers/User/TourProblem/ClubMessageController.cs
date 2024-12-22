@@ -24,6 +24,12 @@ namespace Explorer.API.Controllers.User.TourProblem
             var result = _clubMessageService.GetAllForClub(touristClubId);
             return CreateResponse(result);
         }
+        [HttpGet("{touristClubId:long}/{loggedUserId:long}")]
+        public ActionResult<PersonDto> GetMessagesForTouristClub(long touristClubId, long loggedUserId)
+        {
+            var result = _clubMessageService.GetAllForLoggedUser(touristClubId, loggedUserId);
+            return CreateResponse(result);
+        }
 
         [HttpPost]
         public ActionResult<ClubMessageDto> Create([FromBody] ClubMessageDto clubMessageDto)
@@ -46,6 +52,21 @@ namespace Explorer.API.Controllers.User.TourProblem
             var result = _clubMessageService.DeleteMessage(clubMessageId);
             return CreateResponse(result);
         }
+
+        [HttpPut("like/{clubMessageId:long}/{userId:long}")]
+        public ActionResult<PersonDto> IncrementLikes(long clubMessageId, long userId)
+        {
+            var result = _clubMessageService.IncrementLikes(clubMessageId, userId);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("dislike/{clubMessageId:long}/{userId:long}")]
+        public ActionResult<PersonDto> DecrementLikes(long clubMessageId, long userId)
+        {
+            var result = _clubMessageService.DecrementLikes(clubMessageId, userId);
+            return CreateResponse(result);
+        }
+
 
     }
 }

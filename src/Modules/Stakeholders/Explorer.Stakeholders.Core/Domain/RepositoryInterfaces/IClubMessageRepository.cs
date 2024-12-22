@@ -13,5 +13,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         public ClubMessage Create(ClubMessage message);
         public ClubMessage Update(ClubMessage message);
         public ClubMessage Delete(long clubMessageId);
+        public ClubMessage Get(long clubMessageId);
     }
 }

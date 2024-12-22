@@ -43,7 +43,7 @@ public static class StakeholdersStartup
         // Dodajemo servis za ApplicationGrade
         services.AddScoped<IApplicationGradeService, ApplicationGradeService>();
         services.AddScoped<INotificationInternalService, NotificationService >();
-
+        
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -66,6 +66,8 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<TourProblemReport>), typeof(CrudDatabaseRepository<TourProblemReport, StakeholdersContext>));
         services.AddScoped<ITourProblemReportRepository, TourProblemReportRepository>();
         services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
+        // repozitorijum za tourist club
+        services.AddScoped<ITouristClubRepository, TouristClubRepository>();
         // Dodajemo repozitorijum za ApplicationGrade
         services.AddScoped(typeof(ICrudRepository<ApplicationGrade>), typeof(CrudDatabaseRepository<ApplicationGrade, StakeholdersContext>));
 

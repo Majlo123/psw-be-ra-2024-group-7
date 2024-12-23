@@ -10,6 +10,7 @@ using Explorer.Tours.API.Internal;
 using FluentResults;
 using ProblemPriority = Explorer.Stakeholders.API.Dtos.ProblemPriority;
 using Status = Explorer.Stakeholders.API.Dtos.Status;
+using System.Diagnostics;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
@@ -66,6 +67,7 @@ namespace Explorer.Stakeholders.Core.UseCases
                     Status = (Status)report.Status,
                     TouristId = report.TouristId,
                     Comment = report.Comment,
+                    SolvingDeadline = report.SolvingDeadline ?? DateTime.MinValue,
                     Messages = report.Messages.Select(message => new MessageDto
                     {
                         UserId = message.UserId,
@@ -129,6 +131,8 @@ namespace Explorer.Stakeholders.Core.UseCases
 
         public Result<TourProblemReportDto> SetSolvingDeadline(int id, TourProblemReportDto tourProblemReport)
         {
+            Debug.WriteLine("SetSolvingDeadline called for id: " + id);
+
             var aggregate = _repository.Get(id);
             if (aggregate == null)
             {

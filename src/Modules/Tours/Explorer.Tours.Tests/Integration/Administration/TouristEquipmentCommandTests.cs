@@ -1,8 +1,8 @@
 ﻿using Explorer.API.Controllers.Tourist.Administration;
-using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Infrastructure.Database;
+using Explorer.Tours.Tests;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,22 +14,22 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.Tests.Integration.Administration
+namespace Explorer.Tours.Tests.Integration.Administration
 {
     [Collection(name: "Sequential")]
-    public class TouristEquipmentCommandTests : BaseStakeholdersIntegrationTest
+    public class TouristEquipmentCommandTests : BaseToursIntegrationTest
     {
-        public TouristEquipmentCommandTests(StakeholdersTestFactory factory) : base(factory) { }
+        public TouristEquipmentCommandTests(ToursTestFactory factory) : base(factory) { }
         [Fact]
         public void Creates()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var newEntity = new TouristEquipmentDto
             {
-                Id=4,
+                Id = -4,
                 TouristId = -21,
                 EquipmentId = -1
             };
@@ -41,9 +41,9 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.ShouldNotBeNull();
             result.Id.ShouldNotBe(0);
             result.TouristId.ShouldBe(newEntity.TouristId);
-            
+
             //Assert - Database
-            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i=>i.Id == newEntity.Id);
+            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == newEntity.Id);
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
 
@@ -57,8 +57,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var updatedEntity = new TouristEquipmentDto
             {
                 Id = -5,
-                TouristId=0,
-                EquipmentId=0
+                TouristId = -1,
+                EquipmentId = 0
             };
 
             //Act
@@ -74,12 +74,12 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var updatedEntity = new TouristEquipmentDto
             {
                 Id = -2,
                 TouristId = -22,
-                EquipmentId = -3
+                EquipmentId = -2
             };
 
             //Act
@@ -92,7 +92,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             result.EquipmentId.ShouldBe(updatedEntity.EquipmentId);
 
             //Assert - Database
-            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.EquipmentId == -3);
+            var storedEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.EquipmentId == -2);
             storedEntity.ShouldNotBeNull();
             storedEntity.TouristId.ShouldBe(updatedEntity.TouristId);
             var oldEntity = dbContext.TouristEquipments.FirstOrDefault(i => i.Id == -2);
@@ -107,11 +107,11 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var controller = CreateController(scope);
             var updatedEntity = new TouristEquipmentDto
             {
-                Id = 1000,
-                TouristId = -21,
-                EquipmentId = -3
+                Id = -1000,
+                EquipmentId = -21,
+                TouristId=4
             };
-            
+
             //Act
             var result = (ObjectResult)controller.Update(updatedEntity).Result;
 
@@ -125,7 +125,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             //Act
             var result = (OkResult)controller.Delete(-1);

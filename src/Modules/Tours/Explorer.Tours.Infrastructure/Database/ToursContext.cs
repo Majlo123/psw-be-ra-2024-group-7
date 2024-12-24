@@ -18,6 +18,7 @@ public class ToursContext : DbContext
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<QuizQuestion> QuizQuestions { get; set; }
     public DbSet<QuizAnswer> QuizAnswers { get; set; }
+    public DbSet<TouristEquipment> TouristEquipments { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,7 +66,10 @@ public class ToursContext : DbContext
                 a.Property(a => a.AnswerText).IsRequired();
             });
         });
-
+        modelBuilder.Entity<TouristEquipment>()
+        .HasOne<Equipment>()
+        .WithMany()
+        .HasForeignKey(te => te.EquipmentId);
     }
 
    

@@ -15,7 +15,6 @@ public class StakeholderProfile : Profile
 
 
 
-        CreateMap<TouristEquipmentDto, TouristEquipment>().ReverseMap();
         CreateMap<PersonDto, Person>().ReverseMap();
         CreateMap<TourProblemReportDto, TourProblemReport>().ReverseMap();
         CreateMap<MessageDto, Message>().ReverseMap();

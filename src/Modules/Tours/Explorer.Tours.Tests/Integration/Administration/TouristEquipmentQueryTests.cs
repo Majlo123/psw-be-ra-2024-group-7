@@ -1,7 +1,7 @@
 ﻿using Explorer.API.Controllers.Tourist.Administration;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.API.Public;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Tours.Tests;
 
-namespace Explorer.Stakeholders.Tests.Integration.Administration
+namespace Explorer.Tours.Tests.Integration.Administration
 {
     [Collection(name: "Sequential")]
-    public class TouristEquipmentQueryTests : BaseStakeholdersIntegrationTest
+    public class TouristEquipmentQueryTests : BaseToursIntegrationTest
     {
-        public TouristEquipmentQueryTests(StakeholdersTestFactory factory) : base(factory) { }
+        public TouristEquipmentQueryTests(ToursTestFactory factory) : base(factory) { }
         [Fact]
         public void Retrieves_all()
         {
@@ -26,7 +27,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Administration
             var controller = CreateController(scope);
 
             //Act
-            var result = ((ObjectResult)controller.GetAll(page:0,pageSize:0).Result)?.Value as PagedResult<TouristEquipmentDto>;
+            var result = ((ObjectResult)controller.GetAll(page: 0, pageSize: 0).Result)?.Value as PagedResult<TouristEquipmentDto>;
 
             //Assert
             result.ShouldNotBeNull();

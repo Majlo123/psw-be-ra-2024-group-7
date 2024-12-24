@@ -63,6 +63,6 @@ public class ToursProfile : Profile
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
             .ReverseMap()
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse<RewardType>(src.Type)));
-
+        CreateMap<TouristEquipmentDto, TouristEquipment>().ReverseMap();
     }
 }

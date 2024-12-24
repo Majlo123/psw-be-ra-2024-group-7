@@ -42,8 +42,8 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpGet]
-        [Route("published/preview/{id:int}")]
-        public ActionResult<BasicTourDetailsDto> GetPublishedTourPreview(long id)
+        [Route("published/preview/{id:long}")]
+        public ActionResult<TourDto> GetPublishedTourPreview(long id)
         {
             var result = _tourService.GetPublishedTourPreview(id);
             return CreateResponse(result);

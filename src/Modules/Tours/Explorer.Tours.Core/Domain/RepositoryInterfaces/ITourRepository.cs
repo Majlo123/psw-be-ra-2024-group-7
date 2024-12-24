@@ -22,5 +22,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         PagedResult<Tour> GetByAuthorId(int id, int page, int pageSize);
         List<Tour> GetPublishedToursList();
         List<Tour> GetAll();
+        Tour GetPublishedTourByid(long id);
     }
 }

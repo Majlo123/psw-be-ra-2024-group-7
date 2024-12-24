@@ -42,6 +42,8 @@ namespace Explorer.Shopping.Core.Domain.ShoppingCarts
         }
         public void UpdateItem(OrderItem orderItem, Item item)
         {
+            //item je ovde null ali radi 
+
             var index = Items.FindIndex(i => i.ItemId == orderItem.ItemId);
 
             if (index == -1) throw new ArgumentException("Order item not found in cart.");

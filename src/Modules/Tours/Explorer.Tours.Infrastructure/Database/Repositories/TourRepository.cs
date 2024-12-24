@@ -121,5 +121,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _context.Tours.Include(t => t.KeyPoints).AsNoTracking().ToList();
         }
+
+        public Tour GetPublishedTourByid(long id)
+        {
+            return _context.Tours.Include(t => t.KeyPoints).Where(t => t.Status == Core.Domain.TourStatus.Published).AsEnumerable().Select(t => t.Preview()).FirstOrDefault(t => t.Id == id);
+        }
     }
 }

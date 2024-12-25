@@ -29,5 +29,19 @@ namespace Explorer.API.Controllers.Tourist
             var result = _quizService.GetAllQuizzes(page, pageSize);
             return Ok(result);
         }
+        [HttpPut("{id}")]
+        public ActionResult<QuizDto> Update(int id, [FromBody] QuizDto quizDto)
+        {
+            var result = _quizService.UpdateQuiz(id, quizDto);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Errors);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _quizService.DeleteQuiz(id);
+            return result.IsSuccess ? Ok() : BadRequest(result.Errors);
+        }
+
     }
 }

@@ -139,6 +139,8 @@ namespace Explorer.Tours.Core.Domain
                 Name = Name,
                 Description = Description,
                 Tags = Tags,
+                Image = Image,
+                Cost = Cost,
                 KeyPoints = keyPoints
             };
         }

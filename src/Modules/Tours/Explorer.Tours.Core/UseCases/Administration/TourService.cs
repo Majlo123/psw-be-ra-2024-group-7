@@ -178,34 +178,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return new PagedResult<BasicTourDetailsDto>(items, result.TotalCount);
             //return MapToDto(result);
         }
-        public Result<BasicTourDetailsDto> GetPublishedTourPreview(long id)
+        public Result<TourDto> GetPublishedTourPreview(long id)
         {
-            var result = _tourRepository.Get(id);
-
-            if (result.Status != TourStatus.Published)
-                return Result.Fail("Tour is not Public");
-
-            var tourDto = new BasicTourDetailsDto
-            {
-                Id = result.Id,
-                Cost = result.Cost,
-                Description = result.Description,
-                Name = result.Name,
-                Length = result.Length,
-                AverageRate = result.getAverageRate(),
-                FirstKeyPoint = result.KeyPoints.Any() ? new KeyPointDto
-                {
-                    Id = (int)result.KeyPoints.First().Id,
-                    Name = result.KeyPoints.First().Name,
-                    Description = result.KeyPoints.First().Description,
-                    Image = result.KeyPoints.First().Image,
-                    Latitude = result.KeyPoints.First().Latitude,
-                    Longitude = result.KeyPoints.First().Longitude,
-                    Status = (KeyPointDto.PublicStatus)result.KeyPoints.First().Status
-                } : null
-            };
-
-            return Result.Ok(tourDto);
+            var result = _tourRepository.GetPublishedTourByid(id);
+            return MapToDto(result);
         }
         public Result<TourDto> GetPublishedTourById(long id)
         {
@@ -221,6 +197,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 Description = result.Description,
                 Name = result.Name,
                 Length = result.Length,
+                Image = result.Image,
                 AverageRate = result.getAverageRate(),
                 KeyPoints = result.KeyPoints.Select(kp => new KeyPointDto
                 {

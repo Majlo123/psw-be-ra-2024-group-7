@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.API.Dtos
+namespace Explorer.Tours.API.Dtos
 {
     public class TouristEquipmentDto
     {
-        public int Id { get ; set; }
+        public int Id { get; set; }
         public long TouristId { get; set; }
-        public int EquipmentId { get; set; }
+        public long EquipmentId { get; set; }
 
     }
 }

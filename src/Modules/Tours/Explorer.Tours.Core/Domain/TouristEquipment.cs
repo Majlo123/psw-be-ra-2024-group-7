@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Stakeholders.Core.Domain
+namespace Explorer.Tours.Core.Domain
 {
     public class TouristEquipment : Entity
     {
         public long TouristId { get; init; }
-        public int EquipmentId { get; init; }
-        public TouristEquipment(long touristId, int equipmentId)
+        public long EquipmentId { get; init; }
+        public TouristEquipment(long touristId, long equipmentId)
         {
             TouristId = touristId;
             EquipmentId = equipmentId;

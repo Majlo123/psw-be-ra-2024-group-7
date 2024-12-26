@@ -40,6 +40,7 @@ public static class ToursStartup
         services.AddScoped<IInternalTourService, TourService>();
         services.AddScoped<ITouristLocationService, TouristLocationService>();
         services.AddScoped<IQuizService, QuizService>();
+        services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -62,5 +63,6 @@ public static class ToursStartup
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "tours")));
+        services.AddScoped(typeof(ICrudRepository<TouristEquipment>), typeof(CrudDatabaseRepository<TouristEquipment, ToursContext>));
     }
 }

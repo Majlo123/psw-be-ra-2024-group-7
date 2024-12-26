@@ -143,6 +143,13 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail("Failed to create quiz").WithError(ex.Message);
             }
         }
+        public Result<QuizDto> GetQuizByTourId(int tourId)
+        {
+            
+              var result = _quizRepository.GetByTourId(tourId);
+              return MapToDto(result);
+            
+        }
     }
 
 }

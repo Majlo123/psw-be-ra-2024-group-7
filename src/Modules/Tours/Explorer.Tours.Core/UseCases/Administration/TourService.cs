@@ -299,5 +299,24 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
             return result;
         }
+        public Result<TourDto> SetHasQuiz(int id, bool hasQuiz)
+        {
+            // 1. Dohvati turu iz baze
+            var tour = _tourRepository.Get(id);
+            if (tour == null)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError("Tour not found.");
+            }
+
+            // 2. Postavi polje HasQuiz
+            tour.HasQuiz = hasQuiz;
+
+            // 3. Ažuriraj turu u bazi
+            var updatedTour = _tourRepository.Update(tour);
+
+            // 4. Vrati ažuriranu turu kao DTO
+            return MapToDto(updatedTour);
+        }
+
     }
 }

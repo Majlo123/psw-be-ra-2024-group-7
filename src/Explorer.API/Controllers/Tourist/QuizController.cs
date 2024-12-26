@@ -43,5 +43,16 @@ namespace Explorer.API.Controllers.Tourist
             return result.IsSuccess ? Ok() : BadRequest(result.Errors);
         }
 
+        [HttpGet("byTour/{tourId}")]
+        public ActionResult<QuizDto> GetByTour(int tourId)
+        {
+            // Očekujemo da IQuizService ima metodu GetQuizByTourId(tourId)
+            var result = _quizService.GetQuizByTourId(tourId);
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Errors);
+            }
+            return Ok(result.Value);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace Explorer.Tours.API.Public.Administration
 
         Result<QuizDto> UpdateQuiz(int id, QuizDto dto);
         Result DeleteQuiz(int id);
+        Result<QuizDto> GetQuizByTourId(int tourId);
 
     }
 }

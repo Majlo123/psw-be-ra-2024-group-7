@@ -16,7 +16,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         void Update(Quiz quiz);
 
         void Delete(Quiz quiz);
-        
 
+        Quiz? GetByTourId(int tourId);
     }
 }

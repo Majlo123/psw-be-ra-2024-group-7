@@ -20,7 +20,14 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ThenInclude(a => a.Answers)
                          .FirstOrDefault(q => q.Id == id);
         }
-
+        public Quiz? GetByTourId(int tourId)
+        {
+            return _dbSet
+                           .Include(q => q.Questions)
+                           .ThenInclude(q => q.Answers)
+                           .Include(q => q.Reward)
+                           .FirstOrDefault(q => q.TourId == tourId);
+        }
         public void Update(Quiz quiz)
         {
             _dbSet.Update(quiz);

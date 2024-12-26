@@ -59,7 +59,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var updatedEntity = new ClubMessageDto
             {
-                Id = -1,
+                Id = -2,
                 SenderId = -11,
                 TouristClubId = -1,
                 SentDate = DateTime.UtcNow,
@@ -67,11 +67,11 @@ namespace Explorer.Stakeholders.Tests.Integration
             };
 
             // Act
-            var result = ((ObjectResult)controller.Update(updatedEntity, -1).Result)?.Value as ClubMessageDto;
+            var result = ((ObjectResult)controller.Update(updatedEntity, -2).Result)?.Value as ClubMessageDto;
 
             // Assert - Response
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-1);
+            result.Id.ShouldBe(-2);
             result.Content.ShouldBe(updatedEntity.Content);
 
             // Assert - Database
@@ -89,13 +89,13 @@ namespace Explorer.Stakeholders.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
-            var result = controller.Delete(-3);
+            var result = controller.Delete(-1);
 
             // Assert - Response
             result.ShouldNotBeNull();
 
             // Assert - Database
-            var storedCourse = dbContext.ClubMessages.FirstOrDefault(i => i.Id == -3);
+            var storedCourse = dbContext.ClubMessages.FirstOrDefault(i => i.Id == -1);
             storedCourse.ShouldBeNull();
         }
 

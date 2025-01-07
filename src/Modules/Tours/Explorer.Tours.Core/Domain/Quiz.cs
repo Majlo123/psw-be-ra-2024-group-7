@@ -7,9 +7,9 @@ namespace Explorer.Tours.Core.Domain
     public class Quiz : Entity
     {
         public int TourId { get; init; }
-        public string Title { get; private set; }
-        public List<QuizQuestion> Questions { get; private set; } = new();
-        public Reward Reward { get; private set; } 
+        public string Title { get;  set; }
+        public List<QuizQuestion> Questions { get; set; } = new();
+        public Reward Reward { get; set; } 
 
         private Quiz() { }
 

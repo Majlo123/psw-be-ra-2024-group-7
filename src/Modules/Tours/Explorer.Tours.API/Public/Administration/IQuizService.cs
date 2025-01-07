@@ -13,5 +13,10 @@ namespace Explorer.Tours.API.Public.Administration
     {
         Result<QuizResponseDto> CreateQuiz(QuizDto dto);
         PagedResult<QuizDto> GetAllQuizzes(int page, int pageSize);
+
+        Result<QuizDto> UpdateQuiz(int id, QuizDto dto);
+        Result DeleteQuiz(int id);
+        Result<QuizDto> GetQuizByTourId(int tourId);
+
     }
 }

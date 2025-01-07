@@ -9,7 +9,6 @@ using Explorer.Tours.API.Dtos;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    [Authorize(Policy = "touristPolicy")]
     [Route("api/tours")]
     public class TourController : BaseApiController
     {
@@ -25,7 +24,13 @@ namespace Explorer.API.Controllers.Tourist
         {
             var result = _tourService.GetPaged(page, pageSize);
             return CreateResponse(result);
-        }       
+        }
+        [HttpPut("{id:int}/hasQuiz")]
+        public ActionResult<TourDto> SetHasQuiz(int id, [FromBody] bool hasQuiz)
+        {
+            var result = _tourService.SetHasQuiz(id, hasQuiz);
+            return CreateResponse(result);
+        }
         [HttpGet("{id:int}")]
         public ActionResult<TourDto> GetById(int id)
         {

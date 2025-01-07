@@ -38,5 +38,6 @@ namespace Explorer.Tours.API.Dtos
         public DateTime? PublishTime { get;  set; } = null;
         public DateTime? ArchiveTime { get; set; } = null;
         public string Image { get; set; } = string.Empty;
+        public bool HasQuiz {  get; set; }
     }
 }

@@ -14,6 +14,32 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         private readonly ToursContext _dbContext;
         private readonly DbSet<Quiz> _dbSet;
 
+        public Quiz? GetById(int id)
+        {
+            return _dbSet.Include(q => q.Questions)
+                         .ThenInclude(a => a.Answers)
+                         .FirstOrDefault(q => q.Id == id);
+        }
+        public Quiz? GetByTourId(int tourId)
+        {
+            return _dbSet
+                           .Include(q => q.Questions)
+                           .ThenInclude(q => q.Answers)
+                           .Include(q => q.Reward)
+                           .FirstOrDefault(q => q.TourId == tourId);
+        }
+        public void Update(Quiz quiz)
+        {
+            _dbSet.Update(quiz);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(Quiz quiz)
+        {
+            _dbSet.Remove(quiz);
+            _dbContext.SaveChanges();
+        }
+
         public QuizRepository(ToursContext dbContext)
         {
             _dbContext = dbContext;

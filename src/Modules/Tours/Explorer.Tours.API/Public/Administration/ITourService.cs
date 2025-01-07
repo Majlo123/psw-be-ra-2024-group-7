@@ -16,6 +16,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> Update(TourDto tour);
         Result Delete(long id);
         Result<TourDto> Get(long id);
+        public Result<TourDto> SetHasQuiz(int id, bool hasQuiz);
         void DeleteEquipments(long id);
         Result<TourDto> Publish(TourDto tour);
         Result<PagedResult<TourDto>> GetPublishedTour(int page, int pageSize);

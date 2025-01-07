@@ -24,6 +24,74 @@ namespace Explorer.Tours.Core.UseCases.Administration
             _quizRepository = quizRepository;
             _mapper = mapper;
         }
+        public Result<QuizDto> UpdateQuiz(int id, QuizDto dto)
+        {
+            try
+            {
+                // Dohvatanje kviza iz baze
+                var quiz = _quizRepository.GetById(id);
+                if (quiz == null) return Result.Fail("Quiz not found");
+
+                // Ažuriranje podataka
+                quiz.Title = dto.Title;
+                quiz.Reward = new Reward(
+                    (RewardType)Enum.Parse(typeof(RewardType), dto.Reward.Type),
+                    dto.Reward.Amount
+                );
+
+                // Prvo brišemo postojeća pitanja i odgovore
+                quiz.Questions.Clear();
+
+                // Dodavanje novih pitanja sa odgovorima
+                foreach (var questionDto in dto.Questions)
+                {
+                    // Kreiramo listu odgovora
+                    var answers = questionDto.Answers
+                                             .Select(a => new QuizAnswer(a.AnswerText))
+                                             .ToList();
+
+                    // Kreiramo pitanje sa listom odgovora
+                    var question = new QuizQuestion(
+                        quiz.Id,
+                        questionDto.QuestionText,
+                        answers,
+                        questionDto.CorrectAnswerIndex
+                    );
+
+                    // Dodajemo pitanje direktno u listu pitanja kviza
+                    quiz.Questions.Add(question);
+                }
+
+                // Ažuriranje u bazi
+                _quizRepository.Update(quiz);
+
+                // Mapiranje rezultata i vraćanje odgovora
+                var updatedQuiz = _mapper.Map<QuizDto>(quiz);
+                return Result.Ok(updatedQuiz);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail("Failed to update quiz").WithError(ex.Message);
+            }
+        }
+
+
+        public Result DeleteQuiz(int id)
+        {
+            try
+            {
+                var quiz = _quizRepository.GetById(id);
+                if (quiz == null) return Result.Fail("Quiz not found");
+
+                _quizRepository.Delete(quiz);
+                return Result.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail("Failed to delete quiz").WithError(ex.Message);
+            }
+        }
+
         public PagedResult<QuizDto> GetAllQuizzes(int page, int pageSize)
         {
             try
@@ -75,5 +143,13 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail("Failed to create quiz").WithError(ex.Message);
             }
         }
+        public Result<QuizDto> GetQuizByTourId(int tourId)
+        {
+            
+              var result = _quizRepository.GetByTourId(tourId);
+              return MapToDto(result);
+            
+        }
     }
+
 }
